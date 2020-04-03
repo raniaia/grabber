@@ -40,6 +40,9 @@ it is not related to the original author and need to be personally responsible.
         <module>grabber-bytecode-macos</module>
         <module>grabber-provided-lib</module>
         <module>grabber-static-tools</module>
+        <module>grabber-builder-tool</module>
+        <module>grabber-sys-exception</module>
+        <module>grabber-debug-tool</module>
     </modules>
 
 </project>
