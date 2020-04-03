@@ -44,6 +44,7 @@ it is not related to the original author and need to be personally responsible.
         <module>grabber-sys-exception</module>
         <module>grabber-debug-tool</module>
         <module>grabber-bytecode</module>
+        <module>grabber-provided-constant</module>
     </modules>
 
 </project>
