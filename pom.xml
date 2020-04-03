@@ -25,7 +25,7 @@ it is not related to the original author and need to be personally responsible.
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.raniaia</groupId>
-    <artifactId>panda</artifactId>
+    <artifactId>grabber</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0.BETA</version>
 
