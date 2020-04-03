@@ -33,6 +33,13 @@ it is not related to the original author and need to be personally responsible.
         <module>grabber-code-parser</module>
         <module>grabber-bytecode-generator</module>
         <module>grabber-source-reader</module>
+        <module>grabber-virtual-machine</module>
+        <module>grabber-external-lib</module>
+        <module>grabber-bytecode-windows</module>
+        <module>grabber-bytecode-linux</module>
+        <module>grabber-bytecode-macos</module>
+        <module>grabber-provided-lib</module>
+        <module>grabber-static-tools</module>
     </modules>
 
 </project>
