@@ -28,5 +28,11 @@ it is not related to the original author and need to be personally responsible.
     <artifactId>grabber</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0.BETA</version>
+    <modules>
+        <module>grabber-lexical-analyzer</module>
+        <module>grabber-code-parser</module>
+        <module>grabber-bytecode-generator</module>
+        <module>grabber-source-reader</module>
+    </modules>
 
 </project>
