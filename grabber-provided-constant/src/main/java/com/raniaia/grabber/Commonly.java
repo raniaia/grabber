@@ -1,4 +1,4 @@
-package com.raniaia.grabber.features;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,13 +20,14 @@ package com.raniaia.grabber.features;
  */
 
 /*
- * Creates on 2020/4/3.
+ * Creates on 2020/4/4.
  */
 
 /**
- * ByteCode是一个字节码对象，仅支持一行一行的读取。
- * 因为效率问题，所有的指令都将被转换成byte类型
  * @author tiansheng
  */
-public class ByteCode {
+public interface Commonly {
+
+    String              GRABBER             = "grabber";
+
 }

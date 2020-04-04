@@ -28,6 +28,7 @@ it is not related to the original author and need to be personally responsible.
     <artifactId>grabber</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0.BETA</version>
+
     <modules>
         <module>grabber-lexical-analyzer</module>
         <module>grabber-code-parser</module>
@@ -45,6 +46,20 @@ it is not related to the original author and need to be personally responsible.
         <module>grabber-debug-tool</module>
         <module>grabber-bytecode</module>
         <module>grabber-provided-constant</module>
+        <module>grabber-code-tamplate</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.raniaia</groupId>
+            <artifactId>available</artifactId>
+            <version>1.0.0.FIRST</version>
+        </dependency>
+        <dependency>
+            <groupId>com.raniaia</groupId>
+            <artifactId>grabber-provided-constant</artifactId>
+            <version>1.0.0.BETA</version>
+        </dependency>
+    </dependencies>
 
 </project>
