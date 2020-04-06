@@ -30,6 +30,8 @@ import org.raniaia.available.array.ArrayUtils;
  *
  * 每个符号都是一个byte数组，假设我们有一段代码：
  * <code>
+ *     set x = 0;
+ *     set y = 0;
  *     def main(args)
  *     {
  *         print("Hello,World!");
@@ -43,29 +45,6 @@ import org.raniaia.available.array.ArrayUtils;
  *
  * 当我们解析成字节码就是这样的:
  * <code>
- *     grabber class null:
- *          M:                                            // M表示方法
- *              0_main                    #NEW            // 给main方法分配地址和内存。0代表这是第一个方法
- *              {
- *                  V:                                    // V表示变量的意思，全称Variable
- *                    args                #T,A            // #T代表类型，A代表数组
- *
- *                  P:                                    // P在这里代表过程的意思，全称Process
- *                    Hello,World         #PUT_C          // 将helloworld解析成char数组放入栈中，并分配地址
- *                    print               #OP,POP
- *                    #PUT                1               // 将1压入栈顶
- *                    #PUT                2               // 将2压入栈顶
- *                    #POP2
- *                    #IADD 0,1                           // 弹出栈顶的两个元素，0代表1，1代表2，然后执行加法操作
- *                    #POP  0                             // 操作完后，将结果给0，最后将0压入栈顶
- *                    print               #OP,POP         // print执行print，从栈顶弹出一个元素
- *              }
- *
- *              1_test                    #NEW            // 基本操作和上述一样，1代表这是解析到的第二个方法
- *              {
- *                  ...
- *              }
- *          :E                                            // E表示结束
  * </code>
  *
  * @author tiansheng

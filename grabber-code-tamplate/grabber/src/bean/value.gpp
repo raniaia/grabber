@@ -1,0 +1,23 @@
+class value
+{
+    set username = "root";
+    set password = "root";
+
+    def connect(username, password)
+    {
+        if(username != null)
+        {
+            print("username: %s",username)
+        }
+        else
+        {
+            print("username:", this.username);
+        }
+    }
+
+    def main(args)
+    {
+        connect(username,"sysdba");
+    }
+
+}

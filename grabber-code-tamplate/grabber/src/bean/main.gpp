@@ -1,0 +1,7 @@
+include value;
+
+def main(args)
+{
+    set v = new value();
+    v.connect("u","p");
+}
