@@ -47,6 +47,8 @@ it is not related to the original author and need to be personally responsible.
         <module>grabber-bytecode</module>
         <module>grabber-provided-constant</module>
         <module>grabber-code-tamplate</module>
+        <module>grabber-sys-grammar</module>
+        <module>grabber-sys-semantic</module>
     </modules>
 
     <dependencies>
