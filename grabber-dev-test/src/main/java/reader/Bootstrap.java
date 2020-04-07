@@ -1,4 +1,4 @@
-package com.raniaia.grabber.features.save;
+package reader;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,21 +20,18 @@ package com.raniaia.grabber.features.save;
  */
 
 /*
- * Creates on 2020/4/5.
+ * Creates on 2020/4/7.
  */
 
-import org.raniaia.available.map.Maps;
-
-import java.util.Map;
-
+import com.raniaia.grabber.exec.GrabberSourceReader;
 
 /**
  * @author tiansheng
  */
-public class SourceCode {
+public class Bootstrap {
 
-    public static SourceCode NONE = null;
-
-    Map<Integer,String> sourceCode = Maps.newLinkedHashMap();
+    public static void main(String[] args) {
+        GrabberSourceReader.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE");
+    }
 
 }

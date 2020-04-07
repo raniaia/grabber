@@ -1,0 +1,11 @@
+class GLog {
+
+    def GLog() {
+        print("<init>:V()")
+    }
+
+    def print(msg) {
+        print("log:" + msg,10)
+    }
+
+}

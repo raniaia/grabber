@@ -6,16 +6,16 @@
         <artifactId>grabber</artifactId>
         <groupId>com.raniaia</groupId>
         <version>1.0.0.BETA</version>
-        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>grabber-source-reader</artifactId>
-
+    <artifactId>grabber-dev-test</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.raniaia</groupId>
-            <artifactId>grabber-provided-constant</artifactId>
+            <artifactId>grabber-source-reader</artifactId>
+            <version>1.0.0.BETA</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

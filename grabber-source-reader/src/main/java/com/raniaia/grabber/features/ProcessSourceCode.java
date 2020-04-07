@@ -23,11 +23,45 @@ package com.raniaia.grabber.features;
  * Creates on 2020/4/5.
  */
 
+import com.raniaia.grabber.features.save.SourceCode;
+
 /**
  * 处理源代码，擦除注释等操作。
+ * 可能会有一些疑问，就是擦除注释后我们怎么进行异常的精准定位呢？
+ * 其实在擦除注释的过程中会对源码进行一个标记。源码如下：
+ * <code>
+ *     // 这是main方法
+ *     def main(args)
+ *     {
+ *         // 打印hello，world
+ *         print("hello,world!")
+ *     }
+ * </code>
+ *
+ * 上述源码一共有6行,在擦除的过程中会进行标记，最终结果如下
+ * <code>
+ *     1:def main(args)
+ *     2:{
+ *     4:print("hello,world!")
+ *     5:}
+ * </code>
  *
  * @author tiansheng
  */
 public class ProcessSourceCode {
+
+    //
+    // 获取擦除器
+    //
+    public static Erase eraser = new Erase();
+
+    public static class Erase
+    {
+        // 擦除注释
+        public SourceCode comment(String sourceCode)
+        {
+            return SourceCode.NONE;
+        }
+    }
 
 }

@@ -61,19 +61,36 @@ it is not related to the original author and need to be personally responsible.
         <module>grabber-analysis-semantic</module>
         <!-- 字节码生成 -->
         <module>grabber-bytecode-generator</module>
+        <module>grabber-dev-test</module>
     </modules>
+
+    <properties>
+        <const.version>1.0.0.BETA</const.version>
+        <lombok.version>1.18.10</lombok.version>
+        <available.version>1.0.0.FIRST</available.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.raniaia</groupId>
+                <artifactId>grabber-provided-constant</artifactId>
+                <version>${const.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- Java开发工具库 -->
         <dependency>
             <groupId>com.raniaia</groupId>
             <artifactId>available</artifactId>
-            <version>1.0.0.FIRST</version>
+            <version>${available.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.raniaia</groupId>
-            <artifactId>grabber-provided-constant</artifactId>
-            <version>1.0.0.BETA</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 

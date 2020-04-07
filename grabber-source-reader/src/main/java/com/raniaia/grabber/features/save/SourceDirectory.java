@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 获取源码目录，并读取每个包下的所有源码文件。
+ *
  * @author tiansheng
  */
 public class SourceDirectory {
@@ -41,6 +43,7 @@ public class SourceDirectory {
     String prefix;
     List<String> classfile;
     String previousPackage;
+
     Map<String, List<String>> packages;
 
     public SourceDirectory(String prefix) {

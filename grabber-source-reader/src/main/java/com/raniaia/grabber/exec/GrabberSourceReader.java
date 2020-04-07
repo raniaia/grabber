@@ -23,10 +23,13 @@ package com.raniaia.grabber.exec;
  * Creates on 2020/4/4.
  */
 
+import com.raniaia.grabber.features.ProcessSourceCode;
+import com.raniaia.grabber.features.save.SourceCode;
 import com.raniaia.grabber.features.save.SourceDirectory;
 
 /**
  * 获取源码目录
+ *
  * @author tiansheng
  */
 public class GrabberSourceReader {
@@ -41,10 +44,7 @@ public class GrabberSourceReader {
         // 初始化directory，内部递归遍历获取源码目录
         //
         directory.init();
-    }
-
-    public static void main(String[] args) {
-        exec("E:\\IdeaProjects\\grabber\\grabber-code-tamplate\\grabber");
+        SourceCode sourceCode = ProcessSourceCode.eraser.comment("");
     }
 
 }
