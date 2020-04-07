@@ -1,5 +1,5 @@
-#include <'tools'>
-class File: 'file' {
+#include <'tools.file'>
+@interface File {
 
     def File(){}
 
