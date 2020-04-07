@@ -30,28 +30,41 @@ it is not related to the original author and need to be personally responsible.
     <version>1.0.0.BETA</version>
 
     <modules>
-        <module>grabber-lexical-analyzer</module>
-        <module>grabber-code-parser</module>
-        <module>grabber-bytecode-generator</module>
-        <module>grabber-source-reader</module>
+        <!-- grabber虚拟机 -->
         <module>grabber-virtual-machine</module>
+        <!-- grabber自带的库 -->
         <module>grabber-external-lib</module>
+        <!-- 将bytecode转换成windows对应的机器码 -->
         <module>grabber-bytecode-windows</module>
+        <!-- 将bytecode转换成linux对应的机器码 -->
         <module>grabber-bytecode-linux</module>
+        <!-- 将bytecode转换成mac对应的机器码 -->
         <module>grabber-bytecode-macos</module>
         <module>grabber-provided-lib</module>
+        <!-- 静态工具 -->
         <module>grabber-static-tools</module>
+        <!-- 构建工具 -->
         <module>grabber-builder-tool</module>
+        <!-- 异常处理 -->
         <module>grabber-sys-exception</module>
+        <!-- debug工具 -->
         <module>grabber-debug-tool</module>
-        <module>grabber-bytecode</module>
+        <!-- 用到的常量 -->
         <module>grabber-provided-constant</module>
-        <module>grabber-code-tamplate</module>
-        <module>grabber-sys-grammar</module>
-        <module>grabber-sys-semantic</module>
+        <!-- 源码读取器 -->
+        <module>grabber-source-reader</module>
+        <!-- 词法分析器：token -->
+        <module>grabber-analysis-lexical</module>
+        <!-- 语法分析器：ast -->
+        <module>grabber-analysis-grammar</module>
+        <!-- 语义分析器：bytecode -->
+        <module>grabber-analysis-semantic</module>
+        <!-- 字节码生成 -->
+        <module>grabber-bytecode-generator</module>
     </modules>
 
     <dependencies>
+        <!-- Java开发工具库 -->
         <dependency>
             <groupId>com.raniaia</groupId>
             <artifactId>available</artifactId>

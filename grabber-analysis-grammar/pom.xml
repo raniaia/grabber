@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>grabber-sys-semantic</artifactId>
+    <artifactId>grabber-analysis-grammar</artifactId>
 
 
 </project>
