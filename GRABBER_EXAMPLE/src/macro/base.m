@@ -3,6 +3,6 @@
 //
 #define 'base'
     func {
-        toString(object)
+        hasCode()
     }
 #end

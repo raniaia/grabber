@@ -23,8 +23,12 @@ package com.raniaia.grabber.features.save;
  * Creates on 2020/4/5.
  */
 
+import org.raniaia.available.list.Lists;
 import org.raniaia.available.map.Maps;
+import org.raniaia.available.string.LineReader;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 
@@ -35,6 +39,29 @@ public class SourceCode {
 
     public static SourceCode NONE = null;
 
-    Map<Integer,String> sourceCode = Maps.newLinkedHashMap();
+    String path;
+
+    String[] value;
+
+    public SourceCode(){}
+
+    public SourceCode(String path){
+        this.path = path;
+        read();
+    }
+
+    void read() {
+        try {
+            List<String> lines = Lists.newLinkedList();
+            LineReader lr = new LineReader(path);
+            while (lr.ready()){
+                lines.add(lr.readLine());
+            }
+            value = new String[lines.size()];
+            lines.toArray(value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

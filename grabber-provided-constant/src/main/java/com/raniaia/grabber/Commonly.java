@@ -28,6 +28,7 @@ package com.raniaia.grabber;
  */
 public interface Commonly {
 
-    String              GRABBER             = "grabber";
+    String              MACRO               = "m";
+    String              GRABBER             = "g";
 
 }

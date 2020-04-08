@@ -31,7 +31,7 @@ import com.raniaia.grabber.exec.GrabberSourceReader;
 public class Bootstrap {
 
     public static void main(String[] args) {
-        GrabberSourceReader.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE");
+        GrabberSourceReader.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
     }
 
 }
