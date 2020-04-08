@@ -1,5 +1,3 @@
-package reader;
-
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
