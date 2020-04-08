@@ -64,7 +64,8 @@ public class SourceDirectory {
                 previousPackage = file.getPath();
                 getPackages(file);
             }
-            if (Commonly.GRABBER.equals(Files.getSuffix(file))) {
+            if (Commonly.GRABBER.equals(Files.getSuffix(file))
+                    || Commonly.MACRO.equals(Files.getSuffix(file))) {
                 if (classfile == null) {
                     classfile = Lists.newArrayList();
                 }
@@ -85,6 +86,18 @@ public class SourceDirectory {
             packages = Maps.newHashMap();
         }
         packages.put(packageName, files);
+    }
+
+    public List<SourceCode> toSourceCodeList() {
+        List<SourceCode> codes = Lists.newArrayList();
+        for (Map.Entry<String, List<String>> pk : packages.entrySet()) {
+            String key = pk.getKey() == null ? prefix : pk.getKey();
+            for (String path : pk.getValue()) {
+                key = key.concat("\\").concat(path);
+                codes.add(new SourceCode(key));
+            }
+        }
+        return codes;
     }
 
 }

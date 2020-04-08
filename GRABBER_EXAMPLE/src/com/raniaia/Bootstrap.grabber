@@ -1,6 +1,0 @@
-
-set log = GLog();
-
-def main(args) {
-    log.print("main")
-}

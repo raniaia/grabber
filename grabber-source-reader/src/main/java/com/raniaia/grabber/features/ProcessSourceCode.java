@@ -58,7 +58,7 @@ public class ProcessSourceCode {
     public static class Erase
     {
         // 擦除注释
-        public SourceCode comment(String sourceCode)
+        public SourceCode comment(SourceCode sourceCode)
         {
             return SourceCode.NONE;
         }

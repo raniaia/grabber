@@ -27,6 +27,8 @@ import com.raniaia.grabber.features.ProcessSourceCode;
 import com.raniaia.grabber.features.save.SourceCode;
 import com.raniaia.grabber.features.save.SourceDirectory;
 
+import java.util.List;
+
 /**
  * 获取源码目录
  *
@@ -44,7 +46,8 @@ public class GrabberSourceReader {
         // 初始化directory，内部递归遍历获取源码目录
         //
         directory.init();
-        SourceCode sourceCode = ProcessSourceCode.eraser.comment("");
+        List<SourceCode> codes = directory.toSourceCodeList();
+        System.out.println();
     }
 
 }
