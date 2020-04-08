@@ -1,4 +1,4 @@
-package com.raniaia.grabber.features.save;
+package com.raniaia.grabber.features.structure;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -26,12 +26,9 @@ package com.raniaia.grabber.features.save;
 import com.raniaia.grabber.Commonly;
 import org.raniaia.available.io.file.Files;
 import org.raniaia.available.list.Lists;
-import org.raniaia.available.map.Maps;
-import org.raniaia.available.string.StringUtils;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**

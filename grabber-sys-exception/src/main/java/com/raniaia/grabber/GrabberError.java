@@ -1,4 +1,4 @@
-package com.raniaia.grabber.exec;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,33 +20,31 @@ package com.raniaia.grabber.exec;
  */
 
 /*
- * Creates on 2020/4/4.
+ * Creates on 2020/4/8.
  */
-
-import com.raniaia.grabber.features.structure.SourceCode;
-import com.raniaia.grabber.features.structure.SourceDirectory;
-
-import java.util.List;
 
 /**
- * 获取源码目录
- *
  * @author tiansheng
  */
-public class GrabberSourceReader {
+public class GrabberError extends Error {
 
-    /**
-     * 获取源码目录。
-     * 这个{@param path}传入源码目录，而不是项目的根目录
-     */
-    public static void exec(String path) {
-        SourceDirectory directory = new SourceDirectory(path);
-        //
-        // 初始化directory，内部递归遍历获取源码目录
-        //
-        directory.init();
-        List<SourceCode> codes = directory.toSourceCodeList();
-        System.out.println();
+    public GrabberError() {
+    }
+
+    public GrabberError(String message) {
+        super(message);
+    }
+
+    public GrabberError(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public GrabberError(Throwable cause) {
+        super(cause);
+    }
+
+    public GrabberError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 
 }
