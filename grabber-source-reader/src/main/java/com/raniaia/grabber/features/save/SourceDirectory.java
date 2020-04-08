@@ -27,6 +27,7 @@ import com.raniaia.grabber.Commonly;
 import org.raniaia.available.io.file.Files;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.map.Maps;
+import org.raniaia.available.string.StringUtils;
 
 import java.io.File;
 import java.util.List;
@@ -44,7 +45,7 @@ public class SourceDirectory {
     List<String> classfile;
     String previousPackage;
 
-    Map<String, List<String>> packages;
+    List<String> packages;
 
     public SourceDirectory(String prefix) {
         this.prefix = prefix;
@@ -56,12 +57,13 @@ public class SourceDirectory {
     }
 
     void getPackages(File files) {
+        File current = null;
         for (File file : Objects.requireNonNull(files.listFiles())) {
+            current = file;
             //
             // 如果是一个目录就保存到previousPackage
             //
             if (file.isDirectory()) {
-                previousPackage = file.getPath();
                 getPackages(file);
             }
             if (Commonly.GRABBER.equals(Files.getSuffix(file))
@@ -75,27 +77,24 @@ public class SourceDirectory {
             }
         }
         if (classfile != null && !classfile.isEmpty()) {
-            put(previousPackage, Lists.newArrayList(classfile));
+            add(Lists.newArrayList(classfile));
             classfile.clear();
             previousPackage = null;
         }
     }
 
-    void put(String packageName, List<String> files) {
+    void add(List<String> files) {
         if (packages == null) {
-            packages = Maps.newHashMap();
+            packages = Lists.newArrayList(files);
         }
-        packages.put(packageName, files);
+        packages.addAll(Lists.newArrayList(files));
     }
 
     public List<SourceCode> toSourceCodeList() {
         List<SourceCode> codes = Lists.newArrayList();
-        for (Map.Entry<String, List<String>> pk : packages.entrySet()) {
-            String key = pk.getKey() == null ? prefix : pk.getKey();
-            for (String path : pk.getValue()) {
-                key = key.concat("\\").concat(path);
-                codes.add(new SourceCode(key));
-            }
+        for (String aPackage : packages) {
+            String key = prefix.concat("\\").concat(aPackage);
+            codes.add(new SourceCode(key));
         }
         return codes;
     }
