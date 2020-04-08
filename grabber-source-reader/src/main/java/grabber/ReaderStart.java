@@ -1,3 +1,5 @@
+package grabber;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,23 +20,31 @@
  */
 
 /*
- * Creates on 2020/4/7.
+ * Creates on 2020/4/4.
  */
 
-import grabber.LexerStart;
-import grabber.ReaderStart;
 import grabber.structure.SourceCode;
 
 import java.util.List;
 
 /**
+ * 获取源码目录
+ *
  * @author tiansheng
  */
-public class Bootstrap {
+public class ReaderStart {
 
-    public static void main(String[] args) {
-        List<SourceCode> codes = ReaderStart.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
-        LexerStart.start(codes);
+    /**
+     * 获取源码目录。
+     * 这个{@param path}传入源码目录，而不是项目的根目录
+     */
+    public static List<SourceCode> exec(String path) {
+        SourceDirectory directory = new SourceDirectory(path);
+        //
+        // 初始化directory，内部递归遍历获取源码目录
+        //
+        directory.init();
+        return directory.toSourceCodeList();
     }
 
 }

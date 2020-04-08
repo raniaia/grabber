@@ -1,3 +1,5 @@
+package grabber;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,23 +20,40 @@
  */
 
 /*
- * Creates on 2020/4/7.
+ * Creates on 2020/4/9.
  */
-
-import grabber.LexerStart;
-import grabber.ReaderStart;
-import grabber.structure.SourceCode;
-
-import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class Bootstrap {
+public class SyntaxToken {
 
-    public static void main(String[] args) {
-        List<SourceCode> codes = ReaderStart.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
-        LexerStart.start(codes);
+    /**
+     * 符号对应编码，参考{@link Operator}
+     */
+    public int          code;
+
+    /**
+     * 符号对应的值
+     */
+    public String       value;
+
+    /**
+     * 符号对应的分类，参考{@link Symbol}
+     */
+    public int          classify;
+
+    /**
+     * Token对应的代码中的行号
+     */
+    public int          lineNumber;
+
+    public SyntaxToken(){}
+
+    public SyntaxToken(int code, String value, int classify, int lineNumber) {
+        this.code = code;
+        this.value = value;
+        this.classify = classify;
+        this.lineNumber = lineNumber;
     }
-
 }

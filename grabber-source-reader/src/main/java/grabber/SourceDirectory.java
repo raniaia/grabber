@@ -1,4 +1,4 @@
-package grabber.features.structure;
+package grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,7 +23,7 @@ package grabber.features.structure;
  * Creates on 2020/4/5.
  */
 
-import grabber.Commonly;
+import grabber.structure.SourceCode;
 import org.raniaia.available.io.file.Files;
 import org.raniaia.available.list.Lists;
 

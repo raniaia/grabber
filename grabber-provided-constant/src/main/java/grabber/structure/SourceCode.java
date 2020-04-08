@@ -1,4 +1,4 @@
-package grabber.features.structure;
+package grabber.structure;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,6 +23,7 @@ package grabber.features.structure;
  * Creates on 2020/4/5.
  */
 
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.LineReader;
 import org.raniaia.available.string.StringUtils;
@@ -44,14 +45,15 @@ public class SourceCode {
 
     StringBuilder builder = new StringBuilder();
 
-    public SourceCode(){}
+    public SourceCode() {
+    }
 
-    public SourceCode(String path){
+    public SourceCode(String path) {
         this.path = path;
         read();
         System.out.println("PATH: " + path);
         System.out.println("------------------------------------------------------------------------");
-        for (String v : value){
+        for (String v : value) {
             System.out.println(v);
         }
         System.out.println("------------------------------------------------------------------------");
@@ -63,9 +65,9 @@ public class SourceCode {
             List<String> lines = Lists.newLinkedList();
             LineReader lr = new LineReader(path);
             int i = 1;
-            while (lr.ready()){
+            while (lr.ready()) {
                 String paragraph = erase(lr.readLine());
-                if(StringUtils.isEmpty(paragraph)){
+                if (StringUtils.isEmpty(paragraph)) {
                     continue;
                 }
                 String line = String.valueOf(i).concat(": ");
@@ -82,19 +84,19 @@ public class SourceCode {
     /**
      * 擦除注释
      */
-    String erase(String line){
+    String erase(String line) {
         int slash = 0;
         int minus = 0;
         char[] charArray = line.toCharArray();
         for (char c : charArray) {
-            switch (c){
+            switch (c) {
                 case '/': {
                     slash++;
-                    if(slash >= 2) {
+                    if (slash >= 2) {
                         System.out.println("擦除单注释：" + line + ", 返回：" + builder.toString());
                         return StringUtils.clear(builder);
                     }
-                    if(slash == 1 && minus == 2) {
+                    if (slash == 1 && minus == 2) {
                         isMultiLineComment = false;
                         System.out.println("擦除多注释：" + line + ", 返回：" + builder.toString());
                         StringUtils.clear(builder);
@@ -102,10 +104,10 @@ public class SourceCode {
                     }
                     break;
                 }
-                case '-':{
+                case '-': {
                     minus++;
-                    if(slash == 1 && minus == 2) {
-                        if(isMultiLineComment) {
+                    if (slash == 1 && minus == 2) {
+                        if (isMultiLineComment) {
                             isMultiLineComment = false;
                         } else {
                             isMultiLineComment = true;
@@ -121,11 +123,15 @@ public class SourceCode {
             }
         }
 
-        if(isMultiLineComment){
+        if (isMultiLineComment) {
             System.out.println("擦除多注释：" + line + ", 返回：" + builder.toString());
             return null;
         }
         return StringUtils.clear(builder);
-}
+    }
+
+    public String[] getValue() {
+        return this.value;
+    }
 
 }

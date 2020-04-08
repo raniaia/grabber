@@ -1,4 +1,4 @@
-package grabber.exec;
+package grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,32 +20,21 @@ package grabber.exec;
  */
 
 /*
- * Creates on 2020/4/4.
+ * Creates on 2020/4/9.
  */
 
-import grabber.features.structure.SourceCode;
-import grabber.features.structure.SourceDirectory;
+import grabber.structure.SourceCode;
+import org.raniaia.available.string.StringUtils;
 
 import java.util.List;
 
 /**
- * 获取源码目录
- *
  * @author tiansheng
  */
-public class GrabberSourceReader {
+public class LexerStart {
 
-    /**
-     * 获取源码目录。
-     * 这个{@param path}传入源码目录，而不是项目的根目录
-     */
-    public static List<SourceCode> exec(String path) {
-        SourceDirectory directory = new SourceDirectory(path);
-        //
-        // 初始化directory，内部递归遍历获取源码目录
-        //
-        directory.init();
-        return directory.toSourceCodeList();
+    public static void start(List<SourceCode> codes){
+        System.out.println(StringUtils.newString(codes.get(0).getValue()));
     }
 
 }
