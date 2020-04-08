@@ -39,14 +39,13 @@ public class GrabberSourceReader {
      * 获取源码目录。
      * 这个{@param path}传入源码目录，而不是项目的根目录
      */
-    public static void exec(String path) {
+    public static List<SourceCode> exec(String path) {
         SourceDirectory directory = new SourceDirectory(path);
         //
         // 初始化directory，内部递归遍历获取源码目录
         //
         directory.init();
-        List<SourceCode> codes = directory.toSourceCodeList();
-        System.out.println();
+        return directory.toSourceCodeList();
     }
 
 }
