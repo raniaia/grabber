@@ -23,15 +23,13 @@ package reader;
  * Creates on 2020/4/7.
  */
 
-import com.raniaia.grabber.exec.GrabberSourceReader;
-
 /**
  * @author tiansheng
  */
 public class Bootstrap {
 
     public static void main(String[] args) {
-        GrabberSourceReader.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
+        // GrabberSourceReader.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
     }
 
 }

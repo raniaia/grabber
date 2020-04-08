@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'com.raniaia:available:1.0.0'
+}
+

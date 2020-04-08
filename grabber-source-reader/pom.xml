@@ -6,7 +6,6 @@
         <artifactId>grabber</artifactId>
         <groupId>com.raniaia</groupId>
         <version>1.0.0.BETA</version>
-        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

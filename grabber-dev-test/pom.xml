@@ -11,12 +11,6 @@
 
     <artifactId>grabber-dev-test</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>com.raniaia</groupId>
-            <artifactId>grabber-source-reader</artifactId>
-            <version>1.0.0.BETA</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
 </project>

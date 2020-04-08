@@ -1,0 +1,20 @@
+rootProject.name = 'grabber'
+
+include(':grabber-virtual-machine')
+include(':grabber-external-lib')
+include(':grabber-bytecode-windows')
+include(':grabber-bytecode-linux')
+include(':grabber-bytecode-macos')
+include(':grabber-provided-lib')
+include(':grabber-builder-tool')
+include(':grabber-sys-exception')
+include(':grabber-debug-tool')
+include(':grabber-provided-constant')
+include(':grabber-source-reader')
+include(':grabber-analysis-lexical')
+include(':grabber-analysis-grammar')
+include(':grabber-analysis-semantic')
+include(':grabber-bytecode-generator')
+include(':grabber-dev-test')
+include(':grabber-test')
+
