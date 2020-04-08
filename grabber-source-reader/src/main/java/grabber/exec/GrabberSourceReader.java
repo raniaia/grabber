@@ -1,4 +1,4 @@
-package com.raniaia.grabber.lexical;
+package grabber.exec;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,15 +20,32 @@ package com.raniaia.grabber.lexical;
  */
 
 /*
- * Creates on 2020/4/8.
+ * Creates on 2020/4/4.
  */
+
+import grabber.features.structure.SourceCode;
+import grabber.features.structure.SourceDirectory;
+
+import java.util.List;
 
 /**
- * 词法规定
+ * 获取源码目录
+ *
  * @author tiansheng
  */
-public class Lexical {
+public class GrabberSourceReader {
 
-
+    /**
+     * 获取源码目录。
+     * 这个{@param path}传入源码目录，而不是项目的根目录
+     */
+    public static List<SourceCode> exec(String path) {
+        SourceDirectory directory = new SourceDirectory(path);
+        //
+        // 初始化directory，内部递归遍历获取源码目录
+        //
+        directory.init();
+        return directory.toSourceCodeList();
+    }
 
 }

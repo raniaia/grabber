@@ -1,6 +1,4 @@
-package com.raniaia.grabber;
-
-/*
+package grabber;/*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL,                           Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,12 +30,12 @@ import java.util.Map;
  */
 public class SymbolTable {
 
-    static Map<String,                           Byte> table = Maps.newHashMap();
+    static Map<String,Byte> table = Maps.newHashMap();
 
     static {
 
         /*
-         *保留字符
+         * 保留字符
          */
         table.put(  "public",                           Symbol.KEEP);
         table.put(  "private",                          Symbol.KEEP);

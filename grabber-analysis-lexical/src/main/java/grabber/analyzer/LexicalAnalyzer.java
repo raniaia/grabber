@@ -1,4 +1,4 @@
-package com.raniaia.grabber;
+package grabber.analyzer;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -24,27 +24,11 @@ package com.raniaia.grabber;
  */
 
 /**
+ * 词法解析器
  * @author tiansheng
  */
-public class GrabberError extends Error {
+public class LexicalAnalyzer {
 
-    public GrabberError() {
-    }
 
-    public GrabberError(String message) {
-        super(message);
-    }
-
-    public GrabberError(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public GrabberError(Throwable cause) {
-        super(cause);
-    }
-
-    public GrabberError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 
 }

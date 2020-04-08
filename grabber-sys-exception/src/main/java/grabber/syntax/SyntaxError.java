@@ -1,4 +1,4 @@
-package com.raniaia.grabber;
+package grabber.syntax;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -24,38 +24,26 @@ package com.raniaia.grabber;
  */
 
 /**
- * 符号种别码
  * @author tiansheng
  */
-public interface Symbol {
+public class SyntaxError extends Error {
 
-    byte
+    public SyntaxError() {
+    }
 
-    //
-    // 标识符
-    //
-    IDEN      =       1,
+    public SyntaxError(String message) {
+        super(message);
+    }
 
-    //
-    // 常数
-    //
-    CONST     =       2,
+    public SyntaxError(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-    //
-    // 保留字符
-    //
-    KEEP      =       3,
+    public SyntaxError(Throwable cause) {
+        super(cause);
+    }
 
-    //
-    // 运算符
-    //
-    OP        =       4,
-
-    //
-    // 界限符
-    //
-    LIMIT     =       5;
-
-
-
+    public SyntaxError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }

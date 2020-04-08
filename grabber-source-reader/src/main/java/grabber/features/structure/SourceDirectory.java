@@ -1,4 +1,4 @@
-package com.raniaia.grabber.features.structure;
+package grabber.features.structure;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,7 +23,7 @@ package com.raniaia.grabber.features.structure;
  * Creates on 2020/4/5.
  */
 
-import com.raniaia.grabber.Commonly;
+import grabber.Commonly;
 import org.raniaia.available.io.file.Files;
 import org.raniaia.available.list.Lists;
 
@@ -54,9 +54,7 @@ public class SourceDirectory {
     }
 
     void getPackages(File files) {
-        File current = null;
         for (File file : Objects.requireNonNull(files.listFiles())) {
-            current = file;
             //
             // 如果是一个目录就保存到previousPackage
             //

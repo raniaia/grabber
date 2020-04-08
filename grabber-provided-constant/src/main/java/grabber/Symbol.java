@@ -1,6 +1,4 @@
-package com.raniaia.grabber.exec;
-
-/*
+package grabber;/*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,32 +18,42 @@ package com.raniaia.grabber.exec;
  */
 
 /*
- * Creates on 2020/4/4.
+ * Creates on 2020/4/8.
  */
-
-import com.raniaia.grabber.features.structure.SourceCode;
-import com.raniaia.grabber.features.structure.SourceDirectory;
-
-import java.util.List;
 
 /**
- * 获取源码目录
- *
+ * 符号种别码
  * @author tiansheng
  */
-public class GrabberSourceReader {
+public interface Symbol {
 
-    /**
-     * 获取源码目录。
-     * 这个{@param path}传入源码目录，而不是项目的根目录
-     */
-    public static List<SourceCode> exec(String path) {
-        SourceDirectory directory = new SourceDirectory(path);
-        //
-        // 初始化directory，内部递归遍历获取源码目录
-        //
-        directory.init();
-        return directory.toSourceCodeList();
-    }
+    byte
+
+    //
+    // 标识符
+    //
+    IDEN      =       1,
+
+    //
+    // 常数
+    //
+    CONST     =       2,
+
+    //
+    // 保留字符
+    //
+    KEEP      =       3,
+
+    //
+    // 运算符
+    //
+    OP        =       4,
+
+    //
+    // 界限符
+    //
+    LIMIT     =       5;
+
+
 
 }

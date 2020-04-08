@@ -13,8 +13,8 @@ def bean.value.connect():
        8: #ifne null    #0x1            // #3如果参数0x1不等于null
        0: #goto         #10             // true
        0: #goto         #12             // false
-      10: #exec print   #0x1            // 打印第三行执行的内容
-      12: #exec print   #3              // 打印第三行的内容
+      10: #grabber.exec print   #0x1            // 打印第三行执行的内容
+      12: #grabber.exec print   #3              // 打印第三行的内容
        0: #end
 
 def bean.value.man():

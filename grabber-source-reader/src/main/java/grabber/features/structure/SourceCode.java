@@ -1,4 +1,4 @@
-package com.raniaia.grabber.features.structure;
+package grabber.features.structure;
 
 /*
  * Copyright (C) 2020 the original author or authors.

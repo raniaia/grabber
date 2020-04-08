@@ -18,18 +18,16 @@
  */
 
 /*
- * Creates on 2020/4/7.
+ * Creates on 2020/4/8.
  */
-
-import grabber.exec.GrabberSourceReader;
 
 /**
  * @author tiansheng
  */
-public class Bootstrap {
+public class Test {
 
-    public static void main(String[] args) {
-        GrabberSourceReader.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
+    public static void main(String[] args){
+        System.out.println(1*1-1);
     }
 
 }

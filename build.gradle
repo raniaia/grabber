@@ -25,5 +25,5 @@ subprojects {
 
 }
 
-group = 'com.raniaia.grabber'
+group = 'grabber'
 version = '1.0.0.OSHG'

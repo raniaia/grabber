@@ -1,4 +1,4 @@
-package com.raniaia.grabber.syntax;
+package grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -26,24 +26,25 @@ package com.raniaia.grabber.syntax;
 /**
  * @author tiansheng
  */
-public class SyntaxError extends Error {
+public class GrabberError extends Error {
 
-    public SyntaxError() {
+    public GrabberError() {
     }
 
-    public SyntaxError(String message) {
+    public GrabberError(String message) {
         super(message);
     }
 
-    public SyntaxError(String message, Throwable cause) {
+    public GrabberError(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public SyntaxError(Throwable cause) {
+    public GrabberError(Throwable cause) {
         super(cause);
     }
 
-    public SyntaxError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public GrabberError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
+
 }

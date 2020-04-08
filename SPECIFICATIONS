@@ -12,7 +12,7 @@ Grabber开发规范
           |
           |---- export // export为暴露给外部模块的接口
           |
-          |---- features // features是模块内部的代码
+          |---- grabber.features // features是模块内部的代码
 
 2. 注释问题：
 
