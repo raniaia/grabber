@@ -16,5 +16,4 @@ include(':grabber-analysis-grammar')
 include(':grabber-analysis-semantic')
 include(':grabber-bytecode-generator')
 include(':grabber-dev-test')
-include(':grabber-test')
 

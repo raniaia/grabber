@@ -1,13 +1,29 @@
-plugins {
-    id 'java'
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'idea'
+
+    ext {
+        available = '1.0.0'
+    }
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenLocal()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    dependencies {
+        compile (
+            'com.raniaia:available:1.0.0'
+        )
+    }
+
 }
 
-repositories {
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    mavenLocal()
-}
-
-dependencies {
-    implementation 'com.raniaia:available:1.0.0'
-}
-
+group = 'com.raniaia.grabber'
+version = '1.0.0.OSHG'

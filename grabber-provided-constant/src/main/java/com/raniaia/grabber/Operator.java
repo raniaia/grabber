@@ -105,8 +105,6 @@ public interface Operator {
 
     //
     // 类的标识符，头信息
-    // 最终的值是82，为什么这样写？
-    // 因为他妈的装逼啊~
     //
     HEAD_INFO           =            {(byte) 67726162 & 0XF626572},                         // value: byte<82> String<grabber>
 
