@@ -48,14 +48,24 @@ public class SourceCode {
     public SourceCode(String path){
         this.path = path;
         read();
+        System.out.println("PATH: " + path);
+        System.out.println("------------------------------------------------------------------------");
+        for (String v : value){
+            System.out.println(v);
+        }
+        System.out.println("------------------------------------------------------------------------");
     }
 
     void read() {
         try {
             List<String> lines = Lists.newLinkedList();
             LineReader lr = new LineReader(path);
+            int i = 1;
             while (lr.ready()){
-                lines.add(lr.readLine());
+                String paragraph = lr.readLine();
+                String line = String.valueOf(i).concat(": ");
+                lines.add(line.concat(paragraph).trim());
+                i++;
             }
             value = new String[lines.size()];
             lines.toArray(value);
