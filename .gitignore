@@ -7,8 +7,9 @@ out
 target
 .gradle
 build
-*.log
+# *.log
 .project
 .classpath
 .settings
-*.temp
+# *.tmp
+# ~$*.docx
