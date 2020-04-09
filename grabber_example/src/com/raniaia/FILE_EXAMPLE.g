@@ -1,10 +1,14 @@
-#include <'tools.file'>
-@interface File {
+#include <'file_jio.e'>
+class File {
 
-    def File(){}
+    def File()
 
-    def File(path){
-        this.path = path;
+    def File(@value path)
+
+    def main(input) {
+        set f = File("/grabber/study/text")
+        set f = File("/grabber/study/text")
+        print(f.path)
     }
 
 }

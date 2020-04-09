@@ -1,7 +1,7 @@
 //
 // 宏定义
 //
-#include 'base'
+#include 'base: base_of_grabber'
 #define 'file'
     set {
         // 公开
@@ -17,7 +17,8 @@
         }
     },
 
-    func {
+    fun {
+
        File(),
        File(path),
        read(path),              // 读取文件

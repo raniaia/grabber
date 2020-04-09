@@ -23,6 +23,7 @@ package object.structure;
  * Creates on 2020/4/5.
  */
 
+import org.raniaia.available.io.file.Files;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.LineReader;
 import org.raniaia.available.string.StringUtils;
@@ -38,11 +39,7 @@ public class SourceCode {
 
     String path;
 
-    String[] value;
-
-    boolean isMultiLineComment = false;
-
-    StringBuilder builder = new StringBuilder();
+    String value;
 
     public SourceCode() {
     }
@@ -50,86 +47,14 @@ public class SourceCode {
     public SourceCode(String path) {
         this.path = path;
         read();
-        System.out.println("PATH: " + path);
-        System.out.println("------------------------------------------------------------------------");
-        for (String v : value) {
-            System.out.println(v);
-        }
-        System.out.println("------------------------------------------------------------------------");
-        builder = null;
     }
 
     void read() {
-        try {
-            List<String> lines = Lists.newLinkedList();
-            LineReader lr = new LineReader(path);
-            int i = 1;
-            while (lr.ready()) {
-                String paragraph = erase(lr.readLine());
-                if (StringUtils.isEmpty(paragraph)) {
-                    continue;
-                }
-                String line = String.valueOf(i).concat(": ");
-                lines.add(line.concat(paragraph).trim());
-                i++;
-            }
-            value = new String[lines.size()];
-            lines.toArray(value);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.value = Files.read(path);
+        System.out.println(StringUtils.trim(value));
     }
 
-    /**
-     * 鎿﹂櫎娉ㄩ噴
-     */
-    String erase(String line) {
-        int slash = 0;
-        int minus = 0;
-        char[] charArray = line.toCharArray();
-        for (char c : charArray) {
-            switch (c) {
-                case '/': {
-                    slash++;
-                    if (slash >= 2) {
-                        System.out.println("鎿﹂櫎鍗曟敞閲婏細" + line + ", 杩斿洖锛�" + builder.toString());
-                        return StringUtils.clear(builder);
-                    }
-                    if (slash == 1 && minus == 2) {
-                        isMultiLineComment = false;
-                        System.out.println("鎿﹂櫎澶氭敞閲婏細" + line + ", 杩斿洖锛�" + builder.toString());
-                        StringUtils.clear(builder);
-                        return null;
-                    }
-                    break;
-                }
-                case '-': {
-                    minus++;
-                    if (slash == 1 && minus == 2) {
-                        if (isMultiLineComment) {
-                            isMultiLineComment = false;
-                        } else {
-                            isMultiLineComment = true;
-                        }
-                        System.out.println("鎿﹂櫎澶氭敞閲婏細" + line + ", 杩斿洖锛�" + builder.toString());
-                        StringUtils.clear(builder);
-                        return null;
-                    }
-                    break;
-                }
-                default:
-                    builder.append(c);
-            }
-        }
-
-        if (isMultiLineComment) {
-            System.out.println("鎿﹂櫎澶氭敞閲婏細" + line + ", 杩斿洖锛�" + builder.toString());
-            return null;
-        }
-        return StringUtils.clear(builder);
-    }
-
-    public String[] getValue() {
+    public String getValue() {
         return this.value;
     }
 

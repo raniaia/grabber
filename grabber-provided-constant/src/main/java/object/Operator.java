@@ -21,6 +21,9 @@ package object;/*
  * Creates on 2020/4/4.
  */
 
+import org.raniaia.available.string.StringUtils;
+
+import java.io.File;
 import java.lang.reflect.Field;
 
 /**
@@ -49,6 +52,9 @@ import java.lang.reflect.Field;
  */
 public interface Operator {
 
+    Operator op          = new Operator(){};
+
+    Class<?> current     = op.getClass();
 
     /**
      * 每个符号对应的识别码
@@ -58,65 +64,75 @@ public interface Operator {
     //
     // 操作符
     //
-    ELSE                =            0xA1,            // value:       else
-    RETURN              =            0xA2,            // value:       return
-    FOR                 =            0xA3,            // value:       for
-    WHILE               =            0xA4,            // value:       while
-    EXPORT              =            0xA5,            // value:       export
-    DEF                 =            0xA6,            // value:       def
-    SET                 =            0xA7,            // value:       set
-    STATIC              =            0xA8,            // value:       static
-    NULL                =            0xA9,            // value:       null
-    NONE                =            0xA10,           // value:       none
-    TRUE                =            0xA11,           // value:       true
-    FALSE               =            0xA12,           // value:       false
-    INSTANCEOF          =            0xA13,           // value:       instance
-    ARRAYOF             =            0xA14,           // value:       arrayof
-    GOTO                =            0xA15,           // value:       goto
-    BREAK               =            0xA16,           // value:       break
-    CONTINUE            =            0xA17,           // value:       continue
-    PRE                 =            0xA18,           // value:       pre
-    THIS                =            0xA19,           // value:       this
-    SUPER               =            0xA20,           // value:       super
-    SWITCH              =            0xA21,           // value:       switch
-    CASE                =            0xA22,           // value:       case
-    PACKAGE             =            0xA23,           // value:       package
-    CLASS               =            0xA24,           // value:       class
-    INTERFACE           =            0xA25,           // value:       interface
+    ELSE                =             1,           // value:       else
+    RETURN              =             2,           // value:       return
+    FOR                 =             3,           // value:       for
+    WHILE               =             4,           // value:       while
+    EXPORT              =             5,           // value:       export
+    DEF                 =             6,           // value:       def
+    SET                 =             7,           // value:       set
+    STATIC              =             8,           // value:       static
+    NULL                =             9,           // value:       null
+    NONE                =            10,           // value:       none
+    TRUE                =            11,           // value:       true
+    FALSE               =            12,           // value:       false
+    INSTANCEOF          =            13,           // value:       instance
+    ARRAYOF             =            14,           // value:       arrayof
+    GOTO                =            15,           // value:       goto
+    BREAK               =            16,           // value:       break
+    CONTINUE            =            17,           // value:       continue
+    PRE                 =            18,           // value:       pre
+    THIS                =            19,           // value:       this
+    SUPER               =            20,           // value:       super
+    SWITCH              =            21,           // value:       switch
+    CASE                =            22,           // value:       case
+    PACKAGE             =            23,           // value:       package
+    CLASS               =            24,           // value:       class
+    IFACE               =            25,           // value:       @interface       注解
 
     //
     // 运算符
     //
-    ADD                 =            0xB26,           // value:       add
-    SUB                 =            0xB27,           // value:       sub
-    MUL                 =            0xB28,           // value:       mul
-    DIV                 =            0xB29,           // value:       div
-    EQ                  =            0xB30,           // value:       eq
-    NE                  =            0xB31,           // value:       ne
-    GT                  =            0xB32,           // value:       gt
-    LT                  =            0xB33,           // value:       lt
-    GE                  =            0xB34,           // value:       ge
-    LE                  =            0xB35,           // value:       le
-    DISL                =            0xB36,           // value:       disl
-    DISR                =            0xB37,           // value:       disr
-    POWER               =            0xB38,           // value:       power
+    ADD                 =            26,           // value:       add              加
+    SUB                 =            27,           // value:       sub              减
+    MUL                 =            28,           // value:       mul              乘
+    DIV                 =            29,           // value:       div              除
+    EQ                  =            30,           // value:       eq               等于
+    NE                  =            31,           // value:       ne               不等于
+    GT                  =            32,           // value:       gt               大于
+    LT                  =            33,           // value:       lt               小于
+    GE                  =            34,           // value:       ge               大于等于
+    LE                  =            35,           // value:       le               小于等于
+    DISL                =            36,           // value:       <<               左位移
+    DISR                =            37,           // value:       >>               有位移
+    POWER               =            38,           // value:       ^                计算次方
 
     //
     // 类的标识符，头信息
     //
-    HEAD_INFO           =            0xF01,           // value: 0xF01
+    HEAD_INFO           =            0xF01,        // value: 0xF01
 
     // 结束符
-    __END__             =            0xF02;            // value: 0xF02
+    __END__             =            0xF02;         // value: 0xF02
 
-
-    static void main(String[] args) throws Throwable {
-        long s = System.currentTimeMillis();
-        Operator op = new Operator(){};
-        for(Field f : Operator.class.getDeclaredFields()){
-             System.out.println(f.getName() + " = " + f.get(op));
-         }
-        long e = System.currentTimeMillis();
+    static Integer get0(String name) {
+        name = StringUtils.toUpperCase(name);
+        try {
+            Field field = current.getDeclaredField(name);
+            return (Integer) field.get(op);
+        } catch (Throwable e) {
+            // 忽略异常
+            return null;
+        }
     }
+
+//    static void main(String[] args) throws Throwable {
+//        long s = System.currentTimeMillis();
+//        Operator op = new Operator(){};
+//        for(Field f : Operator.class.getDeclaredFields()){
+//             System.out.println(f.getName() + " = " + f.get(op));
+//        }
+//        long e = System.currentTimeMillis();
+//    }
 
 }

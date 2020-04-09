@@ -25,17 +25,19 @@ package lexer;
 
 import lexer.analyzer.LexicalAnalyzer;
 import object.structure.SourceCode;
+import object.syntax.SyntaxToken;
 
-import java.util.List;
+import java.io.File;
+import java.util.LinkedList;
 
 /**
  * @author tiansheng
  */
 public class LexerStart {
 
-    public static void start(List<SourceCode> codes){
-        LexicalAnalyzer lexer = new LexicalAnalyzer();
-        lexer.setSourceCode(codes);
+    public static LinkedList<SyntaxToken> parseToken(SourceCode code){
+        LexicalAnalyzer lexer = LexicalAnalyzer.getInstance(code);
+        return null;
     }
 
 }

@@ -34,6 +34,8 @@ public class Bootstrap {
 
     public static void main(String[] args) {
         List<SourceCode> codes = ReaderStart.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
-        LexerStart.start(codes);
+        for (SourceCode code : codes) {
+            LexerStart.parseToken(code);
+        }
     }
 }

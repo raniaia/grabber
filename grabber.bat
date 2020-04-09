@@ -26,4 +26,5 @@ if exist "%USERPROFILE%\.gradle" (
 @REM ---------------------------------------------------------------------
 @echo org.gradle.daemon=true>"%USERPROFILE%/.gradle/gradle.properties"
 
+@echo Bye~Bye!
 @echo off

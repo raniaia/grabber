@@ -1,4 +1,4 @@
-package object.structure;
+package object.syntax;
 
 /*
  * Copyright (C) 2020 the original author or authors.

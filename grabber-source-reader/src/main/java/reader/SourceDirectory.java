@@ -39,60 +39,60 @@ import java.util.Objects;
  */
 public class SourceDirectory {
 
-    String prefix;
-    List<String> classfile;
-    String previousPackage;
+	String prefix;
+	List<String> classfile;
+	String previousPackage;
 
-    List<String> packages;
+	List<String> packages;
 
-    public SourceDirectory(String prefix) {
-        this.prefix = prefix;
-    }
+	public SourceDirectory(String prefix) {
+		this.prefix = prefix;
+	}
 
-    public void init() {
-        File dirs = Files.newFile(prefix);
-        getPackages(dirs);
-    }
+	public void init() {
+		File dirs = Files.newFile(prefix);
+		getPackages(dirs);
+	}
 
-    void getPackages(File files) {
-        for (File file : Objects.requireNonNull(files.listFiles())) {
-            //
-            // 如果是一个目录就保存到previousPackage
-            //
-            if (file.isDirectory()) {
-                getPackages(file);
-            }
-            if (Commonly.GRABBER.equals(Files.getSuffix(file))
-                    || Commonly.MACRO.equals(Files.getSuffix(file))) {
-                if (classfile == null) {
-                    classfile = Lists.newArrayList();
-                }
-                classfile.add(
-                        file.getPath().substring(prefix.length() + 1)
-                );
-            }
-        }
-        if (classfile != null && !classfile.isEmpty()) {
-            add(Lists.newArrayList(classfile));
-            classfile.clear();
-            previousPackage = null;
-        }
-    }
+	void getPackages(File files) {
+		for (File file : Objects.requireNonNull(files.listFiles())) {
+			//
+			// 如果是一个目录就保存到previousPackage
+			//
+			if (file.isDirectory()) {
+				getPackages(file);
+			}
+			if (Commonly.GRABBER.equals(Files.getSuffix(file))
+							|| Commonly.MACRO.equals(Files.getSuffix(file))) {
+				if (classfile == null) {
+					classfile = Lists.newArrayList();
+				}
+				classfile.add(
+								file.getPath().substring(prefix.length() + 1)
+				);
+			}
+		}
+		if (classfile != null && !classfile.isEmpty()) {
+			add(Lists.newArrayList(classfile));
+			classfile.clear();
+			previousPackage = null;
+		}
+	}
 
-    void add(List<String> files) {
-        if (packages == null) {
-            packages = Lists.newArrayList(files);
-        }
-        packages.addAll(Lists.newArrayList(files));
-    }
+	void add(List<String> files) {
+		if (packages == null) {
+			packages = Lists.newArrayList(files);
+		}
+		packages.addAll(Lists.newArrayList(files));
+	}
 
-    public List<SourceCode> toSourceCodeList() {
-        List<SourceCode> codes = Lists.newArrayList();
-        for (String aPackage : packages) {
-            String key = prefix.concat("\\").concat(aPackage);
-            codes.add(new SourceCode(key));
-        }
-        return codes;
-    }
+	public List<SourceCode> toSourceCodeList() {
+		List<SourceCode> codes = Lists.newArrayList();
+		for (String aPackage : packages) {
+			String key = prefix.concat("\\").concat(aPackage);
+			codes.add(new SourceCode(key));
+		}
+		return codes;
+	}
 
 }
