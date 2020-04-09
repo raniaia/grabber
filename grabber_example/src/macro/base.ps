@@ -1,0 +1,16 @@
+//
+// macro define 'base'
+//
+#define 'base_of_grabber'
+    func {
+        hasCode() {
+            return {
+                set id = toString()
+                id % glib.pointer 0xf to 16hex
+            }
+        },
+        toString() {
+            this to char[]
+        }
+    }
+#endif

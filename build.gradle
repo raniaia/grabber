@@ -2,7 +2,6 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'maven'
-    apply plugin: 'idea'
 
     ext {
         available = '1.0.0'

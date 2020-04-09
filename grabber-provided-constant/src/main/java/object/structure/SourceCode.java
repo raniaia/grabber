@@ -1,3 +1,5 @@
+package object.structure;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,24 +20,42 @@
  */
 
 /*
- * Creates on 2020/4/7.
+ * Creates on 2020/4/5.
  */
 
-import lexer.LexerStart;
-import reader.ReaderStart;
-import object.structure.SourceCode;
+import org.raniaia.available.io.file.Files;
+import org.raniaia.available.list.Lists;
+import org.raniaia.available.string.LineReader;
+import org.raniaia.available.string.StringUtils;
 
+import java.io.IOException;
 import java.util.List;
+
 
 /**
  * @author tiansheng
  */
-public class Bootstrap {
+public class SourceCode {
 
-    public static void main(String[] args) {
-        List<SourceCode> codes = ReaderStart.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
-        for (SourceCode code : codes) {
-            LexerStart.parseToken(code);
-        }
+    String path;
+
+    String value;
+
+    public SourceCode() {
     }
+
+    public SourceCode(String path) {
+        this.path = path;
+        read();
+    }
+
+    void read() {
+        this.value = Files.read(path);
+        System.out.println(StringUtils.trim(value));
+    }
+
+    public String getValue() {
+        return this.value;
+    }
+
 }

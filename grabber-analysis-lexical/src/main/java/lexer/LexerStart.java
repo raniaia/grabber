@@ -1,3 +1,5 @@
+package lexer;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,24 +20,24 @@
  */
 
 /*
- * Creates on 2020/4/7.
+ * Creates on 2020/4/9.
  */
 
-import lexer.LexerStart;
-import reader.ReaderStart;
+import lexer.analyzer.LexicalAnalyzer;
 import object.structure.SourceCode;
+import object.syntax.SyntaxToken;
 
-import java.util.List;
+import java.io.File;
+import java.util.LinkedList;
 
 /**
  * @author tiansheng
  */
-public class Bootstrap {
+public class LexerStart {
 
-    public static void main(String[] args) {
-        List<SourceCode> codes = ReaderStart.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
-        for (SourceCode code : codes) {
-            LexerStart.parseToken(code);
-        }
+    public static LinkedList<SyntaxToken> parseToken(SourceCode code){
+        LexicalAnalyzer lexer = LexicalAnalyzer.getInstance(code);
+        return null;
     }
+
 }

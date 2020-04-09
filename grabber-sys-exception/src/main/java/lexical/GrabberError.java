@@ -1,3 +1,5 @@
+package lexical;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,24 +20,31 @@
  */
 
 /*
- * Creates on 2020/4/7.
+ * Creates on 2020/4/8.
  */
-
-import lexer.LexerStart;
-import reader.ReaderStart;
-import object.structure.SourceCode;
-
-import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class Bootstrap {
+public class GrabberError extends Error {
 
-    public static void main(String[] args) {
-        List<SourceCode> codes = ReaderStart.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
-        for (SourceCode code : codes) {
-            LexerStart.parseToken(code);
-        }
+    public GrabberError() {
     }
+
+    public GrabberError(String message) {
+        super(message);
+    }
+
+    public GrabberError(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public GrabberError(Throwable cause) {
+        super(cause);
+    }
+
+    public GrabberError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
+
 }
