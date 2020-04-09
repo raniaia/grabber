@@ -1,5 +1,6 @@
 //
-// macro define 'base'
+// 每个对象都会继承这个结构体
+// 相当于Java的Object也会被每个类继承一样
 //
 #define 'base_of_grabber'
     func {

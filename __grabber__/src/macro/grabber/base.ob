@@ -1,0 +1,21 @@
+/*
+ * 在结构体内外面的定义访问权限为公共的。
+ */
+#define
+
+    set {
+        value
+    }
+
+    //
+    // 定义类必须实现的方法
+    //
+    def {
+        getValue(),
+        private {
+            getValue0()
+        }
+
+    }
+
+#endif
