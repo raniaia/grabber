@@ -1,4 +1,4 @@
-/*
+package object;/*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +18,42 @@
  */
 
 /*
- * Creates on 2020/4/7.
+ * Creates on 2020/4/8.
  */
-
-import lexer.LexerStart;
-import reader.ReaderStart;
-import object.structure.SourceCode;
-
-import java.util.List;
 
 /**
+ * 符号种别码
  * @author tiansheng
  */
-public class Bootstrap {
+public interface Symbol {
 
-    public static void main(String[] args) {
-        List<SourceCode> codes = ReaderStart.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
-        LexerStart.start(codes);
-    }
+    byte
+
+    //
+    // 标识符
+    //
+    IDEN      =       1,
+
+    //
+    // 常数
+    //
+    CONST     =       2,
+
+    //
+    // 保留字符
+    //
+    KEEP      =       3,
+
+    //
+    // 运算符
+    //
+    OP        =       4,
+
+    //
+    // 界限符
+    //
+    LIMIT     =       5;
+
+
+
 }

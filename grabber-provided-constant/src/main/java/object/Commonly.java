@@ -1,4 +1,4 @@
-/*
+package object;/*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +18,15 @@
  */
 
 /*
- * Creates on 2020/4/7.
+ * Creates on 2020/4/4.
  */
-
-import lexer.LexerStart;
-import reader.ReaderStart;
-import object.structure.SourceCode;
-
-import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class Bootstrap {
+public interface Commonly {
 
-    public static void main(String[] args) {
-        List<SourceCode> codes = ReaderStart.exec("E:\\IdeaProjects\\grabber\\GRABBER_EXAMPLE\\src");
-        LexerStart.start(codes);
-    }
+    String              MACRO               = "m";
+    String              GRABBER             = "g";
+
 }

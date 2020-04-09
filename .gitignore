@@ -8,3 +8,6 @@ target
 .gradle
 build
 *.log
+.project
+.classpath
+.settings
