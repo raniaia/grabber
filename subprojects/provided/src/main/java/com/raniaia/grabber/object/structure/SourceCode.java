@@ -1,3 +1,5 @@
+package com.raniaia.grabber.object.structure;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,20 +20,35 @@
  */
 
 /*
- * Creates on 2020/4/10.
+ * Creates on 2020/4/5.
  */
 
-rootProject.name = 'grabber'
+import org.raniaia.available.io.file.Files;
 
-include("subprojects")
 
-/*
- * subprojects.
+/**
+ * @author tiansheng
  */
-include("subprojects:provided")
-include("subprojects:compiler")
-include("subprojects:dev-test")
+public class SourceCode {
 
-/*
- * compiler module.
- */
+    String path;
+
+    String value;
+
+    public SourceCode() {
+    }
+
+    public SourceCode(String path) {
+        this.path = path;
+        read();
+    }
+
+    void read() {
+        this.value = Files.read(path);
+    }
+
+    public String getValue() {
+        return this.value;
+    }
+
+}

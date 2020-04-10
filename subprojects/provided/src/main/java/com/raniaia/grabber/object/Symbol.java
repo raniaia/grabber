@@ -1,4 +1,4 @@
-/*
+package com.raniaia.grabber.object;/*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,42 @@
  */
 
 /*
- * Creates on 2020/4/10.
+ * Creates on 2020/4/8.
  */
 
-rootProject.name = 'grabber'
-
-include("subprojects")
-
-/*
- * subprojects.
+/**
+ * 符号种别码
+ * @author tiansheng
  */
-include("subprojects:provided")
-include("subprojects:compiler")
-include("subprojects:dev-test")
+public interface Symbol {
 
-/*
- * compiler module.
- */
+    byte
+
+    //
+    // 标识符
+    //
+    IDEN      =       1,
+
+    //
+    // 常数
+    //
+    CONST     =       2,
+
+    //
+    // 保留字符
+    //
+    KEEP      =       3,
+
+    //
+    // 运算符
+    //
+    OP        =       4,
+
+    //
+    // 界限符
+    //
+    LIMIT     =       5;
+
+
+
+}

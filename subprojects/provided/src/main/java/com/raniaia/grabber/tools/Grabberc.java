@@ -1,3 +1,5 @@
+package com.raniaia.grabber.tools;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -21,17 +23,38 @@
  * Creates on 2020/4/10.
  */
 
-rootProject.name = 'grabber'
+import org.raniaia.available.config.Cfg;
 
-include("subprojects")
+import java.io.IOException;
 
-/*
- * subprojects.
+/**
+ * 这个是配置类，Grabberc全称是Grabber配置。
+ *（Grabber Config）
+ *
+ * @author tiansheng
  */
-include("subprojects:provided")
-include("subprojects:compiler")
-include("subprojects:dev-test")
+public class Grabberc {
 
-/*
- * compiler module.
- */
+	public static Grabberc getInstance(String path) {
+		return getInstance(path,null);
+	}
+
+	public static Grabberc getInstance(String path,Class<?> clazz) {
+		return new Grabberc(path,clazz);
+	}
+
+	Cfg cfg;
+
+	Grabberc(String path,Class<?> clazz) {
+		try {
+			this.cfg = new Cfg(path,clazz);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String getValue(String root,String key) {
+		return cfg.get(root, key);
+	}
+
+}

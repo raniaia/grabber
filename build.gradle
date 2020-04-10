@@ -17,12 +17,10 @@ subprojects {
     }
 
     dependencies {
-        compile (
-            'com.raniaia:available:1.0.0'
-        )
+        implementation "com.raniaia:available:1.0.0"
     }
 
 }
 
-group = 'grabber'
+group = 'com.raniaia.grabber'
 version = '1.0.0.OSHG'

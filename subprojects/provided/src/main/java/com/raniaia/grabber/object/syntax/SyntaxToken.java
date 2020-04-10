@@ -1,3 +1,5 @@
+package com.raniaia.grabber.object.syntax;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,20 +20,43 @@
  */
 
 /*
- * Creates on 2020/4/10.
+ * Creates on 2020/4/9.
  */
 
-rootProject.name = 'grabber'
+import com.raniaia.grabber.object.Operator;
+import com.raniaia.grabber.object.Symbol;
 
-include("subprojects")
-
-/*
- * subprojects.
+/**
+ * @author tiansheng
  */
-include("subprojects:provided")
-include("subprojects:compiler")
-include("subprojects:dev-test")
+public class SyntaxToken {
 
-/*
- * compiler module.
- */
+    /**
+     * 符号对应编码，参考{@link Operator}
+     */
+    public int          code;
+
+    /**
+     * 符号对应的值
+     */
+    public String       value;
+
+    /**
+     * 符号对应的分类，参考{@link Symbol}
+     */
+    public int          classify;
+
+    /**
+     * Token对应的代码中的行号
+     */
+    public int          lineNumber;
+
+    public SyntaxToken(){}
+
+    public SyntaxToken(int code, String value, int classify, int lineNumber) {
+        this.code = code;
+        this.value = value;
+        this.classify = classify;
+        this.lineNumber = lineNumber;
+    }
+}

@@ -1,4 +1,4 @@
-/*
+package com.raniaia.grabber.object;/*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,15 @@
  */
 
 /*
- * Creates on 2020/4/10.
+ * Creates on 2020/4/4.
  */
 
-rootProject.name = 'grabber'
-
-include("subprojects")
-
-/*
- * subprojects.
+/**
+ * @author tiansheng
  */
-include("subprojects:provided")
-include("subprojects:compiler")
-include("subprojects:dev-test")
+public interface Commonly {
 
-/*
- * compiler module.
- */
+    String              MACRO               = "m";
+    String              GRABBER             = "g";
+
+}

@@ -25,43 +25,43 @@ it is not related to the original author and need to be personally responsible.
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.raniaia</groupId>
-    <artifactId>grabber</artifactId>
+    <artifactId>com.raniaia.grabber</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0.BETA</version>
 
     <modules>
         <!-- grabber虚拟机 -->
-        <module>grabber-virtual-machine</module>
+        <module>com.raniaia.grabber-virtual-machine</module>
         <!-- grabber自带的库 -->
-        <module>grabber-external-lib</module>
+        <module>com.raniaia.grabber-external-lib</module>
         <!-- 将bytecode转换成windows对应的机器码 -->
-        <module>grabber-bytecode-windows</module>
+        <module>com.raniaia.grabber-bytecode-windows</module>
         <!-- 将bytecode转换成linux对应的机器码 -->
-        <module>grabber-bytecode-linux</module>
+        <module>com.raniaia.grabber-bytecode-linux</module>
         <!-- 将bytecode转换成mac对应的机器码 -->
-        <module>grabber-bytecode-macos</module>
-        <module>grabber-provided-lib</module>
+        <module>com.raniaia.grabber-bytecode-macos</module>
+        <module>com.raniaia.grabber-provided-lib</module>
         <!-- 静态工具 -->
-        <module>grabber-static-tools</module>
+        <module>com.raniaia.grabber-static-com.raniaia.grabber.tools</module>
         <!-- 构建工具 -->
-        <module>grabber-builder-tool</module>
+        <module>com.raniaia.grabber-builder-tool</module>
         <!-- 异常处理 -->
-        <module>grabber-sys-exception</module>
+        <module>com.raniaia.grabber-sys-exception</module>
         <!-- debug工具 -->
-        <module>grabber-debug-tool</module>
+        <module>com.raniaia.grabber-debug-tool</module>
         <!-- 用到的常量 -->
-        <module>grabber-provided-constant</module>
+        <module>com.raniaia.grabber-provided-constant</module>
         <!-- 源码读取器 -->
-        <module>grabber-source-reader</module>
+        <module>com.raniaia.grabber-source-reader</module>
         <!-- 词法分析器：token -->
-        <module>grabber-analysis-lexical</module>
+        <module>com.raniaia.grabber-analysis-lexical</module>
         <!-- 语法分析器：ast -->
-        <module>grabber-analysis-grammar</module>
+        <module>com.raniaia.grabber-analysis-grammar</module>
         <!-- 语义分析器：bytecode -->
-        <module>grabber-analysis-semantic</module>
+        <module>com.raniaia.grabber-analysis-semantic</module>
         <!-- 字节码生成 -->
-        <module>grabber-bytecode-generator</module>
-        <module>grabber-dev-test</module>
+        <module>com.raniaia.grabber-bytecode-generator</module>
+        <module>com.raniaia.grabber-dev-test</module>
     </modules>
 
     <properties>
@@ -74,7 +74,7 @@ it is not related to the original author and need to be personally responsible.
         <dependencies>
             <dependency>
                 <groupId>com.raniaia</groupId>
-                <artifactId>grabber-provided-constant</artifactId>
+                <artifactId>com.raniaia.grabber-provided-constant</artifactId>
                 <version>${const.version}</version>
             </dependency>
         </dependencies>

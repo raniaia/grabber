@@ -1,3 +1,5 @@
+package com.raniaia.grabber.error;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,20 +20,31 @@
  */
 
 /*
- * Creates on 2020/4/10.
+ * Creates on 2020/4/8.
  */
 
-rootProject.name = 'grabber'
-
-include("subprojects")
-
-/*
- * subprojects.
+/**
+ * @author tiansheng
  */
-include("subprojects:provided")
-include("subprojects:compiler")
-include("subprojects:dev-test")
+public class GrabberError extends Error {
 
-/*
- * compiler module.
- */
+    public GrabberError() {
+    }
+
+    public GrabberError(String message) {
+        super(message);
+    }
+
+    public GrabberError(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public GrabberError(Throwable cause) {
+        super(cause);
+    }
+
+    public GrabberError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
+
+}

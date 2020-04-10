@@ -1,3 +1,5 @@
+package com.raniaia.grabber.compiler;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -21,17 +23,20 @@
  * Creates on 2020/4/10.
  */
 
-rootProject.name = 'grabber'
+import com.raniaia.grabber.tools.SourceReader;
+import org.raniaia.available.list.Lists;
 
-include("subprojects")
-
-/*
- * subprojects.
+/**
+ * @author tiansheng
  */
-include("subprojects:provided")
-include("subprojects:compiler")
-include("subprojects:dev-test")
+public class ReaderTest {
 
-/*
- * compiler module.
- */
+	static String srcdir = System.getProperty("user.dir") + "/__grabber__/src/";
+
+	public static void main(String[] args) {
+		SourceReader reader = new SourceReader(srcdir);
+		reader.init();
+		// System.out.println(Lists.toString(reader.toSourceCodeList()));
+	}
+
+}
