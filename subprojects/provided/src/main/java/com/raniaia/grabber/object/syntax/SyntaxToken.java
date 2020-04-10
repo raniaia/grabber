@@ -53,6 +53,14 @@ public class SyntaxToken {
 
     public SyntaxToken(){}
 
+    /**
+     * 创建一个语法Token对象
+     *
+     * @param code          token对应编码，参考{@link Operator}
+     * @param value         token的值
+     * @param classify      token分类，参考{@link Symbol}
+     * @param lineNumber    token在代码中对应的行号
+     */
     public SyntaxToken(int code, String value, int classify, int lineNumber) {
         this.code = code;
         this.value = value;

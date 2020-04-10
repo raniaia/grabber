@@ -2,8 +2,12 @@ package com.raniaia.grabber.tools;
 
 import java.util.List;
 
+import com.raniaia.grabber.object.Operator;
+import com.raniaia.grabber.object.Symbol;
 import com.raniaia.grabber.object.structure.SourceCode;
 import com.raniaia.grabber.object.syntax.SyntaxToken;
+import com.sun.xml.internal.messaging.saaj.util.CharReader;
+import jdk.nashorn.internal.runtime.regexp.joni.Syntax;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 
@@ -41,7 +45,9 @@ public class GrabberLexer {
 	/**
 	 * 用于在扫描源码的时候保存源码的对象
 	 */
-	private StringBuilder builder = new StringBuilder();
+	StringBuilder 		builder = new StringBuilder();
+
+	List<SyntaxToken> 	tokens = Lists.newLinkedList();
 
 	public GrabberLexer(SourceCode code) {
 		this.code = code;
@@ -61,27 +67,27 @@ public class GrabberLexer {
 	 *
 	 * @return SyntaxToken数组。
 	 */
-	public SyntaxToken[] getSyntaxTokens() {
-		List<SyntaxToken> tokens = Lists.newLinkedList();
+	public List<SyntaxToken> getSyntaxTokens() {
 		CharReader reader = getCharReader();
-		while(reader.ready())
-		{
+		while (reader.ready()) {
 			char ch = reader.read();
 			// 忽略字符
-			if(ignore(ch)) continue;
+			if (ignore(ch)) {
+				addToken(reader.lineNumber);
+			}
 
 			// 普通的A-z a-z _等字符
-			if(isLetter(ch)) {
+			if (isLetterOrAvailable(ch)) {
 				append(ch);
 				continue;
 			}
 
 			// 界限符
-			if(isLimit(ch)) {
-
+			if (isLimit(ch)) {
+				addToken(reader.lineNumber);
 			}
 		}
-		return null;
+		return tokens;
 	}
 
 	/**
@@ -89,7 +95,7 @@ public class GrabberLexer {
 	 *
 	 * @return {@link #builder} the value.
 	 */
-	String clear() {
+	String builderClear() {
 		return StringUtils.clear(builder);
 	}
 
@@ -108,10 +114,10 @@ public class GrabberLexer {
 	/**
 	 * 判断是否为一个a-z\A-z以及下划线的字符
 	 */
-	boolean isLetter(char ch) {
-		return  ('a' <= ch && ch <= 'z') ||
-				('A' <= ch && ch <= 'Z') ||
-				(ch == '_');
+	boolean isLetterOrAvailable(char ch) {
+		return  ('a' <= ch  && ch <=   'z') ||
+				('A' <= ch  && ch <=   'Z') ||
+				(ch == '_') || (ch == '#');
 	}
 
 	/**
@@ -128,9 +134,20 @@ public class GrabberLexer {
 			   '^'  == ch || '='  == ch ||
 			   '&'  == ch || '|'  == ch ||
 			   '%'  == ch || '$'  == ch ||
-			   '"'  == ch ||  39  == ch || // 39是单引号: '
-			   ';'  == ch || '@'  == ch ||
-			   '!'  == ch || '#'  == ch  ;
+			   ' '  == ch ||  39  == ch || // 39是单引号: '
+			   ';'  == ch || '!'  == ch ||
+			   '\\' == ch;
+	}
+
+	void addToken(int lineNumber) {
+		String key = builderClear();
+		if(StringUtils.isEmpty(key)){
+			return;
+		}
+		Integer classify = Symbol.table.get(key);
+		SyntaxToken token = new SyntaxToken(Operator.get0(key), key,
+				classify != null ? classify : Symbol.IDEN, lineNumber);
+		tokens.add(token);
 	}
 
 	boolean ignore(char ch) {

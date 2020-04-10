@@ -21,13 +21,19 @@ package com.raniaia.grabber.object;/*
  * Creates on 2020/4/8.
  */
 
+import org.raniaia.available.map.Maps;
+
+import java.util.Map;
+
 /**
  * 符号种别码
  * @author tiansheng
  */
 public interface Symbol {
 
-    byte
+    Map<String,Integer> table = Maps.newHashMap(new SymbolTable().table);
+
+    int
 
     //
     // 标识符
@@ -54,6 +60,77 @@ public interface Symbol {
     //
     LIMIT     =       5;
 
+    /**
+     * 符号Hash表
+     */
+    class SymbolTable{
+        Map<String,Integer> table = Maps.newHashMap();
 
+        {
+            /*
+             * 保留字符
+             */
+            table.put(  "public",                           KEEP);
+            table.put(  "private",                          KEEP);
+            table.put(  "set",                              KEEP);
+            table.put(  "const",                            KEEP);
+            table.put(  "if",                               KEEP);
+            table.put(  "else",                             KEEP);
+            table.put(  "switch",                           KEEP);
+            table.put(  "case",                             KEEP);
+            table.put(  "default",                          KEEP);
+            table.put(  "define",                           KEEP);
+            table.put(  "def",                              KEEP);
+            table.put(  "return",                           KEEP);
+            table.put(  "class",                            KEEP);
+            table.put(  "@interface",                       KEEP);
+            table.put(  "#include",                         KEEP);
+            table.put(  "null",                             KEEP);
+            table.put(  "true",                             KEEP);
+            table.put(  "false",                            KEEP);
+            table.put(  "instanceof",                       KEEP);
+            table.put(  "goto",                             KEEP);
+            table.put(  "break",                            KEEP);
+            table.put(  "for",                              KEEP);
+            table.put(  "while",                            KEEP);
+            table.put(  "this",                             KEEP);
+            table.put(  "func",                             KEEP);
+
+            /*
+             * 运算符
+             */
+            table.put(  "+",                                OP);
+            table.put(  "-",                                OP);
+            table.put(  "*",                                OP);
+            table.put(  "/",                                OP);
+            table.put(  "%",                                OP);
+            table.put(  "^",                                OP);
+            table.put(  "=",                                OP);
+            table.put(  "<",                                OP);
+            table.put(  ">",                                OP);
+            table.put(  "++",                               OP);
+            table.put(  "--",                               OP);
+            table.put(  "==",                               OP);
+            table.put(  ">=",                               OP);
+            table.put(  "<=",                               OP);
+            table.put(  ">>",                               OP);
+            table.put(  "<<",                               OP);
+            table.put(  "===",                              OP);
+
+            /*
+             * 界限符
+             */
+            table.put(  ";",                                LIMIT);
+            table.put(  "(",                                LIMIT);
+            table.put(  ")",                                LIMIT);
+            table.put(  "[",                                LIMIT);
+            table.put(  "]",                                LIMIT);
+            table.put(  "{",                                LIMIT);
+            table.put(  "}",                                LIMIT);
+            table.put(  ".",                                LIMIT);
+            table.put(  "\\",                               LIMIT);
+        }
+
+    }
 
 }
