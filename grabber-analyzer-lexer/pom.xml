@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>grabber-analysis-lexical</artifactId>
+    <artifactId>grabber-analyzer-lexer</artifactId>
 
 
 </project>

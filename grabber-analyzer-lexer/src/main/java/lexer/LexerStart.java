@@ -23,6 +23,7 @@ package lexer;
  * Creates on 2020/4/9.
  */
 
+import jdk.nashorn.internal.parser.Lexer;
 import lexer.analyzer.LexicalAnalyzer;
 import object.structure.SourceCode;
 import object.syntax.SyntaxToken;

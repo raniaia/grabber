@@ -1,4 +1,4 @@
-#include <'base'>
+#include <'base'> // 声明结构文件
 /*
 
 /--

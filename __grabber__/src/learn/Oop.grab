@@ -1,0 +1,92 @@
+/*
+
+/--
+ Grabber面向对象教程。
+
+ 可以先简单的回顾一下什么是面向对象：
+    1. 抽象 （interface）
+    2. 多态 （implements）
+    3. 封装 （implements）
+
+ 在Grabber中抽象可以用结构体文件声明，多态也可以用实现类进行声明。封装就不多赘述了。
+--/
+
+*/
+
+/*
+
+/--
+ 声明一个结构体对象
+--/
+
+*/
+
+#define 'oop'
+
+    // 要求声明了该结构的类需要实现的方法
+    def {
+        /*
+
+        /--
+         深拷贝自己
+         如果函数没有写return，那么最后一行数据代表返回值
+         注意：结构体文件可以获取到声明类的信息 this 代表实现类。
+
+         下面这句话也可以理解为Java中的这种写法:
+            <code>
+                interface opp {
+                    default opp selfCopy() {
+                        return this;
+                    }
+                }
+            </code>
+        --/
+
+        */
+        selfCopy() {sys.copy(this)},
+
+        // 获取类名，这个并没被实现所以需要被声明的类都去实现
+        name()
+    }
+
+#endif
+
+/*
+
+/--
+ #include这句话就代表声明了一个结构体文件。
+ 你可以将它理解为Java中的这句话
+ <code>
+    class OOP_A implements Base {}
+ <code>
+
+ 下面我们声明了两个对象，他们同时声明了<'base'>结构体文件。
+ 如果我们要实现相同的功能
+--/
+
+*/
+#include <'oop'>
+class OOP_A {
+    def name() {"A"}
+}
+
+#include <'oop'>
+class OOP_B {
+    def name() {"B"}
+}
+
+/*
+
+/--
+ 有了两个相同结构的对象时，我们就可以通过结构文件来进行多态创建了。
+--/
+
+*/
+
+def main() {
+
+    set oppA = OppA()
+    set base = oppA to <'opp'>
+    print(base.name())
+
+}

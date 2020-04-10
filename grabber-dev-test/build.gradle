@@ -5,5 +5,5 @@ plugins {
 dependencies {
     compile project(":grabber-source-reader")
     compile project(":grabber-provided-constant")
-    compile project(":grabber-analysis-lexical")
+    compile project(":grabber-analyzer-lexer")
 }
