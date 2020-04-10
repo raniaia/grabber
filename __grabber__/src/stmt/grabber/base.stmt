@@ -1,6 +1,3 @@
-/*
- * 在结构体内外面的定义访问权限为公共的。
- */
 #define
 
     set {
@@ -12,10 +9,9 @@
     //
     def {
         getValue(),
-        private {
+        private:
             getValue0()
-        }
-
+            destroy()
     }
 
 #endif
