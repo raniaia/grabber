@@ -21,8 +21,7 @@ package com.raniaia.grabber.object;/*
  * Creates on 2020/4/8.
  */
 
-import com.sun.org.apache.bcel.internal.generic.GOTO;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 /**
  * 注意前排提醒：
@@ -272,17 +271,101 @@ public interface Symbol {
      */
     CONTINUE            =          {0xf17, KEEP},
 
+    /**
+     * 索引符号，$i。
+     * 在for循环和while循环介绍的时候有提到过。所以这里就不再
+     * 赘述了。
+     */
+    INDEX               =          {0xf18, KEEP},
 
-    PRE                 =          {0xf18, KEEP},
+    /**
+     * this理解为指针，指向当前对象
+     */
     THIS                =          {0xf19, KEEP},
+
+    /**
+     * super也是一个指针，指向父类的对象
+     */
     SUPER               =          {0xf20, KEEP},
+
+    /**
+     * switch选择，配合case使用
+     */
     SWITCH              =          {0xf21, KEEP},
     CASE                =          {0xf22, KEEP},
+
+    /**
+     * 声明当前文件所在的包。
+     */
     PACKAGE             =          {0xf23, KEEP},
+
+    /**
+     * 声明一个类，可以声明内部类，以及函数中声明一个类。
+     */
     CLASS               =          {0xf24, KEEP},
-    INTERFACE           =          {0xf25, KEEP},
+
+    /**
+     * 声明一个注解对象。声明方法如下<code>
+     *     #scope 'type' 'runtime' // 声明对象的作用域
+     *     annotation value {
+     *     }
+     * </code>
+     *
+     * 上面作用域的声明有很多，详情请参考{@link #SCOPE}
+     */
+    ANNOTATION          =          {0xf25, KEEP},
+
+    /**
+     * include导入结构文件以及包。
+     */
     INCLUDE             =          {0xf26, KEEP},
+
+    /**
+     * for循环时使用
+     */
     IN                  =          {0xf27, KEEP},
+
+    /**
+     * scope声明对象的作用域。
+     * 什么意思呢？可以理解为对象的调用权限管控。
+     * 比如说当前项目结构如下：<code>
+     *     root
+     *      | --- a
+     *      |  |
+     *      |  | --- Scope.grab
+     *      |
+     *      | --- b
+     *      |  |
+     *      |  | --- CallerB.grab
+     *      |
+     *      | --- c
+     *      |  |
+     *      |  | --- CallerC.grab
+     *      |
+     *      | --- d
+     *      |  |
+     *      |  | --- CallerD.grab
+     *      |
+     *      |
+     * </code>
+     *
+     * 我们在Scope.grab文件中声明哪些包可以调用这个类，或者说哪些类可以调用这个类。
+     * 如果不符合作用域声明的类去调用Scope就会报错。
+     *
+     * 比如我们指向让b包下的类调用Scope对象，可以这样声明<code>
+     *
+     *     #scope
+     *         package {
+     *             'root.b'
+     *             'root.c'
+     *              // 不让d包下的文件调用它
+     *         }
+     *     #endif
+     *     class Scope {}
+     *
+     * </code>
+     */
+    SCOPE               =          {0xf28, KEEP},
 
     //
     // 运算符

@@ -73,3 +73,7 @@ def exec() {
     set g = Group()
     g.addPeople({me})
 }
+
+annotation value {
+
+}
