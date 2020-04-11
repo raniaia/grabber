@@ -54,16 +54,12 @@ import java.lang.reflect.Field;
  */
 public interface Operator {
 
-    Operator op          = new Operator(){};
-
-    Class<?> current     = op.getClass();
-
     /**
      * 每个符号对应的识别码
      */
     int
 
-    IDEN                =             0,              // value:      Identifier
+    IDEN                =             0xff,              // value:      Identifier
 
     //
     // 操作符
@@ -114,15 +110,23 @@ public interface Operator {
     SURPLUS             =            0x39e,           // value:       %               取余
 
     //
+    // 比较特殊的符号，字符串以及数字等
+    //
+    CHAR                =             0x1fe,          // value:        单个字符
+    STRING              =             0x2fe,          // value:        字符串
+    S_INTEGER             =             0x3fe,        // value:        有符号整数
+    U_INTEGER           =             0x4fe,          // value:        无符号整数
+
+    //
     // 其他符号
     //
-    DOLLAR               =           0x39a,            // value:       $                 美元符号
+    DOLLAR               =           0x39a,            // value:       $
     LPBT                 =           0x40a,            // value:       (
     RPBT                 =           0x40a,            // value:       )
     LSBT                 =           0x41a,            // value:       [
     RSBT                 =           0x42a,            // value:       ]
-    LCBT                 =           0x42a,            // value:       ]
-    RCBT                 =           0x42a,            // value:       ]
+    LCBT                 =           0x43a,            // value:       {
+    RCBT                 =           0x44a,            // value:       }
 
     //
     // 类的标识符，头信息
@@ -133,13 +137,13 @@ public interface Operator {
     __END__             =            0xF02;         // value: 0xF02
 
 
-//    static void main(String[] args) throws Throwable {
-//        long s = System.currentTimeMillis();
-//        Operator op = new Operator(){};
-//        for(Field f : Operator.class.getDeclaredFields()){
-//             System.out.println(f.getName() + " = " + f.get(op));
-//        }
-//        long e = System.currentTimeMillis();
-//    }
+    static void main(String[] args) throws Throwable {
+        long s = System.currentTimeMillis();
+        Operator op = new Operator(){};
+        for(Field f : Operator.class.getDeclaredFields()){
+             System.out.println(f.getName() + " = " + f.get(op));
+        }
+        long e = System.currentTimeMillis();
+    }
 
 }
