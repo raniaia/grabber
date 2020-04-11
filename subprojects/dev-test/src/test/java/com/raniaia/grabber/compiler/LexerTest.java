@@ -25,7 +25,7 @@ package com.raniaia.grabber.compiler;
 
 import com.raniaia.grabber.object.structure.SourceCode;
 import com.raniaia.grabber.object.syntax.SyntaxToken;
-import com.raniaia.grabber.tools.GrabberLexer;
+import com.raniaia.grabber.lexer.GrabberLexer;
 import com.raniaia.grabber.tools.SourceReader;
 
 import java.util.List;

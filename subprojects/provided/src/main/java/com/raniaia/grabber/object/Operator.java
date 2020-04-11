@@ -113,6 +113,17 @@ public interface Operator {
     POWER               =            0x38e,           // value:       ^                计算次方
 
     //
+    // 其他符号
+    //
+    DOLLAR               =           0x39e,            // value:       $                 美元符号
+    LPBT                 =           0x40e,            // value:       (
+    RPBT                 =           0x40e,            // value:       )
+    LSBT                 =           0x41e,            // value:       [
+    RSBT                 =           0x42e,            // value:       ]
+    LCBT                 =           0x42e,            // value:       ]
+    RCBT                 =           0x42e,            // value:       ]
+
+    //
     // 类的标识符，头信息
     //
     HEAD_INFO           =            0xF01,        // value: 0xF01
@@ -120,22 +131,6 @@ public interface Operator {
     // 结束符
     __END__             =            0xF02;         // value: 0xF02
 
-    static Integer get0(String name) {
-        name = StringUtils.toUpperCase(name);
-        try {
-            if("#INCLUDE".equals(name)) {
-                name = "INCLUDE";
-            }
-            if("@ITERFACE".equals(name)){
-                name = "INTERFACE";
-            }
-            Field field = current.getField(name);
-            return field == null ? IDEN : (Integer) field.get(op);
-        } catch (Throwable e) {
-            // 忽略异常
-            return IDEN;
-        }
-    }
 
 //    static void main(String[] args) throws Throwable {
 //        long s = System.currentTimeMillis();
