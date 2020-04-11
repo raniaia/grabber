@@ -63,7 +63,7 @@ public interface Operator {
      */
     int
 
-    IDEN                =             0,           // value:      variable
+    IDEN                =             0,              // value:      Identifier
 
     //
     // 操作符
@@ -98,30 +98,31 @@ public interface Operator {
     //
     // 运算符
     //
-    ADD                 =            0x26e,           // value:       add              加
-    SUB                 =            0x27e,           // value:       sub              减
-    MUL                 =            0x28e,           // value:       mul              乘
-    DIV                 =            0x29e,           // value:       div              除
-    EQ                  =            0x30e,           // value:       eq               等于
-    NE                  =            0x31e,           // value:       ne               不等于
-    GT                  =            0x32e,           // value:       gt               大于
-    LT                  =            0x33e,           // value:       lt               小于
-    GE                  =            0x34e,           // value:       ge               大于等于
-    LE                  =            0x35e,           // value:       le               小于等于
-    DISL                =            0x36e,           // value:       <<               左位移
-    DISR                =            0x37e,           // value:       >>               有位移
-    POWER               =            0x38e,           // value:       ^                计算次方
+    ADD                 =            0x26e,           // value:       +
+    SUB                 =            0x27e,           // value:       -
+    MUL                 =            0x28e,           // value:       *
+    DIV                 =            0x29e,           // value:       /
+    EQ                  =            0x30e,           // value:       ==
+    NE                  =            0x31e,           // value:       !=
+    GT                  =            0x32e,           // value:       >
+    LT                  =            0x33e,           // value:       <
+    GE                  =            0x34e,           // value:       >=
+    LE                  =            0x35e,           // value:       <=
+    DISL                =            0x36e,           // value:       <<
+    DISR                =            0x37e,           // value:       >>
+    POWER               =            0x38e,           // value:       ^               次方计算
+    SURPLUS             =            0x39e,           // value:       %               取余
 
     //
     // 其他符号
     //
-    DOLLAR               =           0x39e,            // value:       $                 美元符号
-    LPBT                 =           0x40e,            // value:       (
-    RPBT                 =           0x40e,            // value:       )
-    LSBT                 =           0x41e,            // value:       [
-    RSBT                 =           0x42e,            // value:       ]
-    LCBT                 =           0x42e,            // value:       ]
-    RCBT                 =           0x42e,            // value:       ]
+    DOLLAR               =           0x39a,            // value:       $                 美元符号
+    LPBT                 =           0x40a,            // value:       (
+    RPBT                 =           0x40a,            // value:       )
+    LSBT                 =           0x41a,            // value:       [
+    RSBT                 =           0x42a,            // value:       ]
+    LCBT                 =           0x42a,            // value:       ]
+    RCBT                 =           0x42a,            // value:       ]
 
     //
     // 类的标识符，头信息
