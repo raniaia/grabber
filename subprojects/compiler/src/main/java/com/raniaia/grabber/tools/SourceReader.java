@@ -23,7 +23,7 @@ package com.raniaia.grabber.tools;
  * Creates on 2020/4/5.
  */
 
-import com.raniaia.grabber.object.structure.SourceCode;
+import com.raniaia.grabber.object.structure.GrabberSourceCode;
 import org.raniaia.available.OpCodes;
 import org.raniaia.available.io.file.Files;
 import org.raniaia.available.list.Lists;
@@ -94,11 +94,11 @@ public class SourceReader {
 		packages.addAll(Lists.newArrayList(files));
 	}
 
-	public List<SourceCode> toSourceCodeList() {
-		List<SourceCode> codes = Lists.newArrayList();
+	public List<GrabberSourceCode> toSourceCodeList() {
+		List<GrabberSourceCode> codes = Lists.newArrayList();
 		for (String aPackage : packages) {
 			String key = srcdir.concat("\\").concat(aPackage);
-			codes.add(new SourceCode(key));
+			codes.add(new GrabberSourceCode(key));
 		}
 		return codes;
 	}

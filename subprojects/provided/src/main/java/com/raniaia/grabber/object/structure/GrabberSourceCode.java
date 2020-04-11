@@ -29,16 +29,16 @@ import org.raniaia.available.io.file.Files;
 /**
  * @author tiansheng
  */
-public class SourceCode {
+public class GrabberSourceCode {
 
     String path;
 
     String value;
 
-    public SourceCode() {
+    public GrabberSourceCode() {
     }
 
-    public SourceCode(String path) {
+    public GrabberSourceCode(String path) {
         this.path = path;
         read();
     }

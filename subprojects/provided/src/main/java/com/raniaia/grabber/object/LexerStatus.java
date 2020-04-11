@@ -1,4 +1,4 @@
-package com.raniaia.grabber.compiler;
+package com.raniaia.grabber.object;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,31 +20,42 @@ package com.raniaia.grabber.compiler;
  */
 
 /*
- * Creates on 2020/4/10.
+ * Creates on 2020/4/11.
  */
-
-import com.raniaia.grabber.object.structure.GrabberSourceCode;
-import com.raniaia.grabber.object.syntax.SyntaxToken;
-import com.raniaia.grabber.lexer.GrabberLexer;
-import com.raniaia.grabber.tools.SourceReader;
-
-import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class LexerTest {
+public enum LexerStatus {
 
-	static String srcdir = System.getProperty("user.dir") + "/grabber-example/src/";
+	/**
+	 * 最初状态
+	 */
+	INITIAL,
 
-	public static void main(String[] args) {
-		SourceReader reader = new SourceReader(srcdir);
-		reader.init();
-		List<GrabberSourceCode> codes = reader.toSourceCodeList();
-		GrabberLexer lexer = GrabberLexer.getInstance(codes.get(0));
-		for (SyntaxToken token : lexer.getSyntaxTokens()) {
-			System.out.println("<" + token.code + ", " + token.value + ">");
-		}
-	}
+	/**
+	 * 词法解析器当前正读取到字符串
+	 */
+	STRING,
+
+	/**
+	 * 词法解析器当前正读取到保留关键字
+	 */
+	KEEP,
+
+	/**
+	 * 词法解析器当前正在读数字
+	 */
+	NUMBER,
+
+	/**
+	 * 词法解析器当前正在读表达式
+	 */
+	EXP,
+
+	/**
+	 * 解析异常，语法声明等不正确情况
+	 */
+	ERROR
 
 }

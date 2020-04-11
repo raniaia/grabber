@@ -1,0 +1,6 @@
+set x = 10
+
+if(x >= 10) do goto "ten"
+
+tag: "ten"
+print("x==10")
