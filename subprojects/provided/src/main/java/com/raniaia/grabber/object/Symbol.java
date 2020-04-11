@@ -353,68 +353,179 @@ public interface Symbol {
      * 如果不符合作用域声明的类去调用Scope就会报错。
      *
      * 比如我们指向让b包下的类调用Scope对象，可以这样声明<code>
-     *
-     *     #scope
-     *         package {
-     *             'root.b'
-     *             'root.c'
-     *              // 不让d包下的文件调用它
+     *     class Scope {
+     *         scope {
+     *             include 'root.b'
      *         }
-     *     #endif
-     *     class Scope {}
-     *
+     *     }
      * </code>
+     *
+     * 如果是注解类的话需要这样使用：<code>
+     *     class Scope {
+     *         scope {
+     *             target 'type'
+     *             retention 'runtime'
+     *             include 'root.b'
+     *         }
+     *     }
+     * </code>
+     *
+     * 如果是需要多个注解目标的话则在target后面多加几个参数即可，参数可以完全
+     * 参照Java的来做，示例：<code>
+     *     class Scope {
+     *         scope {
+     *             target 'type' 'field' 'method'
+     *             retention 'runtime'
+     *             include 'this'
+     *         }
+     *     }
+     * </code>
+     *
+     * 当然如果你注解啥也不做只是一个标记的话，那么可以什么也不用指定。默认就是
+     * 只在源码中存在注解。
+     *
      */
     SCOPE               =          {0xf28, KEEP},
 
-    //
-    // 运算符
-    //
-    ADD                 =          {0x26e, OP},              // value:       +
-    SUB                 =          {0x27e, OP},              // value:       -
-    MUL                 =          {0x28e, OP},              // value:       *
-    DIV                 =          {0x29e, OP},              // value:       /
-    EQ                  =          {0x30e, OP},              // value:       ==
-    NE                  =          {0x31e, OP},              // value:       !=
-    GT                  =          {0x32e, OP},              // value:       >
-    LT                  =          {0x33e, OP},              // value:       <
-    GE                  =          {0x34e, OP},              // value:       >=
-    LE                  =          {0x35e, OP},              // value:       <=
-    DISL                =          {0x36e, OP},              // value:       <<
-    DISR                =          {0x37e, OP},              // value:       >>
-    POWER               =          {0x38e, OP},              // value:       ^               次方计算
-    SURPLUS             =          {0x39e, OP},              // value:       %               取余
+    /**
+     * 运算符加号
+     */
+    ADD                 =          {0x26e, OP},              
 
-    //
-    // 比较特殊的符号，字符串以及数字等
-    //
-    CHAR                =          {0x01fe, CONST},          // value:        单个字符
-    STRING              =          {0x02fe, CONST},          // value:        字符串
-    S_INTEGER           =          {0x03fe, CONST},          // value:        有符号整数
-    U_INTEGER           =          {0x04fe, CONST},          // value:        无符号整数
-    S_LONG              =          {0x05fe, CONST},          // value:        有符号长整数
-    U_LONG              =          {0x06fe, CONST},          // value:        无符号长整数
-    DECIMAL             =          {0x07fe, CONST},          // value:        小数
+    /**
+     * 运算符减号
+     */
+    SUB                 =          {0x27e, OP},              
 
-    //
-    // 其他符号
-    //
-    DOLLAR               =         {0x39a, LIMIT},           // value:       $
-    LPBT                 =         {0x40a, LIMIT},           // value:       (
-    RPBT                 =         {0x40a, LIMIT},           // value:       )
-    LSBT                 =         {0x41a, LIMIT},           // value:       [
-    RSBT                 =         {0x42a, LIMIT},           // value:       ]
-    LCBT                 =         {0x43a, LIMIT},           // value:       {
-    RCBT                 =         {0x44a, LIMIT};           // value:       }
+    /**
+     * 运算符乘号
+     */
+    MUL                 =          {0x28e, OP},              
+
+    /**
+     * 运算符除号
+     */
+    DIV                 =          {0x29e, OP},              
+
+    /**
+     * 逻辑符等于
+     */
+    EQ                  =          {0x30e, OP},              
+
+    /**
+     * 逻辑符不等于
+     */
+    NE                  =          {0x31e, OP},              
+
+    /**
+     * 逻辑符大于
+     */
+    GT                  =          {0x32e, OP},              
+
+    /**
+     * 逻辑符小于
+     */
+    LT                  =          {0x33e, OP},              
+
+    /**
+     * 逻辑符大于等于
+     */
+    GE                  =          {0x34e, OP},              
+
+    /**
+     * 逻辑符小于等于
+     */
+    LE                  =          {0x35e, OP},              
+
+    /**
+     * 向左位移
+     */
+    DISL                =          {0x36e, OP},              
+
+    /**
+     * 向右位移
+     */
+    DISR                =          {0x37e, OP},              
+
+    /**
+     * 幂运算
+     */
+    POWER               =          {0x38e, OP},              
+
+    /**
+     * 取余
+     */
+    SURPLUS             =          {0x39e, OP},              
+
+    /**
+     * 表示一个char字符
+     */
+    CHAR                =          {0x01fe, CONST},          
+
+    /**
+     * 表示一个String字符串
+     */
+    STRING              =          {0x02fe, CONST},          
+
+    /**
+     * 整型（有符号的）
+     */
+    S_INTEGER           =          {0x03fe, CONST},          
+
+    /**
+     * 整型（无符号的）
+     *
+     * 上面有符号的整型可能有点让人懵逼，为什么整型还分符号?因为在计算机里数字
+     * 都是用二进制表示的，所以要表达一个整数是否为正整数或者是负整数的话一般二进制
+     * 最左边的一位就是拿来表示正数或者是负数的符号。
+     *
+     * 那么无符号的整数就没有这个数字，它只能是整型。所以叫做无符号整数。无符号的整数的
+     * 用处就是用来存储地址、索引等正整数。它们的范围可以是8位、16位、32位、64位甚至更多。
+     *
+     * 其取值范围8个二进制的正整数为255(2^8-1)、16位二进制位表示的正整数其取值范围是0~65535(2^16-1),
+     * 32位二进制位表示的正整数其取值范围是(0-2^32-1)
+     */
+    U_INTEGER           =          {0x04fe, CONST},          
+
+    /**
+     * 长整型
+     */
+    LONG                =          {0x05fe, CONST},          
+
+    /**
+     * 小数点
+     */
+    DECIMAL             =          {0x06fe, CONST},          
+
+    /** 符号表示：$ **/
+    DOLLAR              =         {0x39a, LIMIT},           
+
+    /** 符号表示：( **/
+    LPBT                 =         {0x40a, LIMIT},           
+    
+    /** 符号表示：) **/
+    RPBT                 =         {0x40a, LIMIT},           
+
+    /** 符号表示：] **/
+    LSBT                 =         {0x41a, LIMIT},           
+
+    /** 符号表示：[ **/
+    RSBT                 =         {0x42a, LIMIT},           
+
+    /** 符号表示：{ **/
+    LCBT                 =         {0x43a, LIMIT},           
+    
+    /** 符号表示：} **/
+    RCBT                 =         {0x44a, LIMIT};           
 
     int
 
     //
     // 类的标识符，头信息
     //
-    HEAD_INFO           =            0xF01,                  // value: 0xF01
+    HEAD_INFO           =            0xF01,                  
 
     // 结束符
-    __END__             =            0xF02;                  // value: 0xF02
+    __END__             =            0xF02;                  
 
 }
