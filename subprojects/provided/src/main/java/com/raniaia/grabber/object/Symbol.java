@@ -25,12 +25,11 @@ import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 /**
  * 注意前排提醒：
- *              不要格式化这个类！
- *              不要格式化这个类！
- *              不要格式化这个类！
+ * 不要格式化这个类！
+ * 不要格式化这个类！
+ * 不要格式化这个类！
  *
  * 符号种别码，数组中表示每个符号对应的种别码以及每个符号对应的类别。
- *
  *
  * @author tiansheng
  */
@@ -39,25 +38,22 @@ public interface Symbol {
 
     int
 
-    //
-    // 标识符
-    //
-    IDEN      =       1, 
+    IDEN      =       1,
 
     //
     // 常数
     //
-    CONST     =       2, 
+    CONST     =       2,
 
     //
     // 保留字符
     //
-    KEEP      =       3, 
+    KEEP      =       3,
 
     //
     // 运算符
     //
-    OP        =       4, 
+    OP        =       4,
 
     //
     // 界限符
@@ -390,87 +386,87 @@ public interface Symbol {
     /**
      * 运算符加号
      */
-    ADD                 =          {0x26e, OP},              
+    ADD                 =          {0x26e, OP},
 
     /**
      * 运算符减号
      */
-    SUB                 =          {0x27e, OP},              
+    SUB                 =          {0x27e, OP},
 
     /**
      * 运算符乘号
      */
-    MUL                 =          {0x28e, OP},              
+    MUL                 =          {0x28e, OP},
 
     /**
      * 运算符除号
      */
-    DIV                 =          {0x29e, OP},              
+    DIV                 =          {0x29e, OP},
 
     /**
      * 逻辑符等于
      */
-    EQ                  =          {0x30e, OP},              
+    EQ                  =          {0x30e, OP},
 
     /**
      * 逻辑符不等于
      */
-    NE                  =          {0x31e, OP},              
+    NE                  =          {0x31e, OP},
 
     /**
      * 逻辑符大于
      */
-    GT                  =          {0x32e, OP},              
+    GT                  =          {0x32e, OP},
 
     /**
      * 逻辑符小于
      */
-    LT                  =          {0x33e, OP},              
+    LT                  =          {0x33e, OP},
 
     /**
      * 逻辑符大于等于
      */
-    GE                  =          {0x34e, OP},              
+    GE                  =          {0x34e, OP},
 
     /**
      * 逻辑符小于等于
      */
-    LE                  =          {0x35e, OP},              
+    LE                  =          {0x35e, OP},
 
     /**
      * 向左位移
      */
-    DISL                =          {0x36e, OP},              
+    DISL                =          {0x36e, OP},
 
     /**
      * 向右位移
      */
-    DISR                =          {0x37e, OP},              
+    DISR                =          {0x37e, OP},
 
     /**
      * 幂运算
      */
-    POWER               =          {0x38e, OP},              
+    POWER               =          {0x38e, OP},
 
     /**
      * 取余
      */
-    SURPLUS             =          {0x39e, OP},              
+    SURPLUS             =          {0x39e, OP},
 
     /**
      * 表示一个char字符
      */
-    CHAR                =          {0x01fe, CONST},          
+    CHAR                =          {0x01fe, CONST},
 
     /**
      * 表示一个String字符串
      */
-    STRING              =          {0x02fe, CONST},          
+    STRING              =          {0x02fe, CONST},
 
     /**
      * 整型（有符号的）
      */
-    S_INTEGER           =          {0x03fe, CONST},          
+    S_INTEGER           =          {0x03fe, CONST},
 
     /**
      * 整型（无符号的）
@@ -485,38 +481,38 @@ public interface Symbol {
      * 其取值范围8个二进制的正整数为255(2^8-1)、16位二进制位表示的正整数其取值范围是0~65535(2^16-1),
      * 32位二进制位表示的正整数其取值范围是(0-2^32-1)
      */
-    U_INTEGER           =          {0x04fe, CONST},          
+    U_INTEGER           =          {0x04fe, CONST},
 
     /**
      * 长整型
      */
-    LONG                =          {0x05fe, CONST},          
+    LONG                =          {0x05fe, CONST},
 
     /**
      * 小数点
      */
-    DECIMAL             =          {0x06fe, CONST},          
+    DECIMAL             =          {0x06fe, CONST},
 
     /** 符号表示：$ **/
-    DOLLAR              =         {0x39a, LIMIT},           
+    DOLLAR              =         {0x39a, LIMIT},
 
     /** 符号表示：( **/
-    LPBT                 =         {0x40a, LIMIT},           
-    
+    LPBT                =         {0x40a, LIMIT},
+
     /** 符号表示：) **/
-    RPBT                 =         {0x40a, LIMIT},           
+    RPBT                =         {0x40a, LIMIT},
 
     /** 符号表示：] **/
-    LSBT                 =         {0x41a, LIMIT},           
+    LSBT                =         {0x41a, LIMIT},
 
     /** 符号表示：[ **/
-    RSBT                 =         {0x42a, LIMIT},           
+    RSBT                =         {0x42a, LIMIT},
 
     /** 符号表示：{ **/
-    LCBT                 =         {0x43a, LIMIT},           
-    
+    LCBT                =         {0x43a, LIMIT},
+
     /** 符号表示：} **/
-    RCBT                 =         {0x44a, LIMIT};           
+    RCBT                =         {0x44a, LIMIT};
 
     int
 
