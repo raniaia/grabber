@@ -52,6 +52,8 @@ public interface GrabberSymbol {
 
     final int LIMIT_EOF       = 0xEFF;
 
+    final int KEEP_SET        = 0xf07;
+
     int
 
     IDEN               =       1,
@@ -191,7 +193,7 @@ public interface GrabberSymbol {
      *
      * 当然你也可以用set声明一个map、数组等内容。
      */
-    SET                 =          {0xf07, KEEP},
+    SET                 =          {KEEP_SET, KEEP},
 
     /**
      * static关键字在现阶段也是和{@link #EXPORT}关键字一样。只是
@@ -584,6 +586,10 @@ public interface GrabberSymbol {
         }
     }
 
+    static boolean isEmpty(char ch) {
+        return isEmpty(String.valueOf(ch));
+    }
+
     static boolean isEmpty(String input) {
         return getCode(input) == null;
     }
@@ -592,6 +598,10 @@ public interface GrabberSymbol {
         switch (input) {
             case "=": return "ASSIGN";
             case ";": return "EOF";
+            case "(": return "LPBT";
+            case ")": return "RPBT";
+            case "{": return "LCBT";
+            case "}": return "RCBT";
             case "#include": return "INCLUDE";
         }
         return StringUtils.toUpperCase(input);

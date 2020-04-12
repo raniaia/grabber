@@ -27,23 +27,14 @@ package com.raniaia.grabber.lexer;
 import com.raniaia.grabber.error.syntax.GrabberStatementError;
 import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
 import com.raniaia.grabber.object.GrabberSymbol;
-import com.raniaia.grabber.object.GrabberSymbol.*;
 import com.raniaia.grabber.object.structure.GrabberSourceCode;
 import com.raniaia.grabber.object.syntax.SyntaxToken;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.sun.xml.internal.messaging.saaj.util.CharReader;
-import jdk.nashorn.internal.runtime.regexp.joni.Syntax;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 
 import java.util.List;
 import java.util.Scanner;
-
-import com.raniaia.grabber.object.GrabberSymbol;
-import com.raniaia.grabber.object.structure.GrabberSourceCode;
-import com.raniaia.grabber.object.syntax.SyntaxToken;
-import org.raniaia.available.list.Lists;
-import org.raniaia.available.string.StringUtils;
 
 /**
  * 词法解析器 (lexer)
@@ -261,7 +252,9 @@ public class Lexer {
 	/** 判断是不是一个结束符 **/
 	boolean space(char ch) {
 		return ch == ';' || ch == ' ' ||
-				ch == '\n' || ch == '}' ||
+				ch == '\n' || ch == '(' ||
+				ch == ')' || ch == '{' ||
+				ch == '}' ||
 				!reader.ready();
 	}
 
@@ -312,14 +305,18 @@ public class Lexer {
 		tokenRecord(builderClear());
 	}
 
+	void tokenRecord(char ch) {
+		tokenRecord(String.valueOf(ch));
+	}
+
 	/**
 	 * 手动添加token
 	 *
-	 * @param code        token识别码
-	 * @param value            token值
-	 * @param classify        token分类
-	 * @param lineNumber    token所在行
-	 * @param nextStatus    下一个状态
+	 * @param code        		token识别码
+	 * @param value            	token值
+	 * @param classify        	token分类
+	 * @param lineNumber    	token所在行
+	 * @param nextStatus    	下一个状态
 	 */
 	void tokenRecord(int code, String value, int classify, int lineNumber, int nextStatus) {
 		tokens.add(new SyntaxToken(code, value, classify, lineNumber));
@@ -337,7 +334,6 @@ public class Lexer {
 		SyntaxToken token = new SyntaxToken();
 		token.setCode(scode[0]);
 		token.setClassify(classify);
-		;
 		token.setValue(value);
 		token.setLineNumber(reader.lineNumber);
 		this.tokens.add(token);
@@ -365,6 +361,15 @@ public class Lexer {
 					case GrabberSymbol.TYPE_BOOL:
 						updateStatus(STMT_BOOL);
 						return;
+				}
+			}
+
+			case GrabberSymbol.KEEP: {
+				switch (species) {
+					case GrabberSymbol.KEEP_SET: {
+						updateStatus(STMT_SET);
+						return;
+					}
 				}
 			}
 
@@ -425,8 +430,13 @@ public class Lexer {
 				case INITIAL:
 					break;
 
-				/* 如果状态是一个声明的时候，那么该字符就表示是定义一个变量。 **/
+				/*
+				 * 如果状态是一个声明的时候，那么该字符就表示是定义一个变量。
+				 */
 				case STMT_INT:
+				case STMT_SET:
+				case STMT_FLOAT:
+				case STMT_BOOL:
 				case STMT_DOUBLE: {
 					if (!GrabberSymbol.isEmpty(value())) {
 						throw new GrabberSyntaxError("非法定义，不能使用关键字作为成员名。" + value());
@@ -471,10 +481,18 @@ public class Lexer {
 			 * 也会被识别成字母。
 			 *
 			 */
+			boolean _return = false;
 			if (!GrabberSymbol.isEmpty(value())) {
 				tokenRecord();
+				_return = true;
+			}
+
+			if (!GrabberSymbol.isEmpty(ch)) {
+				tokenRecord(ch);
 				return;
 			}
+
+			if(_return) return;
 
 		}
 
@@ -541,7 +559,10 @@ public class Lexer {
 		}
 	}
 
-	class CharReader {
+	/**
+	 * 字符读取器
+	 */
+	static class CharReader {
 
 		char[] value;
 		int position = -1; // 当前读取到的位置
