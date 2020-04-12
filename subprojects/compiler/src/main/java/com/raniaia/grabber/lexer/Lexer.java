@@ -54,114 +54,114 @@ public class Lexer {
 
 	private GrabberSourceCode code;
 
-	final int IDEN = GrabberSymbol.IDEN;
+	static final int IDEN = GrabberSymbol.IDEN;
 
 	/**
 	 * 终结符
 	 */
-	final int EOF = -1;
+	static final int EOF = -1;
 
 	/**
 	 * 最初状态
 	 */
-	final int INITIAL = 0;
+	static final int INITIAL = 0;
 
 	/**
 	 * 词法解析器当前正读取到字符串
 	 */
-	final int STRING = 1;
+	static final int STRING = 1;
 
 	/**
 	 * 词法解析器当前正在读数字
 	 */
-	final int NUMBER = 2;
+	static final int NUMBER = 2;
 
 	/**
 	 * 词法解析器当前读取到小数
 	 */
-	final int DECIMAL = 3;
+	static final int DECIMAL = 3;
 
 	/**
 	 * 词法解析器解析到一个定义变量或者是函数的
 	 * 句子。
 	 */
-	final int DEF = 4;
+	static final int DEF = 4;
 
 	/**
 	 * 解析异常，语法声明等不正确情况
 	 */
-	final int ERROR = 5;
+	static final int ERROR = 5;
 
 	/**
 	 * 当前读到int声明, 后面读取的只能是参数。
 	 * 要么就是表达式或者整数，否则抛异常。
 	 */
-	final int STMT_INT = 0xf5;
+	static final int STMT_INT = 0xf5;
 
 	/**
 	 * 当前读到long声明, 后面读取的只能是参数。
 	 * 要么就是表达式或者整数，否则抛异常。
 	 */
-	final int STMT_LONG = 0xf6;
+	static final int STMT_LONG = 0xf6;
 
 	/**
 	 * 当前读到char声明, 后面读取到字符只能是char或者
 	 * 是表达式（因为char可以做运算），否则抛异常。
 	 */
-	final int STMT_CHAR = 0xf7;
+	static final int STMT_CHAR = 0xf7;
 
 	/**
 	 * 当前读到double声明, 后面读取的只能是参数。
 	 * 要么就是表达式或者小数，否则抛异常。
 	 */
-	final int STMT_DOUBLE = 0xf8;
+	static final int STMT_DOUBLE = 0xf8;
 
 	/**
 	 * 当前读到flaot声明, 后面读取的只能是参数。
 	 * 要么就是表达式或者小数，否则抛异常。
 	 */
-	final int STMT_FLOAT = 0xf9;
+	static final int STMT_FLOAT = 0xf9;
 
 	/**
 	 * 当前读到bool声明, 后面读取的只能是true或者是false
 	 * ，否则抛异常。
 	 */
-	final int STMT_BOOL = 0xf10;
+	static final int STMT_BOOL = 0xf10;
 
 	/**
 	 * 当读到set声明的时候
 	 */
-	final int STMT_SET = 0xf11;
+	static final int STMT_SET = 0xf11;
 
 	/**
 	 * 对一个int类型的变量进行赋值
 	 */
-	final int A_INT = 0xe11;
+	static final int A_INT = 0xe11;
 
 	/**
 	 * 对一个long类型的变量进行赋值
 	 */
-	final int A_LONG = 0xe12;
+	static final int A_LONG = 0xe12;
 
 	/**
 	 * 对一个char类型的变量进行赋值
 	 */
-	final int A_CHAR = 0xe13;
+	static final int A_CHAR = 0xe13;
 
 	/**
 	 * 对一个double类型的变量进行赋值
 	 */
-	final int A_DOUBLE = 0xe14;
+	static final int A_DOUBLE = 0xe14;
 
 	/**
 	 * 对一个float类型的变量进行赋值
 	 */
-	final int A_FLOAT = 0xe15;
+	static final int A_FLOAT = 0xe15;
 
 	/**
 	 * 对一个bool类型的变量进行赋值
 	 */
-	final int A_BOOL = 0xe16;
+	static final int A_BOOL = 0xe16;
 
 	/**
 	 * 当前状态
@@ -173,6 +173,7 @@ public class Lexer {
 	 */
 	int previous = INITIAL;
 
+
 	/**
 	 * 用于在扫描源码的时候保存源码的对象
 	 */
@@ -180,11 +181,11 @@ public class Lexer {
 
 	List<SyntaxToken> tokens = Lists.newLinkedList();
 
+	CharReader reader;
+
 	public void setSourceCode(GrabberSourceCode code) {
 		this.code = code;
 	}
-
-	CharReader reader;
 
 	/**
 	 * 初始化源码读取器
@@ -239,8 +240,90 @@ public class Lexer {
 		return builder.toString();
 	}
 
+	/** 更新状态 **/
+	void updateStatus(int x) {
+		previous = status;
+		status = x;
+	}
+
+	/** 获取源程序单个字符的读取器 **/
+	CharReader getCharReader() {
+		return new CharReader(code.getValue());
+	}
+
+	/** 判断是不是一个字符 **/
+	boolean letter(char ch) {
+		return ('a' <= ch && 'z' >= ch) ||
+				('A' <= ch && 'Z' >= ch) ||
+				ch == '_' || ch == '#';
+	}
+
+	/** 判断是不是一个结束符 **/
+	boolean space(char ch) {
+		return ch == ';' || ch == ' ' ||
+				ch == '\n' || ch == '}' ||
+				!reader.ready();
+	}
+
+	/**
+	 * 判断是不是整数
+	 */
+	boolean number(char ch) {
+		return (ch >= '0' && ch <= '9');
+	}
+
+	/**
+	 * 判断是不是整数
+	 */
+	boolean number(String input) {
+		for (char ch : input.toCharArray()) {
+			if (!number(ch)) {
+				return false;
+			}
+		}
+		return !"".equals(input);
+	}
+
+	/**
+	 * 判断是不是小数
+	 */
+	boolean decimal(String input) {
+		int point = 0;
+		for (char ch : input.toCharArray()) {
+			if (number(ch)) continue;
+			if ('.' == ch) {
+				if (point > 1) {
+					return false;
+				}
+				point++;
+				continue;
+			}
+			return false;
+		}
+		return !"".equals(input);
+	}
+
+	/** 判断是不是结束符 **/
+	boolean eof(char ch) {
+		return ch == ';';
+	}
+
 	void tokenRecord() {
 		tokenRecord(builderClear());
+	}
+
+	/**
+	 * 手动添加token
+	 *
+	 * @param code        token识别码
+	 * @param value            token值
+	 * @param classify        token分类
+	 * @param lineNumber    token所在行
+	 * @param nextStatus    下一个状态
+	 */
+	void tokenRecord(int code, String value, int classify, int lineNumber, int nextStatus) {
+		tokens.add(new SyntaxToken(code, value, classify, lineNumber));
+		updateStatus(nextStatus);
 	}
 
 	/**
@@ -309,87 +392,6 @@ public class Lexer {
 
 		}
 
-	}
-
-	/**
-	 * 手动识别token
-	 *
-	 * @param code        token识别码
-	 * @param value            token值
-	 * @param classify        token分类
-	 * @param lineNumber    token所在行
-	 * @param nextStatus    下一个状态
-	 */
-	void tokenRecord(int code, String value, int classify, int lineNumber, int nextStatus) {
-		tokens.add(new SyntaxToken(code, value, classify, lineNumber));
-		updateStatus(nextStatus);
-	}
-
-	/** 更新状态 **/
-	void updateStatus(int x) {
-		previous = status;
-		status = x;
-	}
-
-	/** 获取源程序单个字符的读取器 **/
-	CharReader getCharReader() {
-		return new CharReader(code.getValue());
-	}
-
-	/** 判断是不是一个字符 **/
-	boolean letter(char ch) {
-		return ('a' <= ch && 'z' >= ch) ||
-				('A' <= ch && 'Z' >= ch) ||
-				ch == '_' || ch == '#';
-	}
-
-	/** 判断是不是一个结束符 **/
-	boolean space(char ch) {
-		return ch == ';' || ch == ' ' ||
-				ch == '\n' || ch == '}' ||
-				!reader.ready();
-	}
-
-	/**
-	 * 判断是不是整数
-	 */
-	boolean number(char ch) {
-		return (ch >= '0' && ch <= '9');
-	}
-
-	/**
-	 * 判断是不是整数
-	 */
-	boolean number(String input) {
-		for (char ch : input.toCharArray()) {
-			if (!number(ch)) {
-				return false;
-			}
-		}
-		return !"".equals(input);
-	}
-
-	/**
-	 * 判断是不是小数
-	 */
-	boolean decimal(String input) {
-		int point = 0;
-		for (char ch : input.toCharArray()) {
-			if (number(ch)) continue;
-			if ('.' == ch) {
-				if (point > 1) {
-					return false;
-				}
-				point++;
-				continue;
-			}
-			return false;
-		}
-		return !"".equals(input);
-	}
-
-	boolean eof(char ch) {
-		return ch == ';';
 	}
 
 	/**
