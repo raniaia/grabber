@@ -47,6 +47,10 @@ public class GrabberSourceCode {
         this.value = Files.read(path);
     }
 
+    public void read(String value) {
+        this.value = value;
+    }
+
     public String getValue() {
         return this.value;
     }

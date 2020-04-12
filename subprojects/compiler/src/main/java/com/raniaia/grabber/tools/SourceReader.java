@@ -47,8 +47,8 @@ public class SourceReader {
 	Grabberc				grabc
 			= Grabberc.getInstance(OpCodes.USER_DIR + "/config/compiler.cfg");
 
-	String					STMT_FILE_SUFFIX	= grabc.getValue("reader","statement");
-	String					OBJECT_FILE_SUFFIX	= grabc.getValue("reader","class");
+	String					OBJECT_FILE_SUFFIX	= grabc.getValue("reader","object");
+	String					STMT_FILE_SUFFIX	= grabc.getValue("reader","structure-body");
 
 	/**
 	 * @param srcdir 源码目录

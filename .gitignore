@@ -13,3 +13,4 @@ build
 .settings
 *.tmp
 ~$*.docx
+cmake-build-debug

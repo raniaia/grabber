@@ -23,8 +23,7 @@ package com.raniaia.grabber.object.syntax;
  * Creates on 2020/4/9.
  */
 
-import com.raniaia.grabber.object.Operator;
-import com.raniaia.grabber.object.Symbol;
+import com.raniaia.grabber.object.GrabberSymbol;
 
 /**
  * @author tiansheng
@@ -32,7 +31,7 @@ import com.raniaia.grabber.object.Symbol;
 public class SyntaxToken {
 
     /**
-     * 符号对应编码，参考{@link Operator}
+     * 符号对应编码，参考{@link GrabberSymbol}
      */
     public int          code;
 
@@ -42,7 +41,7 @@ public class SyntaxToken {
     public String       value;
 
     /**
-     * 符号对应的分类，参考{@link Symbol}
+     * 符号对应的分类，参考{@link GrabberSymbol}
      */
     public int          classify;
 
@@ -56,9 +55,9 @@ public class SyntaxToken {
     /**
      * 创建一个语法Token对象
      *
-     * @param code          token对应编码，参考{@link Operator}
+     * @param code          token对应编码，参考{@link GrabberSymbol}
      * @param value         token的值
-     * @param classify      token分类，参考{@link Symbol}
+     * @param classify      token分类，参考{@link GrabberSymbol}
      * @param lineNumber    token在代码中对应的行号
      */
     public SyntaxToken(int code, String value, int classify, int lineNumber) {
@@ -67,4 +66,37 @@ public class SyntaxToken {
         this.classify = classify;
         this.lineNumber = lineNumber;
     }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public int getClassify() {
+        return classify;
+    }
+
+    public void setClassify(int classify) {
+        this.classify = classify;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
 }

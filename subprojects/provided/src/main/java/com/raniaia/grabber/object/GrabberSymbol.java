@@ -21,7 +21,9 @@ package com.raniaia.grabber.object;/*
  * Creates on 2020/4/8.
  */
 
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
+import org.raniaia.available.string.StringUtils;
+
+import java.lang.reflect.Field;
 
 /**
  * 注意前排提醒：
@@ -30,35 +32,58 @@ import com.sun.org.apache.bcel.internal.generic.SWITCH;
  * 不要格式化这个类！
  *
  * 符号种别码，数组中表示每个符号对应的种别码以及每个符号对应的类别。
- *
- * @author tiansheng
+ *x* @author tiansheng
  */
 @SuppressWarnings("ALL")
-public interface Symbol {
+public interface GrabberSymbol {
+
+    Class<GrabberSymbol>    clazz       = GrabberSymbol.class;
+    Object                  object      = new GrabberSymbol() {};
+
+    final int TYPE_CHAR       = 0x01fe;
+    final int TYPE_INT        = 0x02fe;
+    final int TYPE_U_INT      = 0x03fe;
+    final int TYPE_LONG       = 0x04fe;
+    final int TYPE_FLOAT      = 0x05fe;
+    final int TYPE_DOUBLE     = 0x06fe;
+    final int TYPE_BOOL       = 0x07fe;
+
+    final int OP_ASSIGN       = 0x41e;
+
+    final int LIMIT_EOF       = 0xEFF;
 
     int
 
-    IDEN      =       1,
+    IDEN               =       1,
 
     //
     // 常数
     //
-    CONST     =       2,
+    CONST              =       2,
 
     //
     // 保留字符
     //
-    KEEP      =       3,
+    KEEP               =       3,
 
     //
     // 运算符
     //
-    OP        =       4,
+    OP                 =       4,
 
     //
     // 界限符
     //
-    LIMIT     =       5;
+    LIMIT              =       5,
+
+    //
+    // 数据类型。(type of data)
+    //
+    TYPE_OF_DATA       =       6,
+
+    NUMBER             =       7;
+
+
 
 
     /**
@@ -454,19 +479,24 @@ public interface Symbol {
     SURPLUS             =          {0x39e, OP},
 
     /**
-     * 表示一个char字符
+     * 取反，符号表示为<~>
      */
-    CHAR                =          {0x01fe, CONST},
+    NEGATE              =          {0x40e, OP},
 
     /**
-     * 表示一个String字符串
+     * 赋值，符号为<=>
      */
-    STRING              =          {0x02fe, CONST},
+    ASSIGN              =          {OP_ASSIGN, OP},
+
+    /**
+     * 表示一个char字符
+     */
+    CHAR                =          {TYPE_CHAR, TYPE_OF_DATA},
 
     /**
      * 整型（有符号的）
      */
-    S_INTEGER           =          {0x03fe, CONST},
+    INT                 =          {TYPE_INT, TYPE_OF_DATA},
 
     /**
      * 整型（无符号的）
@@ -481,47 +511,88 @@ public interface Symbol {
      * 其取值范围8个二进制的正整数为255(2^8-1)、16位二进制位表示的正整数其取值范围是0~65535(2^16-1),
      * 32位二进制位表示的正整数其取值范围是(0-2^32-1)
      */
-    U_INTEGER           =          {0x04fe, CONST},
+    U_INT               =          {TYPE_U_INT, TYPE_OF_DATA},
 
     /**
      * 长整型
      */
-    LONG                =          {0x05fe, CONST},
+    LONG                =          {TYPE_LONG, TYPE_OF_DATA},
 
     /**
-     * 小数点
+     * 单精度浮点数。
+     * 单精度浮来点数在机内占4个字节，用32位二进制描述。
+     *
+     * float的运算速度比double快。但是精度不如double
      */
-    DECIMAL             =          {0x06fe, CONST},
+    FLOAT               =          {TYPE_FLOAT, TYPE_OF_DATA},
+
+    /**
+     * 双精度浮点数
+     * 双精度浮点数在机内占8个字节，用64位二进制描述。
+     *
+     * double精度比float高，但是占用的内存是float的两倍。且
+     * 运算速度不如float高。
+     */
+    DOUBLE             =           {TYPE_DOUBLE, TYPE_OF_DATA},
+
+    /**
+     * 布尔类型
+     */
+    BOOL                =          {TYPE_BOOL, TYPE_OF_DATA},
 
     /** 符号表示：$ **/
-    DOLLAR              =         {0x39a, LIMIT},
+    DOLLAR              =          {0x39a, LIMIT},
 
     /** 符号表示：( **/
-    LPBT                =         {0x40a, LIMIT},
+    LPBT                =          {0x40a, LIMIT},
 
     /** 符号表示：) **/
-    RPBT                =         {0x40a, LIMIT},
+    RPBT                =          {0x40a, LIMIT},
 
     /** 符号表示：] **/
-    LSBT                =         {0x41a, LIMIT},
+    LSBT                =          {0x41a, LIMIT},
 
     /** 符号表示：[ **/
-    RSBT                =         {0x42a, LIMIT},
+    RSBT                =          {0x42a, LIMIT},
 
     /** 符号表示：{ **/
-    LCBT                =         {0x43a, LIMIT},
+    LCBT                =          {0x43a, LIMIT},
 
     /** 符号表示：} **/
-    RCBT                =         {0x44a, LIMIT};
+    RCBT                =          {0x44a, LIMIT},
+
+    EOF                 =          {LIMIT_EOF, LIMIT};
 
     int
 
     //
     // 类的标识符，头信息
     //
-    HEAD_INFO           =            0xF01,                  
+    HEAD_INFO           =          0xF01;
 
-    // 结束符
-    __END__             =            0xF02;                  
+    static int[] getCode(String input){
+        try {
+            input = cover(input);
+            Field field = clazz.getField(input);
+            return (int[]) field.get(object);
+        } catch (Exception e) {
+            // 忽略异常
+            // e.printStackTrace();
+            return null;
+        }
+    }
+
+    static boolean isEmpty(String input) {
+        return getCode(input) == null;
+    }
+
+    static String cover(String input) {
+        switch (input) {
+            case "=": return "ASSIGN";
+            case ";": return "EOF";
+            case "#include": return "INCLUDE";
+        }
+        return StringUtils.toUpperCase(input);
+    }
 
 }
