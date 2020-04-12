@@ -23,27 +23,29 @@ package com.raniaia.grabber.error.syntax;
  * Creates on 2020/4/8.
  */
 
+import com.raniaia.grabber.error.GrabberError;
+
 /**
  * @author tiansheng
  */
-public class SyntaxError extends Error {
+public class GrabberSyntaxError extends GrabberError {
 
-    public SyntaxError() {
+    public GrabberSyntaxError() {
     }
 
-    public SyntaxError(String message) {
+    public GrabberSyntaxError(String message) {
         super(message);
     }
 
-    public SyntaxError(String message, Throwable cause) {
+    public GrabberSyntaxError(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public SyntaxError(Throwable cause) {
+    public GrabberSyntaxError(Throwable cause) {
         super(cause);
     }
 
-    public SyntaxError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public GrabberSyntaxError(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

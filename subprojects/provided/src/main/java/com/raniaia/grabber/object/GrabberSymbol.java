@@ -7,13 +7,13 @@ package com.raniaia.grabber.object;/*
  *     https://b2evolution.net/about/gnu-gpl-license
  *
  * Unless required by applicable law or agreed to in writing,  software
- * distributed under the License is distributed on an "AS IS" BASIS, 
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  * The source code of this program is only provided for learning and research.
- * If the program source code is used for criminal acts,  such as illegal acts, 
+ * If the program source code is used for criminal acts,  such as illegal acts,
  * it is not related to the original author and need to be personally responsible.
  */
 
@@ -81,7 +81,9 @@ public interface GrabberSymbol {
     //
     TYPE_OF_DATA       =       6,
 
-    NUMBER             =       7;
+    NUMBER             =       7,
+
+    DECIMAL            =       8;
 
 
 

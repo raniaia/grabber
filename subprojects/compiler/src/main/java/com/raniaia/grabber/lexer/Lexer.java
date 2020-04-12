@@ -24,6 +24,8 @@ package com.raniaia.grabber.lexer;
  * Creates on 2020/4/11.
  */
 
+import com.raniaia.grabber.error.syntax.GrabberStatementError;
+import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
 import com.raniaia.grabber.object.GrabberSymbol;
 import com.raniaia.grabber.object.GrabberSymbol.*;
 import com.raniaia.grabber.object.structure.GrabberSourceCode;
@@ -35,82 +37,141 @@ import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 
 import java.util.List;
+import java.util.Scanner;
+
+import com.raniaia.grabber.object.GrabberSymbol;
+import com.raniaia.grabber.object.structure.GrabberSourceCode;
+import com.raniaia.grabber.object.syntax.SyntaxToken;
+import org.raniaia.available.list.Lists;
+import org.raniaia.available.string.StringUtils;
 
 /**
  * 词法解析器 (lexer)
  *
  * @author tiansheng
  */
-@SuppressWarnings("ALL")
 public class Lexer {
 
 	private GrabberSourceCode code;
 
-	static final int IDEN = GrabberSymbol.IDEN;
+	final int IDEN = GrabberSymbol.IDEN;
 
 	/**
 	 * 终结符
 	 */
-	static final int EOF = -1;
+	final int EOF = -1;
 
 	/**
 	 * 最初状态
 	 */
-	static final int INITIAL = 0;
+	final int INITIAL = 0;
 
 	/**
 	 * 词法解析器当前正读取到字符串
 	 */
-	static final int STRING = 1;
+	final int STRING = 1;
 
 	/**
 	 * 词法解析器当前正在读数字
 	 */
-	static final int NUMBER = 2;
+	final int NUMBER = 2;
+
+	/**
+	 * 词法解析器当前读取到小数
+	 */
+	final int DECIMAL = 3;
 
 	/**
 	 * 词法解析器解析到一个定义变量或者是函数的
 	 * 句子。
 	 */
-	static final int DEF = 3;
+	final int DEF = 4;
 
 	/**
 	 * 解析异常，语法声明等不正确情况
 	 */
-	static final int ERROR = 4;
+	final int ERROR = 5;
 
 	/**
 	 * 当前读到int声明, 后面读取的只能是参数。
 	 * 要么就是表达式或者整数，否则抛异常。
 	 */
-	static final int INT = 5;
+	final int STMT_INT = 0xf5;
 
-	static final int LONG = 6;
+	/**
+	 * 当前读到long声明, 后面读取的只能是参数。
+	 * 要么就是表达式或者整数，否则抛异常。
+	 */
+	final int STMT_LONG = 0xf6;
 
-	static final int CHAR = 7;
+	/**
+	 * 当前读到char声明, 后面读取到字符只能是char或者
+	 * 是表达式（因为char可以做运算），否则抛异常。
+	 */
+	final int STMT_CHAR = 0xf7;
 
-	static final int DOUBLE = 8;
+	/**
+	 * 当前读到double声明, 后面读取的只能是参数。
+	 * 要么就是表达式或者小数，否则抛异常。
+	 */
+	final int STMT_DOUBLE = 0xf8;
 
-	static final int FLOAT = 9;
+	/**
+	 * 当前读到flaot声明, 后面读取的只能是参数。
+	 * 要么就是表达式或者小数，否则抛异常。
+	 */
+	final int STMT_FLOAT = 0xf9;
 
-	static final int BOOL = 10;
+	/**
+	 * 当前读到bool声明, 后面读取的只能是true或者是false
+	 * ，否则抛异常。
+	 */
+	final int STMT_BOOL = 0xf10;
 
-	static final int A_INT = 11;
-	static final int A_LONG = 12;
-	static final int A_CHAR = 13;
-	static final int A_DOUBLE = 14;
-	static final int A_FLOAT = 15;
-	static final int A_BOOL = 16;
+	/**
+	 * 当读到set声明的时候
+	 */
+	final int STMT_SET = 0xf11;
+
+	/**
+	 * 对一个int类型的变量进行赋值
+	 */
+	final int A_INT = 0xe11;
+
+	/**
+	 * 对一个long类型的变量进行赋值
+	 */
+	final int A_LONG = 0xe12;
+
+	/**
+	 * 对一个char类型的变量进行赋值
+	 */
+	final int A_CHAR = 0xe13;
+
+	/**
+	 * 对一个double类型的变量进行赋值
+	 */
+	final int A_DOUBLE = 0xe14;
+
+	/**
+	 * 对一个float类型的变量进行赋值
+	 */
+	final int A_FLOAT = 0xe15;
+
+	/**
+	 * 对一个bool类型的变量进行赋值
+	 */
+	final int A_BOOL = 0xe16;
 
 	/**
 	 * 当前状态
 	 */
-	static int status = INITIAL;
+	int status = INITIAL;
 
 	/**
 	 * 上一个状态
 	 */
-	static int previous = INITIAL;
+	int previous = INITIAL;
 
 	/**
 	 * 用于在扫描源码的时候保存源码的对象
@@ -204,22 +265,22 @@ public class Lexer {
 			case GrabberSymbol.TYPE_OF_DATA: {
 				switch (species) {
 					case GrabberSymbol.TYPE_CHAR:
-						updateStatus(CHAR);
+						updateStatus(STMT_CHAR);
 						return;
 					case GrabberSymbol.TYPE_INT:
-						updateStatus(INT);
+						updateStatus(STMT_INT);
 						return;
 					case GrabberSymbol.TYPE_LONG:
-						updateStatus(LONG);
+						updateStatus(STMT_LONG);
 						return;
 					case GrabberSymbol.TYPE_DOUBLE:
-						updateStatus(DOUBLE);
+						updateStatus(STMT_DOUBLE);
 						return;
 					case GrabberSymbol.TYPE_FLOAT:
-						updateStatus(FLOAT);
+						updateStatus(STMT_FLOAT);
 						return;
 					case GrabberSymbol.TYPE_BOOL:
-						updateStatus(BOOL);
+						updateStatus(STMT_BOOL);
 						return;
 				}
 			}
@@ -227,9 +288,22 @@ public class Lexer {
 			/* 操作符 */
 			case GrabberSymbol.OP: {
 				switch (species) {
-					case GrabberSymbol.OP_ASSIGN:
-						updateStatus(A_INT);
+					case GrabberSymbol.OP_ASSIGN: {
+						if (previous == STMT_INT) {
+							updateStatus(A_INT);
+						}
+						if (previous == STMT_DOUBLE) {
+							updateStatus(A_DOUBLE);
+						}
 						return;
+					}
+				}
+			}
+
+			case GrabberSymbol.LIMIT: {
+				switch (species) {
+					case GrabberSymbol.LIMIT_EOF:
+						updateStatus(INITIAL);
 				}
 			}
 
@@ -269,16 +343,23 @@ public class Lexer {
 				ch == '_' || ch == '#';
 	}
 
-	/** 结束符 **/
+	/** 判断是不是一个结束符 **/
 	boolean space(char ch) {
 		return ch == ';' || ch == ' ' ||
-				ch == '\n' || ch == '}';
+				ch == '\n' || ch == '}' ||
+				!reader.ready();
 	}
 
+	/**
+	 * 判断是不是整数
+	 */
 	boolean number(char ch) {
 		return (ch >= '0' && ch <= '9');
 	}
 
+	/**
+	 * 判断是不是整数
+	 */
 	boolean number(String input) {
 		for (char ch : input.toCharArray()) {
 			if (!number(ch)) {
@@ -289,87 +370,180 @@ public class Lexer {
 	}
 
 	/**
+	 * 判断是不是小数
+	 */
+	boolean decimal(String input) {
+		int point = 0;
+		for (char ch : input.toCharArray()) {
+			if (number(ch)) continue;
+			if ('.' == ch) {
+				if (point > 1) {
+					return false;
+				}
+				point++;
+				continue;
+			}
+			return false;
+		}
+		return !"".equals(input);
+	}
+
+	boolean eof(char ch) {
+		return ch == ';';
+	}
+
+	/**
 	 * 将源码拆分成Token
 	 *
+	 * @see #lexer
 	 * @return Token集合
 	 */
 	public List<SyntaxToken> getSyntaxTokens() {
 		while (reader.ready()) {
 			char ch = reader.read();
+			lexer(ch);
+		}
+		return this.tokens;
+	}
 
-			// 判断是不是空格等符号
-			if (space(ch)) {
-				/*
-				 * 将已有的字符和定义的标识符做比较
-				 * 如果不等于空的话那么我们这边肯定是扫描到了一个标识符（保留关键字）。
-				 *
-				 * 因为当前方法是判断是否为字母的，如果是字母则进来。
-				 *
-				 * 当然了，由于一些特殊的保留关键字。比如说#include、#define等
-				 * 也会被识别成字母。
-				 *
-				 */
-				if (!GrabberSymbol.isEmpty(value())) {
-					tokenRecord();
-					continue;
+	/**
+	 * 具体解析的代码在这里
+	 *
+	 * @see #getSyntaxTokens
+	 */
+	private void lexer(char ch) {
+		// 判断是不是空格等符号
+		if (space(ch)) {
+
+			/*
+			 * 判断当前状态
+			 */
+			switch (status) {
+
+				case INITIAL:
+					break;
+
+				/* 如果状态是一个声明的时候，那么该字符就表示是定义一个变量。 **/
+				case STMT_INT:
+				case STMT_DOUBLE: {
+					if (!GrabberSymbol.isEmpty(value())) {
+						throw new GrabberSyntaxError("非法定义，不能使用关键字作为成员名。" + value());
+					}
+					tokenRecord(IDEN, builderClear(), IDEN, reader.lineNumber, DEF);
+					return;
 				}
 
-				/*
-				 * 判断当前状态
-				 */
-				switch (status) {
-
-					/* 如果状态是int时，那么该字符就表示是定义一个变量。 **/
-					case INT: {
-						tokenRecord(IDEN, builderClear(), IDEN, reader.lineNumber, DEF);
-						continue;
-					}
-
-					/* 给int变量赋值 **/
-					case A_INT: {
+				/* 读取到数字 **/
+				case NUMBER: {
+					if (previous == A_INT) {
 						if (number(value())) {
 							tokenRecord(GrabberSymbol.NUMBER, builderClear(), GrabberSymbol.NUMBER,
 									reader.lineNumber, NUMBER);
+							break;
+						} else {
+							throw new GrabberSyntaxError("非法定义的字符：" + value());
 						}
 					}
-
 				}
-			}
 
-			// 可能是标识符
-			if (letter(ch)) {
-				append(ch);
-				continue;
-			}
-
-			// 数字
-			if (number(ch)) {
-				append(ch);
-				continue;
-			}
-
-			switch (ch) {
-				case '=': {
-					if (previous == INT) {
-						tokenRecord(String.valueOf(ch));
+				/* 如果读取到一个小数  **/
+				case DECIMAL: {
+					if (decimal(value())) {
+						tokenRecord(GrabberSymbol.DECIMAL, builderClear(), GrabberSymbol.DECIMAL,
+								reader.lineNumber, DECIMAL);
+						break;
+					} else {
+						throw new GrabberSyntaxError("非法定义的字符：" + value());
 					}
-					continue;
 				}
-				case ';': {
-					tokenRecord(String.valueOf(ch));
-				}
+
+			}
+
+			/*
+			 * 将已有的字符和定义的标识符做比较
+			 * 如果不等于空的话那么我们这边肯定是扫描到了一个标识符（保留关键字）。
+			 *
+			 * 因为当前方法是判断是否为字母的，如果是字母则进来。
+			 *
+			 * 当然了，由于一些特殊的保留关键字。比如说#include、#define等
+			 * 也会被识别成字母。
+			 *
+			 */
+			if (!GrabberSymbol.isEmpty(value())) {
+				tokenRecord();
+				return;
 			}
 
 		}
 
-		return this.tokens;
+		/*
+		 * 可能是标识符
+		 */
+		if (letter(ch)) {
+			append(ch);
+			return;
+		}
+
+		/*
+		 * 数字
+		 */
+		if (number(ch)) {
+			append(ch);
+			if (status != NUMBER && status != DECIMAL) {
+				updateStatus(NUMBER);
+			}
+			return;
+		}
+
+		/*
+		 * 判断是不是其他符号
+		 */
+		switch (ch) {
+
+			case '.': {
+				/*
+				 * 当扫描到 '.' 的时候判断当前是不是正在读取
+				 * 数字，如果是正在读取数字的话，那么状态就转换成当前
+				 * 正在读小数。
+				 */
+				if (status == NUMBER) {
+					append(ch);
+					updateStatus(DECIMAL);
+					return;
+				}
+
+				/*
+				 * 如果当前状态正在读小数点，又扫描到点符号了。
+				 * 那么就抛出声明错误。
+				 */
+				if (status == DECIMAL) {
+					throw new GrabberStatementError("浮点数声明异常。小数点只能由一个。" + value());
+				}
+
+			}
+
+			/*
+			 * 赋值
+			 */
+			case '=': {
+				tokenRecord(String.valueOf(ch));
+				return;
+			}
+
+			/*
+			 * 结束
+			 */
+			case ';': {
+				tokenRecord(String.valueOf(ch));
+			}
+		}
 	}
 
-	static class CharReader {
+	class CharReader {
 
 		char[] value;
-		int position = -1;
-		int lineNumber = 0;
+		int position = -1; // 当前读取到的位置
+		int lineNumber = 0; // 当前读取到的行
 
 		CharReader(String input) {
 			this.value = input.toCharArray();
@@ -404,13 +578,21 @@ public class Lexer {
 	}
 
 	public static void main(String[] args) {
-		Lexer lexer = new Lexer();
-		GrabberSourceCode sourceCode = new GrabberSourceCode();
-		sourceCode.read("int c = 10;");
-		lexer.setSourceCode(sourceCode);
-		lexer.initReader();
-		for (SyntaxToken token : lexer.getSyntaxTokens()) {
-			System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
+		System.out.println("请输入语法：");
+		Scanner scanner = new Scanner(System.in);
+		while (true) {
+			String value = scanner.nextLine();
+			if ("quit()".equals(value)) {
+				System.exit(0);
+			}
+			Lexer lexer = new Lexer();
+			GrabberSourceCode sourceCode = new GrabberSourceCode();
+			sourceCode.read(value);
+			lexer.setSourceCode(sourceCode);
+			lexer.initReader();
+			for (SyntaxToken token : lexer.getSyntaxTokens()) {
+				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
+			}
 		}
 	}
 
