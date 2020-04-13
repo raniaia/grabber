@@ -50,7 +50,9 @@ public interface GrabberSymbol {
 
     final int OP_ASSIGN       = 0x41e;
 
-    final int LIMIT_EOF       = 0xEFF;
+    final int LIMIT_EOF       = 0xEFF0;
+
+    final int LIMIT_STR       = 0x45a;
 
     final int KEEP_SET        = 0xf07;
 
@@ -563,7 +565,7 @@ public interface GrabberSymbol {
     RCBT                =          {0x44a, LIMIT},
 
     /** 符号表示：字符串 **/
-    STRING              =          {0x45a, LIMIT},
+    STRING              =          {LIMIT_STR, LIMIT},
 
     EOF                 =          {LIMIT_EOF, LIMIT};
 

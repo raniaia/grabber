@@ -29,6 +29,7 @@ import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
 import com.raniaia.grabber.object.GrabberSymbol;
 import com.raniaia.grabber.object.structure.GrabberSourceCode;
 import com.raniaia.grabber.object.syntax.SyntaxToken;
+import com.sun.xml.internal.messaging.saaj.util.CharReader;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 
@@ -244,6 +245,12 @@ public class Lexer {
 		return builder.toString();
 	}
 
+	/** 获取{@link #builder}中的value **/
+	String value(char ch) {
+		builder.append(ch);
+		return builder.toString();
+	}
+
 	/** 更新状态 **/
 	void updateStatus(int x) {
 		previous = status;
@@ -377,6 +384,7 @@ public class Lexer {
 				}
 			}
 
+			/* 关键字 */
 			case GrabberSymbol.KEEP: {
 				switch (species) {
 					case GrabberSymbol.KEEP_SET: {
@@ -403,8 +411,12 @@ public class Lexer {
 
 			case GrabberSymbol.LIMIT: {
 				switch (species) {
-					case GrabberSymbol.LIMIT_EOF:
+					case GrabberSymbol.LIMIT_EOF: {
 						updateStatus(INITIAL);
+					}
+					case GrabberSymbol.LIMIT_STR: {
+						updateStatus(INITIAL);
+					}
 				}
 			}
 		}
@@ -449,7 +461,9 @@ public class Lexer {
 				}
 				append(ch);
 				tokenRecord();
+				return;
 			}
+
 			// 如果扫描到转义符
 			if(ch == '\\') {
 				CONVERSION_CHAR = true;
@@ -564,10 +578,12 @@ public class Lexer {
 			 */
 			case '"': {
 				// 如果当前状态不等于String
-				if(status != STRING){
+				if(status != STRING && previous != STRING){
 					append(ch);
 					updateStatus(STRING);
 					return;
+				} else {
+					throw new GrabberSyntaxError("声明一个字符串时，如果有双引号需要通过反斜杠进行转义<\\>。 " + value());
 				}
 			}
 
