@@ -1,13 +1,5 @@
 //package com.raniaia.grabber.lexer;
 //
-//import com.raniaia.grabber.object.Operator;
-//import com.raniaia.grabber.object.Symbol;
-//import com.raniaia.grabber.object.structure.SourceCode;
-//import com.raniaia.grabber.object.syntax.SyntaxToken;
-//import org.raniaia.available.list.Lists;
-//import org.raniaia.available.string.StringUtils;
-//
-//import java.util.List;
 //
 ///*
 // * Copyright (C) 2020 the original author or authors.
@@ -29,63 +21,190 @@
 // */
 //
 ///*
-// * Creates on 2020/4/8.
+// * Creates on 2020/4/11.
 // */
+//
+//import com.raniaia.grabber.error.syntax.GrabberStatementError;
+//import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
+//import com.raniaia.grabber.object.GrabberSymbol;
+//import com.raniaia.grabber.object.structure.GrabberSourceCode;
+//import com.raniaia.grabber.object.syntax.SyntaxToken;
+//import jdk.nashorn.internal.parser.Lexer;
+//import org.raniaia.available.list.Lists;
+//import org.raniaia.available.string.StringUtils;
+//
+//import java.util.List;
+//import java.util.Scanner;
 //
 ///**
 // * 词法解析器 (lexer)
+// *
 // * @author tiansheng
 // */
-//public class GrabberLexer {
+//public class __Lexer__ {
 //
-//	private SourceCode code;
+//	private GrabberSourceCode code;
+//
+//	static final int IDEN = GrabberSymbol.IDEN;
+//
+//	enum LexerSym {
+//
+//		/**
+//		 * 终结符
+//		 */
+//		 EOF,
+//
+//		/**
+//		 * 最初状态
+//		 */
+//		 INITIAL,
+//
+//		/**
+//		 * 词法解析器当前正读取到字符串
+//		 */
+//		 READ_STRING,
+//
+//		/**
+//		 * 词法解析器当前正在读数字
+//		 */
+//		 READ_NUMBER,
+//
+//		/**
+//		 * 词法解析器当前读取到小数
+//		 */
+//		 READ_DECIMAL,
+//
+//		/**
+//		 * 词法解析器读取到char声明
+//		 */
+//		 READ_CHAR,
+//
+//		/**
+//		 * 词法解析器解析到一个定义变量或者是函数的
+//		 * 句子。
+//		 */
+//		 DEF,
+//
+//		/**
+//		 * 解析异常，语法声明等不正确情况
+//		 */
+//		 ERROR,
+//
+//		/**
+//		 * 当前读到int声明, 后面读取的只能是参数。
+//		 * 要么就是表达式或者整数，否则抛异常。
+//		 */
+//		 STMT_INT,
+//
+//		/**
+//		 * 当前读到long声明, 后面读取的只能是参数。
+//		 * 要么就是表达式或者整数，否则抛异常。
+//		 */
+//		 STMT_LONG,
+//
+//		/**
+//		 * 当前读到char声明, 后面读取到字符只能是char或者
+//		 * 是表达式（因为char可以做运算），否则抛异常。
+//		 */
+//		 STMT_CHAR,
+//
+//		/**
+//		 * 当前读到double声明, 后面读取的只能是参数。
+//		 * 要么就是表达式或者小数，否则抛异常。
+//		 */
+//		 STMT_DOUBLE,
+//
+//		/**
+//		 * 当前读到flaot声明, 后面读取的只能是参数。
+//		 * 要么就是表达式或者小数，否则抛异常。
+//		 */
+//		 STMT_FLOAT,
+//
+//		/**
+//		 * 当前读到bool声明, 后面读取的只能是true或者是false
+//		 * ，否则抛异常。
+//		 */
+//		 STMT_BOOL,
+//
+//		/**
+//		 * 当读到set声明的时候
+//		 */
+//		 STMT_SET,
+//
+//		/**
+//		 * 声明一个String对象
+//		 */
+//		 STMT_STR,
+//
+//		/**
+//		 * 对一个int类型的变量进行赋值
+//		 */
+//		 A_INT,
+//
+//		/**
+//		 * 对一个long类型的变量进行赋值
+//		 */
+//		 A_LONG,
+//
+//		/**
+//		 * 对一个char类型的变量进行赋值
+//		 */
+//		 A_CHAR,
+//
+//		/**
+//		 * 对一个double类型的变量进行赋值
+//		 */
+//		 A_DOUBLE,
+//
+//		/**
+//		 * 对一个float类型的变量进行赋值
+//		 */
+//		 A_FLOAT,
+//
+//		/**
+//		 * 对一个bool类型的变量进行赋值
+//		 */
+//		 A_BOOL,
+//
+//		/**
+//		 * 对一个String类型的变量进行赋值
+//		 */
+//		 A_STR,
+//	}
+//
+//	/**
+//	 * 当前状态
+//	 */
+//	LexerSym status = LexerSym.INITIAL;
+//
+//	/**
+//	 * 上一个状态
+//	 */
+//	LexerSym previous = LexerSym.INITIAL;
+//
+//	/**
+//	 * 当前是否扫描到转义符
+//	 */
+//	boolean CONVERSION_CHAR = false;
 //
 //	/**
 //	 * 用于在扫描源码的时候保存源码的对象
 //	 */
-//	StringBuilder 		builder = new StringBuilder();
+//	StringBuilder builder = new StringBuilder();
 //
-//	List<SyntaxToken> 	tokens = Lists.newLinkedList();
+//	List<SyntaxToken> tokens = Lists.newLinkedList();
 //
-//	public GrabberLexer(SourceCode code) {
+//	CharReader reader;
+//
+//	public void setSourceCode(GrabberSourceCode code) {
 //		this.code = code;
 //	}
 //
 //	/**
-//	 * 将源码内容读取到对象中
-//	 * @param codes 处理过后的源码对象集合
+//	 * 初始化源码读取器
 //	 */
-//	public static GrabberLexer getInstance(SourceCode codes) {
-//		return new GrabberLexer(codes);
-//	}
-//
-//	/**
-//	 * 获取当前源码中的所有token。
-//	 * 需要注意的是数组必须是按照读取顺序进行存放token。
-//	 *
-//	 * @return SyntaxToken数组。
-//	 */
-//	public List<SyntaxToken> getSyntaxTokens() {
-//		CharReader reader = getCharReader();
-//		while (reader.ready()) {
-//			char ch = reader.read();
-//			// 忽略字符
-//			if (ignore(ch)) {
-//				addToken(reader.lineNumber);
-//			}
-//
-//			// 普通的A-z a-z _等字符
-//			if (isLetterOrAvailable(ch)) {
-//				append(ch);
-//				continue;
-//			}
-//
-//			// 界限符
-//			if (isLimit(ch)) {
-//				addToken(reader.lineNumber);
-//			}
-//		}
-//		return tokens;
+//	public void initReader() {
+//		this.reader = getCharReader();
 //	}
 //
 //	/**
@@ -97,59 +216,428 @@
 //		return StringUtils.clear(builder);
 //	}
 //
+//	/**
+//	 * 在{@link #builder}中追加一个char字符，然后清空并返回。
+//	 */
+//	String builderClear(char ch) {
+//		return StringUtils.clear(builder.append(ch));
+//	}
+//
+//	/**
+//	 * 判断当前{@link #builder}是否为空
+//	 */
 //	boolean isEmpty() {
 //		return StringUtils.isEmpty(builder.toString());
 //	}
 //
+//	/**
+//	 * 追加一个字符到{@link #builder}
+//	 */
 //	void append(char ch) {
 //		builder.append(ch);
 //	}
 //
+//	/**
+//	 * 判断当前{@link #builder}中的值是否等于{@param input}输入
+//	 * 的值。
+//	 *
+//	 * @param input 输入
+//	 * @return 如果等于返回true。
+//	 */
+//	boolean eq(String input) {
+//		return input.equals(builder.toString());
+//	}
+//
+//	/** 获取{@link #builder}中的value **/
+//	String value() {
+//		return builder.toString();
+//	}
+//
+//	/** 获取{@link #builder}中的value **/
+//	String value(char ch) {
+//		builder.append(ch);
+//		return builder.toString();
+//	}
+//
+//	/** 更新状态 **/
+//	void updateStatus(LexerSym x) {
+//		previous = status;
+//		status = x;
+//	}
+//
+//	/** 获取源程序单个字符的读取器 **/
 //	CharReader getCharReader() {
 //		return new CharReader(code.getValue());
 //	}
 //
-//	/**
-//	 * 判断是否为一个a-z\A-z以及下划线的字符
-//	 */
-//	boolean isLetterOrAvailable(char ch) {
-//		return  ('a' <= ch  && ch <=   'z') ||
-//				('A' <= ch  && ch <=   'Z') ||
-//				(ch == '_') || (ch == '#');
+//	/** 判断是不是一个字符 **/
+//	boolean letter(char ch) {
+//		return  ('a' <= ch && 'z' >= ch) ||
+//				('A' <= ch && 'Z' >= ch) ||
+//				ch == '_' || ch == '#';
+//	}
+//
+//	/** 判断是不是一个结束符 **/
+//	boolean space(char ch) {
+//		return  ch == ';' || ch == ' ' ||
+//				ch == '\n' || ch == '(' ||
+//				ch == ')' || ch == '{' ||
+//				ch == '}' ||
+//				!reader.ready();
 //	}
 //
 //	/**
-//	 * 判断字符是否为一个界限符。
-//	 * 比如：空格，换行、Tab等符号
+//	 * 判断是不是整数
 //	 */
-//	boolean isLimit(char ch) {
-//		return '('  == ch || ')'  == ch ||
-//			   '['  == ch || ']'  == ch ||
-//			   '{'  == ch || '}'  == ch ||
-//			   '<'  == ch || '>'  == ch ||
-//			   '+'  == ch || '-'  == ch ||
-//			   '*'  == ch || '/'  == ch ||
-//			   '^'  == ch || '='  == ch ||
-//			   '&'  == ch || '|'  == ch ||
-//			   '%'  == ch || '$'  == ch ||
-//			   ' '  == ch ||  39  == ch || // 39是单引号: '
-//			   ';'  == ch || '!'  == ch ||
-//			   '\\' == ch;
+//	boolean number(char ch) {
+//		return (ch >= '0' && ch <= '9');
 //	}
 //
-//	void addToken(int lineNumber) {
-//		String key = builderClear();
-//		if(StringUtils.isEmpty(key)){
+//	/**
+//	 * 判断是不是整数
+//	 */
+//	boolean number(String input) {
+//		for (char ch : input.toCharArray()) {
+//			if (!number(ch)) {
+//				return false;
+//			}
+//		}
+//		return !"".equals(input);
+//	}
+//
+//	/**
+//	 * 判断是不是小数
+//	 */
+//	boolean decimal(String input) {
+//		int point = 0;
+//		for (char ch : input.toCharArray()) {
+//			if (number(ch)) continue;
+//			if ('.' == ch) {
+//				if (point > 1) {
+//					return false;
+//				}
+//				point++;
+//				continue;
+//			}
+//			return false;
+//		}
+//		return !"".equals(input);
+//	}
+//
+//	/** 判断是不是结束符 **/
+//	boolean eof(char ch) {
+//		return ch == ';';
+//	}
+//
+//	void tokenRecord() {
+//		tokenRecord(builderClear());
+//	}
+//
+//	void tokenRecord(char ch) {
+//		tokenRecord(String.valueOf(ch));
+//	}
+//
+//	/**
+//	 * 手动添加token
+//	 *
+//	 * @param code        		token识别码
+//	 * @param value            	token值
+//	 * @param classify        	token分类
+//	 * @param lineNumber    	token所在行
+//	 * @param nextStatus    	下一个状态
+//	 */
+//	void tokenRecord(int code, String value, int classify, int lineNumber, LexerSym nextStatus) {
+//		tokens.add(new SyntaxToken(code, value, classify, lineNumber));
+//		updateStatus(nextStatus);
+//	}
+//
+//	/**
+//	 * 将当前{@link #builder}中的内容记录成token。
+//	 */
+//	@SuppressWarnings({"ConstantConditions"})
+//	void tokenRecord(String value) {
+//		int[] scode = GrabberSymbol.getCode(value);
+//		final int classify = scode[1];
+//		final int species = scode[0];
+//		SyntaxToken token = new SyntaxToken();
+//		token.setCode(scode[0]);
+//		token.setClassify(classify);
+//		token.setValue(value);
+//		token.setLineNumber(reader.lineNumber);
+//		this.tokens.add(token);
+//
+//		switch (classify) {
+//
+//			/* 数据类型 */
+//			case GrabberSymbol.TYPE_OF_DATA: {
+//				switch (species) {
+//					case GrabberSymbol.TYPE_CHAR:
+//						updateStatus(LexerSym.STMT_CHAR);
+//						return;
+//					case GrabberSymbol.TYPE_INT:
+//						updateStatus(LexerSym.STMT_INT);
+//						return;
+//					case GrabberSymbol.TYPE_LONG:
+//						updateStatus(LexerSym.STMT_LONG);
+//						return;
+//					case GrabberSymbol.TYPE_DOUBLE:
+//						updateStatus(LexerSym.STMT_DOUBLE);
+//						return;
+//					case GrabberSymbol.TYPE_FLOAT:
+//						updateStatus(LexerSym.STMT_FLOAT);
+//						return;
+//					case GrabberSymbol.TYPE_BOOL:
+//						updateStatus(LexerSym.STMT_BOOL);
+//						return;
+//				}
+//			}
+//
+//			/* 关键字 */
+//			case GrabberSymbol.KEEP: {
+//				switch (species) {
+//					case GrabberSymbol.KEEP_SET: {
+//						updateStatus(LexerSym.STMT_SET);
+//						return;
+//					}
+//				}
+//			}
+//
+//			/* 操作符 */
+//			case GrabberSymbol.OP: {
+//				switch (species) {
+//					case GrabberSymbol.OP_ASSIGN: {
+//						if (previous == LexerSym.STMT_INT) {
+//							updateStatus(LexerSym.A_INT);
+//						}
+//						if (previous == LexerSym.STMT_DOUBLE) {
+//							updateStatus(LexerSym.A_DOUBLE);
+//						}
+//						return;
+//					}
+//				}
+//			}
+//
+//			case GrabberSymbol.LIMIT: {
+//				switch (species) {
+//					case GrabberSymbol.LIMIT_EOF: {
+//						updateStatus(LexerSym.INITIAL);
+//					}
+//					case GrabberSymbol.LIMIT_STR: {
+//						updateStatus(LexerSym.INITIAL);
+//					}
+//				}
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * 将源码拆分成Token
+//	 *
+//	 * @see #lexer
+//	 * @return Token集合
+//	 */
+//	public List<SyntaxToken> getSyntaxTokens() {
+//		while (reader.ready()) {
+//			char ch = reader.read();
+//			lexer(ch);
+//		}
+//		return this.tokens;
+//	}
+//
+//	/**
+//	 * 具体解析的代码在这里
+//	 *
+//	 * @see #getSyntaxTokens
+//	 */
+//	private void lexer(char ch) {
+//
+//		/*
+//		 * 首先判断当前状态是否是正在读取字符串。
+//		 *
+//		 * 因为如果是正在读取字符串的话，字符串中可能会出现各种各式各样的符号，
+//		 * 这些符号可能在编译器的符号表中是不允许出现的。但是字符串可以出现，所以我们
+//		 * 需要先判断当前是不是正在读取字符串。不是的话再判断其他的。
+//		 */
+//		if(status == LexerSym.READ_STRING) {
+//			// 当又扫描到双引号的时候
+//			if(ch == '\"') {
+//				// 如果当前是转义符
+//				if(CONVERSION_CHAR){
+//					append(ch);
+//					CONVERSION_CHAR = false;
+//					return;
+//				}
+//				append(ch);
+//				tokenRecord();
+//				return;
+//			}
+//
+//			// 如果扫描到转义符
+//			if(ch == '\\') {
+//				CONVERSION_CHAR = true;
+//			}
+//			append(ch);
 //			return;
 //		}
-//		Integer classify = Symbol.table.get(key);
-//		SyntaxToken token = new SyntaxToken(Operator.get0(key), key,
-//				classify != null ? classify : Symbol.IDEN, lineNumber);
-//		tokens.add(token);
-//	}
 //
-//	boolean ignore(char ch) {
-//		return ' ' == ch || '\n' == ch || '\t' == ch;
+//		// 判断是不是空格等符号
+//		if (space(ch)) {
+//
+//			/*
+//			 * 判断当前状态
+//			 */
+//			switch (status) {
+//
+//				case INITIAL:
+//					break;
+//
+//				/*
+//				 * 如果状态是一个声明的时候，那么该字符就表示是定义一个变量。
+//				 */
+//				case STMT_INT:
+//				case STMT_SET:
+//				case STMT_FLOAT:
+//				case STMT_BOOL:
+//				case STMT_DOUBLE: {
+//					if (!GrabberSymbol.isEmpty(value())) {
+//						throw new GrabberSyntaxError("非法定义，不能使用关键字作为成员名。" + value());
+//					}
+//					tokenRecord(IDEN, builderClear(), IDEN, reader.lineNumber, LexerSym.DEF);
+//					return;
+//				}
+//
+//				/* 读取到数字 **/
+//				case READ_NUMBER: {
+//					if (previous == LexerSym.A_INT) {
+//						if (number(value())) {
+//							tokenRecord(GrabberSymbol.NUMBER, builderClear(), GrabberSymbol.NUMBER,
+//									reader.lineNumber, LexerSym.READ_NUMBER);
+//							break;
+//						} else {
+//							throw new GrabberSyntaxError("非法定义的字符：" + value());
+//						}
+//					}
+//				}
+//
+//				/* 如果读取到一个小数  **/
+//				case READ_DECIMAL: {
+//					if (decimal(value())) {
+//						tokenRecord(GrabberSymbol.DECIMAL, builderClear(), GrabberSymbol.DECIMAL,
+//								reader.lineNumber, LexerSym.READ_DECIMAL);
+//						break;
+//					} else {
+//						throw new GrabberSyntaxError("非法定义的字符：" + value());
+//					}
+//				}
+//
+//			}
+//
+//			/*
+//			 * 将已有的字符和定义的标识符做比较
+//			 * 如果不等于空的话那么我们这边肯定是扫描到了一个标识符（保留关键字）。
+//			 *
+//			 * 因为当前方法是判断是否为字母的，如果是字母则进来。
+//			 *
+//			 * 当然了，由于一些特殊的保留关键字。比如说#include、#define等
+//			 * 也会被识别成字母。
+//			 *
+//			 */
+//			boolean _return = false;
+//			if (!GrabberSymbol.isEmpty(value())) {
+//				tokenRecord();
+//				_return = true;
+//			}
+//
+//			if (!GrabberSymbol.isEmpty(ch)) {
+//				tokenRecord(ch);
+//				return;
+//			}
+//
+//			if(_return) return;
+//
+//		}
+//
+//		/*
+//		 * 可能是标识符
+//		 */
+//		if (letter(ch)) {
+//			append(ch);
+//			return;
+//		}
+//
+//		/*
+//		 * 数字
+//		 */
+//		if (number(ch)) {
+//			append(ch);
+//			if (status != LexerSym.READ_NUMBER && status != LexerSym.READ_DECIMAL) {
+//				updateStatus(LexerSym.READ_NUMBER);
+//			}
+//			return;
+//		}
+//
+//		/*
+//		 * 判断是不是其他符号
+//		 */
+//		switch (ch) {
+//
+//			case '\'': {
+//				if(status != LexerSym.READ_CHAR) {
+//					System.out.println(status);
+//				}
+//			}
+//
+//			/*
+//			 * 读取到string
+//			 */
+//			case '"': {
+//				// 如果当前状态不等于String
+//				if(status != LexerSym.READ_STRING && previous != LexerSym.READ_STRING){
+//					append(ch);
+//					updateStatus(LexerSym.READ_STRING);
+//					return;
+//				} else {
+//					throw new GrabberSyntaxError("声明一个字符串时，如果有双引号需要通过反斜杠进行转义<\\>。 " + value());
+//				}
+//			}
+//
+//			case '.': {
+//				/*
+//				 * 当扫描到 '.' 的时候判断当前是不是正在读取
+//				 * 数字，如果是正在读取数字的话，那么状态就转换成当前
+//				 * 正在读小数。
+//				 */
+//				if (status == LexerSym.READ_NUMBER) {
+//					append(ch);
+//					updateStatus(LexerSym.READ_DECIMAL);
+//					return;
+//				}
+//
+//				/*
+//				 * 如果当前状态正在读小数点，又扫描到点符号了。
+//				 * 那么就抛出声明错误。
+//				 */
+//				if (status == LexerSym.READ_DECIMAL) {
+//					throw new GrabberStatementError("浮点数声明异常。小数点只能由一个。" + value());
+//				}
+//
+//			}
+//
+//			/*
+//			 * 赋值
+//			 */
+//			case '=': {
+//				tokenRecord(String.valueOf(ch));
+//				return;
+//			}
+//
+//			/*
+//			 * 结束
+//			 */
+//			case ';': {
+//				tokenRecord(String.valueOf(ch));
+//			}
+//		}
 //	}
 //
 //	/**
@@ -157,9 +645,9 @@
 //	 */
 //	static class CharReader {
 //
-//		char[] 			value;
-//		int 			position	   = 		-1;
-//		int 			lineNumber 	   = 		 0;
+//		char[] value;
+//		int position   = -1; // 当前读取到的位置
+//		int lineNumber =  0; // 当前读取到的行
 //
 //		CharReader(String input) {
 //			this.value = input.toCharArray();
@@ -174,7 +662,7 @@
 //		 */
 //		char next() {
 //			position++;
-//			if(ready()) {
+//			if (ready()) {
 //				return value[position];
 //			}
 //			return 0;
@@ -188,8 +676,27 @@
 //		 */
 //		char read() {
 //			char v = next();
-//			if ( v == '\n' ) lineNumber++;
+//			if (v == '\n') lineNumber++;
 //			return v;
+//		}
+//	}
+//
+//	public static void main(String[] args) {
+//		System.out.println("请输入语法：");
+//		Scanner scanner = new Scanner(System.in);
+//		while (true) {
+//			String value = scanner.nextLine();
+//			if ("quit()".equals(value)) {
+//				System.exit(0);
+//			}
+//			Lexer lexer = new Lexer();
+//			GrabberSourceCode sourceCode = new GrabberSourceCode();
+//			sourceCode.read(value);
+//			lexer.setSourceCode(sourceCode);
+//			lexer.initReader();
+//			for (SyntaxToken token : lexer.getSyntaxTokens()) {
+//				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
+//			}
 //		}
 //	}
 //

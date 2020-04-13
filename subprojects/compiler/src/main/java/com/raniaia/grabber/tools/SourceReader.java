@@ -47,7 +47,7 @@ public class SourceReader {
 	Grabberc				grabc
 			= Grabberc.getInstance(OpCodes.USER_DIR + "/config/compiler.cfg");
 
-	String					OBJECT_FILE_SUFFIX	= grabc.getValue("reader","object");
+	String					OBJECT_FILE_SUFFIX	= grabc.getValue("reader","class");
 	String					STMT_FILE_SUFFIX	= grabc.getValue("reader","structure-body");
 
 	/**
@@ -76,7 +76,7 @@ public class SourceReader {
 					classfile = Lists.newArrayList();
 				}
 				classfile.add(
-								file.getPath().substring(srcdir.length())
+						file.getPath().substring(srcdir.length())
 				);
 			}
 		}
@@ -90,6 +90,7 @@ public class SourceReader {
 	void add(List<String> files) {
 		if (packages == null) {
 			packages = Lists.newArrayList(files);
+			return;
 		}
 		packages.addAll(Lists.newArrayList(files));
 	}

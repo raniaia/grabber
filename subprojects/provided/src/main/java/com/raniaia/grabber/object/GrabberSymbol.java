@@ -52,9 +52,17 @@ public interface GrabberSymbol {
 
     final int LIMIT_EOF       = 0xEFF0;
 
-    final int LIMIT_STR       = 0x45a;
+    final int LIMIT_STR       = 0x46a;
 
     final int KEEP_SET        = 0xf07;
+
+    final int KEEP_CLASS      = 0xf24;
+
+    final int KEEP_DEF        = 0xf06;
+
+    final int LIMIT_LPBT      = 0x40a;
+
+    final int LIMIT_RPBT      = 0x41a;
 
     int
 
@@ -182,7 +190,7 @@ public interface GrabberSymbol {
      * 使用def可以定义一个函数。使用def定义的函数不需要声明返回值。因为
      * 编译器会在解析阶段进行优化的时候推算出函数的返回值。这是一个语法糖。
      */
-    DEF                 =          {0xf06, KEEP},
+    DEF                 =          {KEEP_DEF, KEEP},
 
     /**
      * set声明一个变量或者是其他数据类型的时候需要使用的关键字。
@@ -326,7 +334,7 @@ public interface GrabberSymbol {
     /**
      * 声明一个类，可以声明内部类，以及函数中声明一个类。
      */
-    CLASS               =          {0xf24, KEEP},
+    CLASS               =          {KEEP_CLASS, KEEP},
 
     /**
      * 声明一个注解对象。声明方法如下<code>
@@ -547,25 +555,34 @@ public interface GrabberSymbol {
     DOLLAR              =          {0x39a, LIMIT},
 
     /** 符号表示：( **/
-    LPBT                =          {0x40a, LIMIT},
+    LPBT                =          {LIMIT_LPBT, LIMIT},
 
     /** 符号表示：) **/
-    RPBT                =          {0x40a, LIMIT},
+    RPBT                =          {LIMIT_RPBT, LIMIT},
 
     /** 符号表示：] **/
-    LSBT                =          {0x41a, LIMIT},
+    LSBT                =          {0x42a, LIMIT},
 
     /** 符号表示：[ **/
-    RSBT                =          {0x42a, LIMIT},
+    RSBT                =          {0x43a, LIMIT},
 
     /** 符号表示：{ **/
-    LCBT                =          {0x43a, LIMIT},
+    LCBT                =          {0x44a, LIMIT},
 
     /** 符号表示：} **/
-    RCBT                =          {0x44a, LIMIT},
+    RCBT                =          {0x45a, LIMIT},
 
     /** 符号表示：字符串 **/
     STRING              =          {LIMIT_STR, LIMIT},
+
+    /** 符号表示：分隔符逗号 **/
+    COMMA               =          {0x47a, LIMIT},
+
+    /** 符号表示：$1 获取当前循环索引 **/
+    C_INDEX             =          {0x48a, LIMIT},
+
+    /** 符号表示：. **/
+    DOT                 =          {0x49a, LIMIT},
 
     EOF                 =          {LIMIT_EOF, LIMIT};
 
@@ -597,10 +614,17 @@ public interface GrabberSymbol {
     }
 
     static String cover(String input) {
+        // 判断当前字符是不是String类型的
+        int il = input.length();
         if("\"".equals(input.substring(0,1))) {
-            int il = input.length();
             if("\"".equals(input.substring(il-1,il))) {
                 input = "str";
+            }
+        }
+        // 判断当前字符是不是char类型的
+        if("\'".equals(input.substring(0,1))) {
+            if("\'".equals(input.substring(il-1,il))) {
+                input = "char";
             }
         }
         switch (input) {
@@ -610,7 +634,11 @@ public interface GrabberSymbol {
             case ")": return "RPBT";
             case "{": return "LCBT";
             case "}": return "RCBT";
+            case ",": return "COMMA";
+            case ".": return "DOT";
+            case "$i": return "C_INDEX";
             case "str": return "STRING";
+            case "char": return "CHAR";
             case "#include": return "INCLUDE";
         }
         return StringUtils.toUpperCase(input);

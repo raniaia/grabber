@@ -23,20 +23,34 @@ package com.raniaia.grabber.compiler;
  * Creates on 2020/4/10.
  */
 
+import com.raniaia.grabber.lexer.Lexer;
+import com.raniaia.grabber.object.structure.GrabberSourceCode;
+import com.raniaia.grabber.object.syntax.SyntaxToken;
 import com.raniaia.grabber.tools.SourceReader;
 import org.raniaia.available.list.Lists;
+
+import java.util.List;
 
 /**
  * @author tiansheng
  */
 public class ReaderTest {
 
-	static String srcdir = System.getProperty("user.dir") + "/__grabber__/src/";
+	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
 
 	public static void main(String[] args) {
 		SourceReader reader = new SourceReader(srcdir);
 		reader.init();
-		// System.out.println(Lists.toString(reader.toSourceCodeList()));
+		List<GrabberSourceCode> scs = reader.toSourceCodeList();
+		for (GrabberSourceCode sc : scs) {
+			Lexer lexer = new Lexer();
+			lexer.setSourceCode(sc);
+			lexer.initReader();
+			List<SyntaxToken> tokens = lexer.getSyntaxTokens();
+			for (SyntaxToken token : tokens) {
+				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
+			}
+		}
 	}
 
 }

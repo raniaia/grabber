@@ -47,137 +47,170 @@ public class Lexer {
 
 	static final int IDEN = GrabberSymbol.IDEN;
 
-	/**
-	 * 终结符
-	 */
-	static final int EOF = -1;
+	enum LexerSym {
 
-	/**
-	 * 最初状态
-	 */
-	static final int INITIAL = 0;
+		/**
+		 * 终结符
+		 */
+		EOF,
 
-	/**
-	 * 词法解析器当前正读取到字符串
-	 */
-	static final int STRING = 1;
+		/**
+		 * 最初状态
+		 */
+		INITIAL,
 
-	/**
-	 * 词法解析器当前正在读数字
-	 */
-	static final int NUMBER = 2;
+		/**
+		 * 词法解析器当前正读取到字符串
+		 */
+		READ_STRING,
 
-	/**
-	 * 词法解析器当前读取到小数
-	 */
-	static final int DECIMAL = 3;
+		/**
+		 * 词法解析器当前正在读数字
+		 */
+		READ_NUMBER,
 
-	/**
-	 * 词法解析器解析到一个定义变量或者是函数的
-	 * 句子。
-	 */
-	static final int DEF = 4;
+		/**
+		 * 词法解析器当前读取到小数
+		 */
+		READ_DECIMAL,
 
-	/**
-	 * 解析异常，语法声明等不正确情况
-	 */
-	static final int ERROR = 6;
+		/**
+		 * 词法解析器读取到char声明
+		 */
+		READ_CHAR,
 
-	/**
-	 * 当前读到int声明, 后面读取的只能是参数。
-	 * 要么就是表达式或者整数，否则抛异常。
-	 */
-	static final int STMT_INT = 0xf5;
+		/**
+		 * 词法解析器解析到一个定义是函数的句子。
+		 */
+		DEF,
 
-	/**
-	 * 当前读到long声明, 后面读取的只能是参数。
-	 * 要么就是表达式或者整数，否则抛异常。
-	 */
-	static final int STMT_LONG = 0xf6;
+		/**
+		 * 解析异常，语法声明等不正确情况
+		 */
+		ERROR,
 
-	/**
-	 * 当前读到char声明, 后面读取到字符只能是char或者
-	 * 是表达式（因为char可以做运算），否则抛异常。
-	 */
-	static final int STMT_CHAR = 0xf7;
+		/**
+		 * 当前读到int声明, 后面读取的只能是参数。
+		 * 要么就是表达式或者整数，否则抛异常。
+		 */
+		STMT_INT,
 
-	/**
-	 * 当前读到double声明, 后面读取的只能是参数。
-	 * 要么就是表达式或者小数，否则抛异常。
-	 */
-	static final int STMT_DOUBLE = 0xf8;
+		/**
+		 * 当前读到long声明, 后面读取的只能是参数。
+		 * 要么就是表达式或者整数，否则抛异常。
+		 */
+		STMT_LONG,
 
-	/**
-	 * 当前读到flaot声明, 后面读取的只能是参数。
-	 * 要么就是表达式或者小数，否则抛异常。
-	 */
-	static final int STMT_FLOAT = 0xf9;
+		/**
+		 * 当前读到char声明, 后面读取到字符只能是char或者
+		 * 是表达式（因为char可以做运算），否则抛异常。
+		 */
+		STMT_CHAR,
 
-	/**
-	 * 当前读到bool声明, 后面读取的只能是true或者是false
-	 * ，否则抛异常。
-	 */
-	static final int STMT_BOOL = 0xf10;
+		/**
+		 * 当前读到double声明, 后面读取的只能是参数。
+		 * 要么就是表达式或者小数，否则抛异常。
+		 */
+		STMT_DOUBLE,
 
-	/**
-	 * 当读到set声明的时候
-	 */
-	static final int STMT_SET = 0xf11;
+		/**
+		 * 当前读到flaot声明, 后面读取的只能是参数。
+		 * 要么就是表达式或者小数，否则抛异常。
+		 */
+		STMT_FLOAT,
 
-	/**
-	 * 声明一个String对象
-	 */
-	static final int STMT_STR = 0xf12;
+		/**
+		 * 当前读到bool声明, 后面读取的只能是true或者是false
+		 * ，否则抛异常。
+		 */
+		STMT_BOOL,
 
-	/**
-	 * 对一个int类型的变量进行赋值
-	 */
-	static final int A_INT = 0xe11;
+		/**
+		 * 当读到set声明的时候
+		 */
+		STMT_SET,
 
-	/**
-	 * 对一个long类型的变量进行赋值
-	 */
-	static final int A_LONG = 0xe12;
+		/**
+		 * 声明一个类
+		 */
+		STMT_CLASS,
 
-	/**
-	 * 对一个char类型的变量进行赋值
-	 */
-	static final int A_CHAR = 0xe13;
+		/**
+		 * 声明一个String对象
+		 */
+		STMT_STR,
 
-	/**
-	 * 对一个double类型的变量进行赋值
-	 */
-	static final int A_DOUBLE = 0xe14;
+		/**
+		 * 对一个int类型的变量进行赋值
+		 */
+		A_INT,
 
-	/**
-	 * 对一个float类型的变量进行赋值
-	 */
-	static final int A_FLOAT = 0xe15;
+		/**
+		 * 对一个long类型的变量进行赋值
+		 */
+		A_LONG,
 
-	/**
-	 * 对一个bool类型的变量进行赋值
-	 */
-	static final int A_BOOL = 0xe16;
+		/**
+		 * 对一个char类型的变量进行赋值
+		 */
+		A_CHAR,
 
-	/**
-	 * 对一个String类型的变量进行赋值
-	 */
-	static final int A_STR = 0xe17;
+		/**
+		 * 对一个double类型的变量进行赋值
+		 */
+		A_DOUBLE,
+
+		/**
+		 * 对一个float类型的变量进行赋值
+		 */
+		A_FLOAT,
+
+		/**
+		 * 对一个bool类型的变量进行赋值
+		 */
+		A_BOOL,
+
+		/**
+		 * 对一个String类型的变量进行赋值
+		 */
+		A_STR,
+
+		/**
+		 * 单行注释
+		 */
+		SINGLE_LINE_COMMENT,
+
+		/**
+		 * 多行注释
+		 */
+		MULTI_LINE_COMMENT,
+	}
 
 	/**
 	 * 当前状态
 	 */
-	int status = INITIAL;
+	LexerSym status = LexerSym.INITIAL;
 
 	/**
 	 * 上一个状态
 	 */
-	int previous = INITIAL;
+	LexerSym previous = LexerSym.INITIAL;
 
 	/**
 	 * 当前是否扫描到转义符
 	 */
 	boolean CONVERSION_CHAR = false;
+
+	/**
+	 * 当前读取到第几行了。
+	 *
+	 * 这个lineNumber不需要做到实时更新，因为这个是拿来做注释
+	 * 判断的。当扫描到单行注释时忽略整行，所以我们需要记下当前行号并在每次读取下一个字符
+	 * 的时候判断行号是否有变化。
+	 *
+	 * 如果存在变化就代表当前行结束了，那么就进行下一行的判断了。状态会回到initial。
+	 */
+	int lineNumber = 0;
 
 	/**
 	 * 用于在扫描源码的时候保存源码的对象
@@ -252,7 +285,7 @@ public class Lexer {
 	}
 
 	/** 更新状态 **/
-	void updateStatus(int x) {
+	void updateStatus(LexerSym x) {
 		previous = status;
 		status = x;
 	}
@@ -266,15 +299,17 @@ public class Lexer {
 	boolean letter(char ch) {
 		return  ('a' <= ch && 'z' >= ch) ||
 				('A' <= ch && 'Z' >= ch) ||
-				ch == '_' || ch == '#';
+				ch == '_'  || ch == '#'  ||
+				ch == '$';
 	}
 
 	/** 判断是不是一个结束符 **/
 	boolean space(char ch) {
-		return  ch == ';' || ch == ' ' ||
+		return  ch ==  ';' || ch == ' ' ||
 				ch == '\n' || ch == '(' ||
-				ch == ')' || ch == '{' ||
-				ch == '}' ||
+				ch ==  ')' || ch == '{' ||
+				ch ==  '}' || ch == ',' ||
+				ch ==  '.' ||
 				!reader.ready();
 	}
 
@@ -338,9 +373,15 @@ public class Lexer {
 	 * @param lineNumber    	token所在行
 	 * @param nextStatus    	下一个状态
 	 */
-	void tokenRecord(int code, String value, int classify, int lineNumber, int nextStatus) {
+	void tokenRecord(int code, String value, int classify, int lineNumber, LexerSym nextStatus) {
 		tokens.add(new SyntaxToken(code, value, classify, lineNumber));
-		updateStatus(nextStatus);
+		if (nextStatus != null) {
+			updateStatus(nextStatus);
+		}
+	}
+
+	void tokenRecord(int code, String value, int classify, int lineNumber) {
+		tokenRecord(code, value, classify, lineNumber,null);
 	}
 
 	/**
@@ -364,22 +405,26 @@ public class Lexer {
 			case GrabberSymbol.TYPE_OF_DATA: {
 				switch (species) {
 					case GrabberSymbol.TYPE_CHAR:
-						updateStatus(STMT_CHAR);
+						if("char".equals(value)) {
+							updateStatus(LexerSym.STMT_CHAR);
+						} else {
+							updateStatus(LexerSym.INITIAL);
+						}
 						return;
 					case GrabberSymbol.TYPE_INT:
-						updateStatus(STMT_INT);
+						updateStatus(LexerSym.STMT_INT);
 						return;
 					case GrabberSymbol.TYPE_LONG:
-						updateStatus(STMT_LONG);
+						updateStatus(LexerSym.STMT_LONG);
 						return;
 					case GrabberSymbol.TYPE_DOUBLE:
-						updateStatus(STMT_DOUBLE);
+						updateStatus(LexerSym.STMT_DOUBLE);
 						return;
 					case GrabberSymbol.TYPE_FLOAT:
-						updateStatus(STMT_FLOAT);
+						updateStatus(LexerSym.STMT_FLOAT);
 						return;
 					case GrabberSymbol.TYPE_BOOL:
-						updateStatus(STMT_BOOL);
+						updateStatus(LexerSym.STMT_BOOL);
 						return;
 				}
 			}
@@ -388,7 +433,15 @@ public class Lexer {
 			case GrabberSymbol.KEEP: {
 				switch (species) {
 					case GrabberSymbol.KEEP_SET: {
-						updateStatus(STMT_SET);
+						updateStatus(LexerSym.STMT_SET);
+						return;
+					}
+					case GrabberSymbol.KEEP_CLASS: {
+						updateStatus(LexerSym.STMT_CLASS);
+						return;
+					}
+					case GrabberSymbol.KEEP_DEF: {
+						updateStatus(LexerSym.DEF);
 						return;
 					}
 				}
@@ -398,11 +451,11 @@ public class Lexer {
 			case GrabberSymbol.OP: {
 				switch (species) {
 					case GrabberSymbol.OP_ASSIGN: {
-						if (previous == STMT_INT) {
-							updateStatus(A_INT);
+						if (previous == LexerSym.STMT_INT) {
+							updateStatus(LexerSym.A_INT);
 						}
-						if (previous == STMT_DOUBLE) {
-							updateStatus(A_DOUBLE);
+						if (previous == LexerSym.STMT_DOUBLE) {
+							updateStatus(LexerSym.A_DOUBLE);
 						}
 						return;
 					}
@@ -411,11 +464,12 @@ public class Lexer {
 
 			case GrabberSymbol.LIMIT: {
 				switch (species) {
-					case GrabberSymbol.LIMIT_EOF: {
-						updateStatus(INITIAL);
-					}
+					case GrabberSymbol.LIMIT_EOF:
+					case GrabberSymbol.LIMIT_LPBT:
+					case GrabberSymbol.LIMIT_RPBT:
 					case GrabberSymbol.LIMIT_STR: {
-						updateStatus(INITIAL);
+						updateStatus(LexerSym.INITIAL);
+						return;
 					}
 				}
 			}
@@ -431,9 +485,19 @@ public class Lexer {
 	public List<SyntaxToken> getSyntaxTokens() {
 		while (reader.ready()) {
 			char ch = reader.read();
+			if (status == LexerSym.SINGLE_LINE_COMMENT) {
+				if(reader.lineNumber > this.lineNumber) {
+					status = LexerSym.INITIAL;
+				}
+				continue;
+			}
 			lexer(ch);
 		}
 		return this.tokens;
+	}
+
+	void error(String message) {
+		throw new GrabberSyntaxError(message + " 错误符号：" + value() + ", 当前行号：" + reader.lineNumber);
 	}
 
 	/**
@@ -443,6 +507,13 @@ public class Lexer {
 	 */
 	private void lexer(char ch) {
 
+		// 如果当前字符是转义符
+		if(ch == '\\') {
+			CONVERSION_CHAR = true;
+			append(ch);
+			return;
+		}
+
 		/*
 		 * 首先判断当前状态是否是正在读取字符串。
 		 *
@@ -450,7 +521,7 @@ public class Lexer {
 		 * 这些符号可能在编译器的符号表中是不允许出现的。但是字符串可以出现，所以我们
 		 * 需要先判断当前是不是正在读取字符串。不是的话再判断其他的。
 		 */
-		if(status == STRING) {
+		if(status == LexerSym.READ_STRING) {
 			// 当又扫描到双引号的时候
 			if(ch == '\"') {
 				// 如果当前是转义符
@@ -464,9 +535,21 @@ public class Lexer {
 				return;
 			}
 
-			// 如果扫描到转义符
-			if(ch == '\\') {
-				CONVERSION_CHAR = true;
+			append(ch);
+			return;
+		}
+
+		/*
+		 * 判断当前是不是读取到注释了
+		 */
+		if (ch == '/') {
+			if(value().equals("/")) {
+				status = LexerSym.SINGLE_LINE_COMMENT;
+				// 记录下当前行号
+				this.lineNumber = reader.lineNumber;
+				// 清空当前builder中的内容
+				builderClear();
+				return;
 			}
 			append(ch);
 			return;
@@ -480,8 +563,9 @@ public class Lexer {
 			 */
 			switch (status) {
 
-				case INITIAL:
+				case INITIAL: {
 					break;
+				}
 
 				/*
 				 * 如果状态是一个声明的时候，那么该字符就表示是定义一个变量。
@@ -490,35 +574,45 @@ public class Lexer {
 				case STMT_SET:
 				case STMT_FLOAT:
 				case STMT_BOOL:
+				case STMT_CHAR:
+				case STMT_CLASS:
 				case STMT_DOUBLE: {
 					if (!GrabberSymbol.isEmpty(value())) {
-						throw new GrabberSyntaxError("非法定义，不能使用关键字作为成员名。" + value());
+						error("非法定义，不能使用关键字作为成员名。");
 					}
-					tokenRecord(IDEN, builderClear(), IDEN, reader.lineNumber, DEF);
+					tokenRecord(IDEN, builderClear(), IDEN, reader.lineNumber, LexerSym.DEF);
 					return;
 				}
 
 				/* 读取到数字 **/
-				case NUMBER: {
-					if (previous == A_INT) {
+				case READ_NUMBER: {
+					if (previous == LexerSym.A_INT) {
 						if (number(value())) {
 							tokenRecord(GrabberSymbol.NUMBER, builderClear(), GrabberSymbol.NUMBER,
-									reader.lineNumber, NUMBER);
+									reader.lineNumber, LexerSym.READ_NUMBER);
 							break;
 						} else {
-							throw new GrabberSyntaxError("非法定义的字符：" + value());
+							error("非法定义的字符。");
 						}
+					}
+					if(number(value())) {
+						tokenRecord(GrabberSymbol.NUMBER, builderClear(), GrabberSymbol.NUMBER,
+								reader.lineNumber, LexerSym.INITIAL);
+						return;
 					}
 				}
 
 				/* 如果读取到一个小数  **/
-				case DECIMAL: {
+				case READ_DECIMAL: {
 					if (decimal(value())) {
 						tokenRecord(GrabberSymbol.DECIMAL, builderClear(), GrabberSymbol.DECIMAL,
-								reader.lineNumber, DECIMAL);
+								reader.lineNumber, LexerSym.READ_DECIMAL);
 						break;
-					} else {
-						throw new GrabberSyntaxError("非法定义的字符：" + value());
+					}
+					else {
+						if(previous == LexerSym.A_DOUBLE || previous == LexerSym.A_FLOAT) {
+							error("非法定义的字符。");
+						}
 					}
 				}
 
@@ -538,6 +632,12 @@ public class Lexer {
 			if (!GrabberSymbol.isEmpty(value())) {
 				tokenRecord();
 				_return = true;
+			}
+
+			if(ch == ' ') return;
+
+			if(!StringUtils.isEmpty(value())) {
+				tokenRecord(IDEN,builderClear(),IDEN,reader.lineNumber);
 			}
 
 			if (!GrabberSymbol.isEmpty(ch)) {
@@ -562,8 +662,8 @@ public class Lexer {
 		 */
 		if (number(ch)) {
 			append(ch);
-			if (status != NUMBER && status != DECIMAL) {
-				updateStatus(NUMBER);
+			if (status != LexerSym.READ_NUMBER && status != LexerSym.READ_DECIMAL) {
+				updateStatus(LexerSym.READ_NUMBER);
 			}
 			return;
 		}
@@ -573,17 +673,60 @@ public class Lexer {
 		 */
 		switch (ch) {
 
+			case '\'': {
+
+				/*
+				 * 当当前状态不等于读取字符的时候且上一个状态也不等于读取字符，则将当前状态转变成
+				 * 正在读取字符。
+				 */
+				if(status != LexerSym.READ_CHAR && previous != LexerSym.READ_CHAR) {
+					append(ch);
+					updateStatus(LexerSym.READ_CHAR);
+					return;
+				}
+
+				if(status == LexerSym.READ_CHAR) {
+					// 判断当前是不是读取到了转义符
+					if(CONVERSION_CHAR) {
+						append(ch);
+						CONVERSION_CHAR = false;
+						return;
+					}
+					append(ch);
+					// 如果不是转义符则判断当前字符是否超出了char的范围
+					String value = value();
+					/*
+					 * 正常情况下char的token只有三位，两个单引号加一个符号。
+					 * 不正常的情况就是出现转义符的时候，因为多了一个反斜杠，所以value应该是4位。
+					 *
+					 * 所以如果没有反斜杠的情况下如果超出3位就报错提示，如果有反斜杠的情况下就是超出4位就报错提示。
+					 */
+					out:
+					if(value.length() > 3) {
+						if(value.contains("\\")) {
+							if(value.length() <= 4) {
+								break out;
+							}
+						}
+						error("char字符中的符号过多。");
+					}
+					tokenRecord();
+					return;
+				}
+				error("声明一个char字符时，单引号需要通过反斜杠进行转义<\\>。");
+			}
+
 			/*
 			 * 读取到string
 			 */
 			case '"': {
 				// 如果当前状态不等于String
-				if(status != STRING && previous != STRING){
+				if(status != LexerSym.READ_STRING && previous != LexerSym.READ_STRING){
 					append(ch);
-					updateStatus(STRING);
+					updateStatus(LexerSym.READ_STRING);
 					return;
 				} else {
-					throw new GrabberSyntaxError("声明一个字符串时，如果有双引号需要通过反斜杠进行转义<\\>。 " + value());
+					error("声明一个字符串时，如果有双引号需要通过反斜杠进行转义<\\>。");
 				}
 			}
 
@@ -593,9 +736,9 @@ public class Lexer {
 				 * 数字，如果是正在读取数字的话，那么状态就转换成当前
 				 * 正在读小数。
 				 */
-				if (status == NUMBER) {
+				if (status == LexerSym.READ_NUMBER) {
 					append(ch);
-					updateStatus(DECIMAL);
+					updateStatus(LexerSym.READ_DECIMAL);
 					return;
 				}
 
@@ -603,8 +746,8 @@ public class Lexer {
 				 * 如果当前状态正在读小数点，又扫描到点符号了。
 				 * 那么就抛出声明错误。
 				 */
-				if (status == DECIMAL) {
-					throw new GrabberStatementError("浮点数声明异常。小数点只能由一个。" + value());
+				if (status == LexerSym.READ_DECIMAL) {
+					error("浮点数声明异常。小数点只能由一个。");
 				}
 
 			}
@@ -629,7 +772,7 @@ public class Lexer {
 	/**
 	 * 字符读取器
 	 */
-	static class CharReader {
+	class CharReader {
 
 		char[] value;
 		int position   = -1; // 当前读取到的位置
@@ -662,7 +805,9 @@ public class Lexer {
 		 */
 		char read() {
 			char v = next();
-			if (v == '\n') lineNumber++;
+			if (v == '\n') {
+				lineNumber++;
+			}
 			return v;
 		}
 	}
