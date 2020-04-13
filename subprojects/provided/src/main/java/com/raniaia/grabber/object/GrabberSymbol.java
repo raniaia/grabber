@@ -87,9 +87,6 @@ public interface GrabberSymbol {
 
     DECIMAL            =       8;
 
-
-
-
     /**
      * 每个符号对应的识别码
      */
@@ -565,6 +562,9 @@ public interface GrabberSymbol {
     /** 符号表示：} **/
     RCBT                =          {0x44a, LIMIT},
 
+    /** 符号表示：字符串 **/
+    STRING              =          {0x45a, LIMIT},
+
     EOF                 =          {LIMIT_EOF, LIMIT};
 
     int
@@ -595,6 +595,12 @@ public interface GrabberSymbol {
     }
 
     static String cover(String input) {
+        if("\"".equals(input.substring(0,1))) {
+            int il = input.length();
+            if("\"".equals(input.substring(il-1,il))) {
+                input = "str";
+            }
+        }
         switch (input) {
             case "=": return "ASSIGN";
             case ";": return "EOF";
@@ -602,6 +608,7 @@ public interface GrabberSymbol {
             case ")": return "RPBT";
             case "{": return "LCBT";
             case "}": return "RCBT";
+            case "str": return "STRING";
             case "#include": return "INCLUDE";
         }
         return StringUtils.toUpperCase(input);

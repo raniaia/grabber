@@ -29,7 +29,6 @@ import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
 import com.raniaia.grabber.object.GrabberSymbol;
 import com.raniaia.grabber.object.structure.GrabberSourceCode;
 import com.raniaia.grabber.object.syntax.SyntaxToken;
-import com.sun.xml.internal.messaging.saaj.util.CharReader;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 
@@ -81,7 +80,7 @@ public class Lexer {
 	/**
 	 * 解析异常，语法声明等不正确情况
 	 */
-	static final int ERROR = 5;
+	static final int ERROR = 6;
 
 	/**
 	 * 当前读到int声明, 后面读取的只能是参数。
@@ -125,6 +124,11 @@ public class Lexer {
 	static final int STMT_SET = 0xf11;
 
 	/**
+	 * 声明一个String对象
+	 */
+	static final int STMT_STR = 0xf12;
+
+	/**
 	 * 对一个int类型的变量进行赋值
 	 */
 	static final int A_INT = 0xe11;
@@ -155,6 +159,11 @@ public class Lexer {
 	static final int A_BOOL = 0xe16;
 
 	/**
+	 * 对一个String类型的变量进行赋值
+	 */
+	static final int A_STR = 0xe17;
+
+	/**
 	 * 当前状态
 	 */
 	int status = INITIAL;
@@ -164,6 +173,10 @@ public class Lexer {
 	 */
 	int previous = INITIAL;
 
+	/**
+	 * 当前是否扫描到转义符
+	 */
+	boolean CONVERSION_CHAR = false;
 
 	/**
 	 * 用于在扫描源码的时候保存源码的对象
@@ -244,14 +257,14 @@ public class Lexer {
 
 	/** 判断是不是一个字符 **/
 	boolean letter(char ch) {
-		return ('a' <= ch && 'z' >= ch) ||
+		return  ('a' <= ch && 'z' >= ch) ||
 				('A' <= ch && 'Z' >= ch) ||
 				ch == '_' || ch == '#';
 	}
 
 	/** 判断是不是一个结束符 **/
 	boolean space(char ch) {
-		return ch == ';' || ch == ' ' ||
+		return  ch == ';' || ch == ' ' ||
 				ch == '\n' || ch == '(' ||
 				ch == ')' || ch == '{' ||
 				ch == '}' ||
@@ -394,9 +407,7 @@ public class Lexer {
 						updateStatus(INITIAL);
 				}
 			}
-
 		}
-
 	}
 
 	/**
@@ -419,6 +430,34 @@ public class Lexer {
 	 * @see #getSyntaxTokens
 	 */
 	private void lexer(char ch) {
+
+		/*
+		 * 首先判断当前状态是否是正在读取字符串。
+		 *
+		 * 因为如果是正在读取字符串的话，字符串中可能会出现各种各式各样的符号，
+		 * 这些符号可能在编译器的符号表中是不允许出现的。但是字符串可以出现，所以我们
+		 * 需要先判断当前是不是正在读取字符串。不是的话再判断其他的。
+		 */
+		if(status == STRING) {
+			// 当又扫描到双引号的时候
+			if(ch == '\"') {
+				// 如果当前是转义符
+				if(CONVERSION_CHAR){
+					append(ch);
+					CONVERSION_CHAR = false;
+					return;
+				}
+				append(ch);
+				tokenRecord();
+			}
+			// 如果扫描到转义符
+			if(ch == '\\') {
+				CONVERSION_CHAR = true;
+			}
+			append(ch);
+			return;
+		}
+
 		// 判断是不是空格等符号
 		if (space(ch)) {
 
@@ -520,6 +559,18 @@ public class Lexer {
 		 */
 		switch (ch) {
 
+			/*
+			 * 读取到string
+			 */
+			case '"': {
+				// 如果当前状态不等于String
+				if(status != STRING){
+					append(ch);
+					updateStatus(STRING);
+					return;
+				}
+			}
+
 			case '.': {
 				/*
 				 * 当扫描到 '.' 的时候判断当前是不是正在读取
@@ -565,8 +616,8 @@ public class Lexer {
 	static class CharReader {
 
 		char[] value;
-		int position = -1; // 当前读取到的位置
-		int lineNumber = 0; // 当前读取到的行
+		int position   = -1; // 当前读取到的位置
+		int lineNumber =  0; // 当前读取到的行
 
 		CharReader(String input) {
 			this.value = input.toCharArray();
