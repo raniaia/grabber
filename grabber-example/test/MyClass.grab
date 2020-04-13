@@ -1,3 +1,4 @@
+#include <'base'>
 class MyClass {
 
     // 声明一个整数类型的变量10

@@ -48,21 +48,22 @@ public interface GrabberSymbol {
     final int TYPE_DOUBLE     = 0x06fe;
     final int TYPE_BOOL       = 0x07fe;
 
+    final int OP_GT           = 0x33e;
+    final int OP_LT           = 0x34e;
     final int OP_ASSIGN       = 0x41e;
 
-    final int LIMIT_EOF       = 0xEFF0;
-
-    final int LIMIT_STR       = 0x46a;
-
     final int KEEP_SET        = 0xf07;
-
     final int KEEP_CLASS      = 0xf24;
-
     final int KEEP_DEF        = 0xf06;
+    final int KEEP_INCLUDE    = 0xf26;
 
+    final int LIMIT_EOF       = 0xEFF0;
+    final int LIMIT_STR       = 0x46a;
     final int LIMIT_LPBT      = 0x40a;
-
     final int LIMIT_RPBT      = 0x41a;
+
+
+
 
     int
 
@@ -350,7 +351,7 @@ public interface GrabberSymbol {
     /**
      * include导入结构文件以及包。
      */
-    INCLUDE             =          {0xf26, KEEP},
+    INCLUDE             =          {KEEP_INCLUDE, KEEP},
 
     /**
      * for循环时使用
@@ -452,12 +453,12 @@ public interface GrabberSymbol {
     /**
      * 逻辑符大于
      */
-    GT                  =          {0x32e, OP},
+    GT                  =          {OP_GT, OP},
 
     /**
      * 逻辑符小于
      */
-    LT                  =          {0x33e, OP},
+    LT                  =          {OP_LT, OP},
 
     /**
      * 逻辑符大于等于
@@ -636,6 +637,8 @@ public interface GrabberSymbol {
             case "}": return "RCBT";
             case ",": return "COMMA";
             case ".": return "DOT";
+            case "<": return "LT";
+            case ">": return "GT";
             case "$i": return "C_INDEX";
             case "str": return "STRING";
             case "char": return "CHAR";

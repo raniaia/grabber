@@ -176,6 +176,21 @@ public class Lexer {
 		A_STR,
 
 		/**
+		 * 当读取到大于
+		 */
+		GT,
+
+		/**
+		 * 当读取到小于号
+		 */
+		LT,
+
+		/**
+		 * 当读取到include
+		 */
+		INCLUDE,
+
+		/**
 		 * 单行注释
 		 */
 		SINGLE_LINE_COMMENT,
@@ -184,6 +199,7 @@ public class Lexer {
 		 * 多行注释
 		 */
 		MULTI_LINE_COMMENT,
+		;
 	}
 
 	/**
@@ -309,7 +325,8 @@ public class Lexer {
 				ch == '\n' || ch == '(' ||
 				ch ==  ')' || ch == '{' ||
 				ch ==  '}' || ch == ',' ||
-				ch ==  '.' ||
+				ch ==  '.' || ch == '<' ||
+				ch ==  '>' ||
 				!reader.ready();
 	}
 
@@ -444,6 +461,10 @@ public class Lexer {
 						updateStatus(LexerSym.DEF);
 						return;
 					}
+					case GrabberSymbol.KEEP_INCLUDE: {
+						updateStatus(LexerSym.INCLUDE);
+						return;
+					}
 				}
 			}
 
@@ -457,6 +478,14 @@ public class Lexer {
 						if (previous == LexerSym.STMT_DOUBLE) {
 							updateStatus(LexerSym.A_DOUBLE);
 						}
+						return;
+					}
+					case GrabberSymbol.OP_GT:{
+						updateStatus(LexerSym.GT);
+						return;
+					}
+					case GrabberSymbol.OP_LT:{
+						updateStatus(LexerSym.LT);
 						return;
 					}
 				}
@@ -674,6 +703,22 @@ public class Lexer {
 		switch (ch) {
 
 			case '\'': {
+
+				/**
+				 * 如果当前状态是读取到大于号，且上一个状态为include的话，那么就认定
+				 * 这个char字符是头文件的声明。
+				 */
+				if(status == LexerSym.LT && previous == LexerSym.INCLUDE) {
+					append(ch);
+					updateStatus(LexerSym.READ_CHAR);
+					return;
+				}
+
+				if(status == LexerSym.READ_CHAR && previous == LexerSym.LT) {
+					append(ch);
+					tokenRecord(IDEN,builderClear(),IDEN,reader.lineNumber,LexerSym.INITIAL);
+					return;
+				}
 
 				/*
 				 * 当当前状态不等于读取字符的时候且上一个状态也不等于读取字符，则将当前状态转变成
