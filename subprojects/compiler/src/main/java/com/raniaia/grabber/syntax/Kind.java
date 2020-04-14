@@ -1,4 +1,4 @@
-package com.raniaia.grabber.object;
+package com.raniaia.grabber.syntax;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,42 +20,23 @@ package com.raniaia.grabber.object;
  */
 
 /*
- * Creates on 2020/4/11.
+ * Creates on 2020/4/14.
  */
+
+import com.raniaia.grabber.Constants;
 
 /**
+ * 一段声明符号表示
+ *
  * @author tiansheng
  */
-public enum LexerStatus {
+public enum  Kind {
 
 	/**
-	 * 最初状态
+	 * 表示当前扫描到的声明为一个表达式.
+	 * 例如return、1+1，x * 2等句子。
 	 */
-	INITIAL,
+	CONST_EXP,
 
-	/**
-	 * 词法解析器当前正读取到字符串
-	 */
-	STRING,
-
-	/**
-	 * 词法解析器当前正读取到保留关键字
-	 */
-	KEEP,
-
-	/**
-	 * 词法解析器当前正在读数字
-	 */
-	NUMBER,
-
-	/**
-	 * 词法解析器当前正在读表达式
-	 */
-	EXP,
-
-	/**
-	 * 解析异常，语法声明等不正确情况
-	 */
-	ERROR
 
 }

@@ -1,4 +1,4 @@
-package com.raniaia.grabber.object.syntax;
+package com.raniaia.grabber.syntax;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,7 +23,7 @@ package com.raniaia.grabber.object.syntax;
  * Creates on 2020/4/9.
  */
 
-import com.raniaia.grabber.object.GrabberSymbol;
+import com.raniaia.grabber.Constants;
 
 /**
  * @author tiansheng
@@ -31,7 +31,7 @@ import com.raniaia.grabber.object.GrabberSymbol;
 public class SyntaxToken {
 
     /**
-     * 符号对应编码，参考{@link GrabberSymbol}
+     * 符号对应编码，参考{@link Constants}
      */
     public int          code;
 
@@ -41,7 +41,7 @@ public class SyntaxToken {
     public String       value;
 
     /**
-     * 符号对应的分类，参考{@link GrabberSymbol}
+     * 符号对应的分类，参考{@link Constants}
      */
     public int          classify;
 
@@ -55,9 +55,9 @@ public class SyntaxToken {
     /**
      * 创建一个语法Token对象
      *
-     * @param code          token对应编码，参考{@link GrabberSymbol}
+     * @param code          token对应编码，参考{@link Constants}
      * @param value         token的值
-     * @param classify      token分类，参考{@link GrabberSymbol}
+     * @param classify      token分类，参考{@link Constants}
      * @param lineNumber    token在代码中对应的行号
      */
     public SyntaxToken(int code, String value, int classify, int lineNumber) {

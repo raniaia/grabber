@@ -1,4 +1,4 @@
-package com.raniaia.grabber.object.structure;
+package com.raniaia.grabber.syntax;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,39 +20,14 @@ package com.raniaia.grabber.object.structure;
  */
 
 /*
- * Creates on 2020/4/5.
+ * Creates on 2020/4/14.
  */
-
-import org.raniaia.available.io.file.Files;
-
 
 /**
  * @author tiansheng
  */
-public class GrabberSourceCode {
+public class SyntaxTreeNode {
 
-    String path;
 
-    String value;
-
-    public GrabberSourceCode() {
-    }
-
-    public GrabberSourceCode(String path) {
-        this.path = path;
-        read();
-    }
-
-    void read() {
-        this.value = Files.read(path);
-    }
-
-    public void read(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return this.value;
-    }
 
 }

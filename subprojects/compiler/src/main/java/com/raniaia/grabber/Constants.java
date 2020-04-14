@@ -1,4 +1,4 @@
-package com.raniaia.grabber.object;/*
+package com.raniaia.grabber;/*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL,  Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,10 +35,10 @@ import java.lang.reflect.Field;
  *x* @author tiansheng
  */
 @SuppressWarnings("ALL")
-public interface GrabberSymbol {
+public interface Constants {
 
-    Class<GrabberSymbol>    clazz       = GrabberSymbol.class;
-    Object                  object      = new GrabberSymbol() {};
+    Class<Constants>        clazz       = Constants.class;
+    Object                  object      = new Constants() {};
 
     final int TYPE_CHAR       = 0x01fe;
     final int TYPE_INT        = 0x02fe;
@@ -56,14 +56,12 @@ public interface GrabberSymbol {
     final int KEEP_CLASS      = 0xf24;
     final int KEEP_DEF        = 0xf06;
     final int KEEP_INCLUDE    = 0xf26;
+    final int KEEP_DEFINE     = 0xf29;
 
     final int LIMIT_EOF       = 0xEFF0;
     final int LIMIT_STR       = 0x46a;
     final int LIMIT_LPBT      = 0x40a;
     final int LIMIT_RPBT      = 0x41a;
-
-
-
 
     int
 
@@ -421,6 +419,12 @@ public interface GrabberSymbol {
     SCOPE               =          {0xf28, KEEP},
 
     /**
+     * #define 可以直接定义一个枚举或者是其他对象以及基本数据类型。
+     * 但前提是必须在class关键字上面。
+     */
+    DEFINE               =          {KEEP_DEFINE, KEEP},
+
+    /**
      * 运算符加号
      */
     ADD                 =          {0x26e, OP},
@@ -642,6 +646,7 @@ public interface GrabberSymbol {
             case "$i": return "C_INDEX";
             case "str": return "STRING";
             case "char": return "CHAR";
+            case "#define": return "DEFINE";
             case "#include": return "INCLUDE";
         }
         return StringUtils.toUpperCase(input);

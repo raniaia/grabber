@@ -1,17 +1,2 @@
-#define 'base'
-
-    set {
-        value
-    }
-
-    //
-    // 定义类必须实现的方法
-    //
-    def {
-        getValue(),
-        private:
-            getValue0()
-            destroy()
-    }
-
-#endif
+#define CONST_INT
+#define CONST_UINT

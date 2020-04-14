@@ -1,4 +1,4 @@
-package com.raniaia.grabber.tools;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,7 +23,7 @@ package com.raniaia.grabber.tools;
  * Creates on 2020/4/5.
  */
 
-import com.raniaia.grabber.object.structure.GrabberSourceCode;
+import com.raniaia.grabber.tools.GrabberCfg;
 import org.raniaia.available.OpCodes;
 import org.raniaia.available.io.file.Files;
 import org.raniaia.available.list.Lists;
@@ -37,15 +37,15 @@ import java.util.Objects;
  *
  * @author tiansheng
  */
-public class SourceReader {
+public class Reader {
 
 	String 					srcdir;
 	List<String> 			classfile;
 	List<String> 			packages;
 	String 					previous;
 
-	Grabberc				grabc
-			= Grabberc.getInstance(OpCodes.USER_DIR + "/config/compiler.cfg");
+	GrabberCfg grabc
+			= GrabberCfg.getInstance(OpCodes.USER_DIR + "/config/compiler.cfg");
 
 	String					OBJECT_FILE_SUFFIX	= grabc.getValue("reader","class");
 	String					STMT_FILE_SUFFIX	= grabc.getValue("reader","structure-body");
@@ -53,7 +53,7 @@ public class SourceReader {
 	/**
 	 * @param srcdir 源码目录
 	 */
-	public SourceReader(String srcdir) {
+	public Reader(String srcdir) {
 		this.srcdir = srcdir;
 	}
 
@@ -95,11 +95,11 @@ public class SourceReader {
 		packages.addAll(Lists.newArrayList(files));
 	}
 
-	public List<GrabberSourceCode> toSourceCodeList() {
-		List<GrabberSourceCode> codes = Lists.newArrayList();
+	public List<GrabberSource> toSourceCodeList() {
+		List<GrabberSource> codes = Lists.newArrayList();
 		for (String aPackage : packages) {
 			String key = srcdir.concat("\\").concat(aPackage);
-			codes.add(new GrabberSourceCode(key));
+			codes.add(new GrabberSource(key));
 		}
 		return codes;
 	}

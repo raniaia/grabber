@@ -1,4 +1,4 @@
-package com.raniaia.grabber.compiler;
+package com.raniaia.grabber.tools;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,34 +23,38 @@ package com.raniaia.grabber.compiler;
  * Creates on 2020/4/10.
  */
 
-import com.raniaia.grabber.lexer.Lexer;
-import com.raniaia.grabber.object.structure.GrabberSourceCode;
-import com.raniaia.grabber.object.syntax.SyntaxToken;
-import com.raniaia.grabber.tools.SourceReader;
-import org.raniaia.available.list.Lists;
+import org.raniaia.available.config.Cfg;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
+ * 这个是配置类，Grabberc全称是Grabber配置。
+ *（Grabber Config）
+ *
  * @author tiansheng
  */
-public class ReaderTest {
+public class GrabberCfg {
 
-	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
+	public static GrabberCfg getInstance(String path) {
+		return getInstance(path,null);
+	}
 
-	public static void main(String[] args) {
-		SourceReader reader = new SourceReader(srcdir);
-		reader.init();
-		List<GrabberSourceCode> scs = reader.toSourceCodeList();
-		for (GrabberSourceCode sc : scs) {
-			Lexer lexer = new Lexer();
-			lexer.setSourceCode(sc);
-			lexer.initReader();
-			List<SyntaxToken> tokens = lexer.getSyntaxTokens();
-			for (SyntaxToken token : tokens) {
-				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
-			}
+	public static GrabberCfg getInstance(String path, Class<?> clazz) {
+		return new GrabberCfg(path,clazz);
+	}
+
+	Cfg cfg;
+
+	GrabberCfg(String path, Class<?> clazz) {
+		try {
+			this.cfg = new Cfg(path,clazz);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+
+	public String getValue(String root,String key) {
+		return cfg.get(root, key);
 	}
 
 }

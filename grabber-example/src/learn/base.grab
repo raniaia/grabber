@@ -1,18 +1,18 @@
 #include <'base'> // 声明结构文件
-/*
+
 
 /--
  Grabber基本教学
 --/
 
-*/
-class Base {
+
+class base {
 
     pre {
         int x = 0
     }
 
-    /*
+    
 
     /--
      Grabber声明对象或者是变量
@@ -33,7 +33,7 @@ class Base {
      ----------------------------------------------------
     --/
 
-    */
+    
     int         in       = 10
 
     uint        ui       = 10U
@@ -48,7 +48,7 @@ class Base {
 
     byte        by       = 0
 
-    /*
+    
 
     /--
      Grabber中的其他常用的数据结构和类型
@@ -62,31 +62,31 @@ class Base {
      声明一个String类型
     --/
 
-    */
+    
     set         str         = "string"
 
-    /*
+    
 
     /--
      声明一个数组
     --/
 
-    */
+    
     set         arr         = {}
 
-    /*
+    
 
     /--
      声明一个json
     --/
 
-    */
+    
     set         jso         = {K,V}
 
     // 或者是这样声明一个json
-    set         jso1        = {"name":"zs"}
+    // set         jso1        = {"name":"zs"}
 
-    /*
+    
 
     /--
      声明一个Map
@@ -96,19 +96,19 @@ class Base {
      声明可变的变量
     --/
 
-    */
+    
     set name = "张三"
 
-    /*
+    
 
     /--
      声明一个不可变的变量
     --/
 
-    */
+    
     set money = 0
 
-    /*
+    
 
     /--
      默认为公开的，谁都可以new。
@@ -117,10 +117,10 @@ class Base {
      假设要Base类公开就去掉这段代码即可
     --/
 
-    */
+    
     def Base(): private
 
-    /*
+    
 
     /--
      有参数的构造器
@@ -128,7 +128,7 @@ class Base {
      结构体文件或者是当前类中的全局变量上，前提是变量名称得一致。
     --/
 
-    */
+    
     @value
     def Base(value) {}
 

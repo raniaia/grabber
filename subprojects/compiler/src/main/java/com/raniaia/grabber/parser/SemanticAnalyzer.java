@@ -1,4 +1,4 @@
-package com.raniaia.grabber.tools;
+package com.raniaia.grabber.parser;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,41 +20,11 @@ package com.raniaia.grabber.tools;
  */
 
 /*
- * Creates on 2020/4/10.
+ * Creates on 2020/4/14.
  */
-
-import org.raniaia.available.config.Cfg;
-
-import java.io.IOException;
 
 /**
- * 这个是配置类，Grabberc全称是Grabber配置。
- *（Grabber Config）
- *
  * @author tiansheng
  */
-public class Grabberc {
-
-	public static Grabberc getInstance(String path) {
-		return getInstance(path,null);
-	}
-
-	public static Grabberc getInstance(String path,Class<?> clazz) {
-		return new Grabberc(path,clazz);
-	}
-
-	Cfg cfg;
-
-	Grabberc(String path,Class<?> clazz) {
-		try {
-			this.cfg = new Cfg(path,clazz);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public String getValue(String root,String key) {
-		return cfg.get(root, key);
-	}
-
+public class SemanticAnalyzer {
 }

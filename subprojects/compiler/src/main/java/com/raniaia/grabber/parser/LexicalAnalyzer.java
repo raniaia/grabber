@@ -1,4 +1,4 @@
-package com.raniaia.grabber.lexer;
+package com.raniaia.grabber.parser;
 
 
 /*
@@ -24,12 +24,10 @@ package com.raniaia.grabber.lexer;
  * Creates on 2020/4/11.
  */
 
-import com.raniaia.grabber.error.syntax.GrabberStatementError;
 import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
-import com.raniaia.grabber.object.GrabberSymbol;
-import com.raniaia.grabber.object.structure.GrabberSourceCode;
-import com.raniaia.grabber.object.syntax.SyntaxToken;
-import com.sun.xml.internal.messaging.saaj.util.CharReader;
+import com.raniaia.grabber.Constants;
+import com.raniaia.grabber.GrabberSource;
+import com.raniaia.grabber.syntax.SyntaxToken;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 
@@ -41,11 +39,11 @@ import java.util.Scanner;
  *
  * @author tiansheng
  */
-public class Lexer {
+public class LexicalAnalyzer {
 
-	private GrabberSourceCode code;
+	private GrabberSource code;
 
-	static final int IDEN = GrabberSymbol.IDEN;
+	static final int IDEN = Constants.IDEN;
 
 	enum LexerSym {
 
@@ -83,6 +81,11 @@ public class Lexer {
 		 * 词法解析器解析到一个定义是函数的句子。
 		 */
 		DEF,
+
+		/**
+		 * 当解析到是一个定义关键字
+		 */
+		DEFINE,
 
 		/**
 		 * 解析异常，语法声明等不正确情况
@@ -199,6 +202,7 @@ public class Lexer {
 		 * 多行注释
 		 */
 		MULTI_LINE_COMMENT,
+
 		;
 	}
 
@@ -211,6 +215,11 @@ public class Lexer {
 	 * 上一个状态
 	 */
 	LexerSym previous = LexerSym.INITIAL;
+
+	/**
+	 * 正在读取多行注释结束
+	 */
+	boolean E_MLC = false;
 
 	/**
 	 * 当前是否扫描到转义符
@@ -237,7 +246,7 @@ public class Lexer {
 
 	CharReader reader;
 
-	public void setSourceCode(GrabberSourceCode code) {
+	public void setSourceCode(GrabberSource code) {
 		this.code = code;
 	}
 
@@ -406,7 +415,7 @@ public class Lexer {
 	 */
 	@SuppressWarnings({"ConstantConditions"})
 	void tokenRecord(String value) {
-		int[] scode = GrabberSymbol.getCode(value);
+		int[] scode = Constants.getCode(value);
 		final int classify = scode[1];
 		final int species = scode[0];
 		SyntaxToken token = new SyntaxToken();
@@ -419,59 +428,63 @@ public class Lexer {
 		switch (classify) {
 
 			/* 数据类型 */
-			case GrabberSymbol.TYPE_OF_DATA: {
+			case Constants.TYPE_OF_DATA: {
 				switch (species) {
-					case GrabberSymbol.TYPE_CHAR:
+					case Constants.TYPE_CHAR:
 						if("char".equals(value)) {
 							updateStatus(LexerSym.STMT_CHAR);
 						} else {
 							updateStatus(LexerSym.INITIAL);
 						}
 						return;
-					case GrabberSymbol.TYPE_INT:
+					case Constants.TYPE_INT:
 						updateStatus(LexerSym.STMT_INT);
 						return;
-					case GrabberSymbol.TYPE_LONG:
+					case Constants.TYPE_LONG:
 						updateStatus(LexerSym.STMT_LONG);
 						return;
-					case GrabberSymbol.TYPE_DOUBLE:
+					case Constants.TYPE_DOUBLE:
 						updateStatus(LexerSym.STMT_DOUBLE);
 						return;
-					case GrabberSymbol.TYPE_FLOAT:
+					case Constants.TYPE_FLOAT:
 						updateStatus(LexerSym.STMT_FLOAT);
 						return;
-					case GrabberSymbol.TYPE_BOOL:
+					case Constants.TYPE_BOOL:
 						updateStatus(LexerSym.STMT_BOOL);
 						return;
 				}
 			}
 
 			/* 关键字 */
-			case GrabberSymbol.KEEP: {
+			case Constants.KEEP: {
 				switch (species) {
-					case GrabberSymbol.KEEP_SET: {
+					case Constants.KEEP_SET: {
 						updateStatus(LexerSym.STMT_SET);
 						return;
 					}
-					case GrabberSymbol.KEEP_CLASS: {
+					case Constants.KEEP_CLASS: {
 						updateStatus(LexerSym.STMT_CLASS);
 						return;
 					}
-					case GrabberSymbol.KEEP_DEF: {
+					case Constants.KEEP_DEF: {
 						updateStatus(LexerSym.DEF);
 						return;
 					}
-					case GrabberSymbol.KEEP_INCLUDE: {
+					case Constants.KEEP_INCLUDE: {
 						updateStatus(LexerSym.INCLUDE);
+						return;
+					}
+					case Constants.KEEP_DEFINE: {
+						updateStatus(LexerSym.DEFINE);
 						return;
 					}
 				}
 			}
 
 			/* 操作符 */
-			case GrabberSymbol.OP: {
+			case Constants.OP: {
 				switch (species) {
-					case GrabberSymbol.OP_ASSIGN: {
+					case Constants.OP_ASSIGN: {
 						if (previous == LexerSym.STMT_INT) {
 							updateStatus(LexerSym.A_INT);
 						}
@@ -480,23 +493,23 @@ public class Lexer {
 						}
 						return;
 					}
-					case GrabberSymbol.OP_GT:{
+					case Constants.OP_GT:{
 						updateStatus(LexerSym.GT);
 						return;
 					}
-					case GrabberSymbol.OP_LT:{
+					case Constants.OP_LT:{
 						updateStatus(LexerSym.LT);
 						return;
 					}
 				}
 			}
 
-			case GrabberSymbol.LIMIT: {
+			case Constants.LIMIT: {
 				switch (species) {
-					case GrabberSymbol.LIMIT_EOF:
-					case GrabberSymbol.LIMIT_LPBT:
-					case GrabberSymbol.LIMIT_RPBT:
-					case GrabberSymbol.LIMIT_STR: {
+					case Constants.LIMIT_EOF:
+					case Constants.LIMIT_LPBT:
+					case Constants.LIMIT_RPBT:
+					case Constants.LIMIT_STR: {
 						updateStatus(LexerSym.INITIAL);
 						return;
 					}
@@ -514,12 +527,36 @@ public class Lexer {
 	public List<SyntaxToken> getSyntaxTokens() {
 		while (reader.ready()) {
 			char ch = reader.read();
+			/*
+			 * 当前是正在读取单行注释
+			 */
 			if (status == LexerSym.SINGLE_LINE_COMMENT) {
 				if(reader.lineNumber > this.lineNumber) {
 					status = LexerSym.INITIAL;
 				}
 				continue;
 			}
+
+			/*
+			 * 当前正在读取多行注释
+			 */
+			if(status == LexerSym.MULTI_LINE_COMMENT) {
+				if (ch == '-') {
+					append(ch);
+					E_MLC = true;
+					continue;
+				}
+				if(ch == '/' && E_MLC) {
+					status = LexerSym.INITIAL;
+					builderClear();
+					E_MLC = false;
+					continue;
+				}
+				builderClear();
+				E_MLC = false;
+				continue;
+			}
+
 			lexer(ch);
 		}
 		return this.tokens;
@@ -569,7 +606,7 @@ public class Lexer {
 		}
 
 		/*
-		 * 判断当前是不是读取到注释了
+		 * 判断当前是不是读取到了单行注释
 		 */
 		if (ch == '/') {
 			if(value().equals("/")) {
@@ -582,6 +619,21 @@ public class Lexer {
 			}
 			append(ch);
 			return;
+		}
+
+		/*
+		 * 判断是不是读取到了多行注释。
+		 */
+		if(ch == '-') {
+			if("/".equals(value())) {
+				append(ch);
+				return;
+			}
+			if("/-".equals(value())) {
+				status = LexerSym.MULTI_LINE_COMMENT;
+				builderClear();
+				return;
+			}
 		}
 
 		// 判断是不是空格等符号
@@ -606,7 +658,7 @@ public class Lexer {
 				case STMT_CHAR:
 				case STMT_CLASS:
 				case STMT_DOUBLE: {
-					if (!GrabberSymbol.isEmpty(value())) {
+					if (!Constants.isEmpty(value())) {
 						error("非法定义，不能使用关键字作为成员名。");
 					}
 					tokenRecord(IDEN, builderClear(), IDEN, reader.lineNumber, LexerSym.DEF);
@@ -617,7 +669,7 @@ public class Lexer {
 				case READ_NUMBER: {
 					if (previous == LexerSym.A_INT) {
 						if (number(value())) {
-							tokenRecord(GrabberSymbol.NUMBER, builderClear(), GrabberSymbol.NUMBER,
+							tokenRecord(Constants.NUMBER, builderClear(), Constants.NUMBER,
 									reader.lineNumber, LexerSym.READ_NUMBER);
 							break;
 						} else {
@@ -625,7 +677,7 @@ public class Lexer {
 						}
 					}
 					if(number(value())) {
-						tokenRecord(GrabberSymbol.NUMBER, builderClear(), GrabberSymbol.NUMBER,
+						tokenRecord(Constants.NUMBER, builderClear(), Constants.NUMBER,
 								reader.lineNumber, LexerSym.INITIAL);
 						return;
 					}
@@ -634,7 +686,7 @@ public class Lexer {
 				/* 如果读取到一个小数  **/
 				case READ_DECIMAL: {
 					if (decimal(value())) {
-						tokenRecord(GrabberSymbol.DECIMAL, builderClear(), GrabberSymbol.DECIMAL,
+						tokenRecord(Constants.DECIMAL, builderClear(), Constants.DECIMAL,
 								reader.lineNumber, LexerSym.READ_DECIMAL);
 						break;
 					}
@@ -658,18 +710,19 @@ public class Lexer {
 			 *
 			 */
 			boolean _return = false;
-			if (!GrabberSymbol.isEmpty(value())) {
+			if (!Constants.isEmpty(value())) {
 				tokenRecord();
 				_return = true;
 			}
-
-			if(ch == ' ') return;
 
 			if(!StringUtils.isEmpty(value())) {
 				tokenRecord(IDEN,builderClear(),IDEN,reader.lineNumber);
 			}
 
-			if (!GrabberSymbol.isEmpty(ch)) {
+			if(ch == ' ') return;
+
+
+			if (!Constants.isEmpty(ch)) {
 				tokenRecord(ch);
 				return;
 			}
@@ -865,8 +918,8 @@ public class Lexer {
 			if ("quit()".equals(value)) {
 				System.exit(0);
 			}
-			Lexer lexer = new Lexer();
-			GrabberSourceCode sourceCode = new GrabberSourceCode();
+			LexicalAnalyzer lexer = new LexicalAnalyzer();
+			GrabberSource sourceCode = new GrabberSource();
 			sourceCode.read(value);
 			lexer.setSourceCode(sourceCode);
 			lexer.initReader();
