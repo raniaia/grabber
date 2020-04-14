@@ -37,7 +37,7 @@ import java.util.Objects;
  *
  * @author tiansheng
  */
-public class Reader {
+public class SourcesReader {
 
 	String 					srcdir;
 	List<String> 			classfile;
@@ -53,7 +53,7 @@ public class Reader {
 	/**
 	 * @param srcdir 源码目录
 	 */
-	public Reader(String srcdir) {
+	public SourcesReader(String srcdir) {
 		this.srcdir = srcdir;
 	}
 

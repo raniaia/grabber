@@ -1,4 +1,4 @@
-package com.raniaia.grabber.parser;
+package com.raniaia.grabber;
 
 
 /*
@@ -25,9 +25,6 @@ package com.raniaia.grabber.parser;
  */
 
 import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
-import com.raniaia.grabber.Constants;
-import com.raniaia.grabber.GrabberSource;
-import com.raniaia.grabber.syntax.SyntaxToken;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 

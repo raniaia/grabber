@@ -1,4 +1,4 @@
-package com.raniaia.grabber.syntax;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -24,10 +24,11 @@ package com.raniaia.grabber.syntax;
  */
 
 /**
+ * 抽象语法树
+ * AST(Abstract Syntax Tree)
+ *
  * @author tiansheng
  */
-public class SyntaxTreeNode {
-
-
+public class AST {
 
 }

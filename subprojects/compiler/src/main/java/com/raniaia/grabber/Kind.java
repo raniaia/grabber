@@ -1,4 +1,4 @@
-package com.raniaia.grabber.compiler;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,36 +20,40 @@ package com.raniaia.grabber.compiler;
  */
 
 /*
- * Creates on 2020/4/10.
+ * Creates on 2020/4/14.
  */
-
-import com.raniaia.grabber.parser.LexicalAnalyzer;
-import com.raniaia.grabber.GrabberSource;
-import com.raniaia.grabber.syntax.SyntaxToken;
-import com.raniaia.grabber.Reader;
-
-import java.util.List;
 
 /**
+ * 一段声明符号表示
+ *
  * @author tiansheng
  */
-public class CompilerTest {
+public enum Kind {
 
-	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
+	/**
+	 * 表达式
+	 */
+	G_EXPR,
 
-	public static void main(String[] args) {
-		Reader reader = new Reader(srcdir);
-		reader.init();
-		List<GrabberSource> scs = reader.toSourceCodeList();
-		for (GrabberSource sc : scs) {
-			LexicalAnalyzer lexer = new LexicalAnalyzer();
-			lexer.setSourceCode(sc);
-			lexer.initReader();
-			List<SyntaxToken> tokens = lexer.getSyntaxTokens();
-			for (SyntaxToken token : tokens) {
-				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
-			}
-		}
-	}
+	/**
+	 * 定义一个数组
+	 */
+	G_ARRAY_DEF,
+
+	/**
+	 * 标识符
+	 */
+	G_IDEN,
+
+	/**
+	 * 定义函数块
+	 */
+	G_DEF_FUNCTION,
+
+	/**
+	 * return
+	 */
+	G_RETURN,
+
 
 }

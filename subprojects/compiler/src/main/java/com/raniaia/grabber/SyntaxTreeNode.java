@@ -1,4 +1,4 @@
-package com.raniaia.grabber.syntax;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,12 +23,31 @@ package com.raniaia.grabber.syntax;
  * Creates on 2020/4/14.
  */
 
+import java.util.List;
+
 /**
- * 抽象语法树
- * AST(Abstract Syntax Tree)
- *
  * @author tiansheng
  */
-public class AST {
+public class SyntaxTreeNode {
+
+	/**
+	 * root节点
+	 */
+	protected SyntaxTreeNode parent;
+
+	/**
+	 * 下一个子节点
+	 */
+	protected SyntaxTreeNode next;
+
+	/**
+	 * 当前节点类型
+	 */
+	protected Kind type;
+
+	/**
+	 * 子节点
+	 */
+	List<SyntaxTreeNode> children;
 
 }

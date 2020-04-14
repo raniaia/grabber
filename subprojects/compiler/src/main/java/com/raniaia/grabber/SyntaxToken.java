@@ -1,4 +1,4 @@
-package com.raniaia.grabber.syntax;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.

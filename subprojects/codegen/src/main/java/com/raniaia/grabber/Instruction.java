@@ -1,4 +1,4 @@
-package com.raniaia.grabber.parser;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -24,7 +24,20 @@ package com.raniaia.grabber.parser;
  */
 
 /**
+ * 中间代码指令
+ *
+ * PI_*				 - 压入数据到栈顶
+ * NOP				 - 什么也不做
+ * DUP				 - 从栈顶复制数据
+ *
  * @author tiansheng
  */
-public class SemanticAnalyzer {
+public enum Instruction {
+
+	//===========================================================
+	//
+	// 栈操作
+	//
+	//===========================================================
+
 }

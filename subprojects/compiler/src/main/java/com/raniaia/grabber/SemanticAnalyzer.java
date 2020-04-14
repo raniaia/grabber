@@ -1,3 +1,5 @@
+package com.raniaia.grabber;
+
 /*
  * Copyright (C) 2020 the original author or authors.
  * Licensed under the GPL, Version 2.0 (the "License");
@@ -18,24 +20,22 @@
  */
 
 /*
- * Creates on 2020/4/12.
+ * Creates on 2020/4/14.
  */
 
-import org.junit.Test;
+import java.util.List;
 
 /**
+ * 语义分析器
+ *
  * @author tiansheng
  */
-public class TEST {
+public class SemanticAnalyzer {
 
-	@Test
-	public void decimal() {
+	public void getAst(List<SyntaxToken> syntaxTokens) {
+		for (SyntaxToken syntaxToken : syntaxTokens) {
 
-		float  y = 9;
-
-		double x = 10;
-
-		// System.out.println(100.00);
+		}
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.raniaia.grabber.syntax;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,20 +23,30 @@ package com.raniaia.grabber.syntax;
  * Creates on 2020/4/14.
  */
 
-import com.raniaia.grabber.Constants;
+import java.util.List;
 
 /**
- * 一段声明符号表示
- *
  * @author tiansheng
  */
-public enum  Kind {
+public class Grabberc {
 
-	/**
-	 * 表示当前扫描到的声明为一个表达式.
-	 * 例如return、1+1，x * 2等句子。
-	 */
-	CONST_EXP,
+	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
 
+	public static void main(String[] args) {
+		SourcesReader reader = new SourcesReader(srcdir);
+		reader.init();
+		List<GrabberSource> scs = reader.toSourceCodeList();
+		for (GrabberSource sc : scs) {
+			LexicalAnalyzer lexer = new LexicalAnalyzer();
+			lexer.setSourceCode(sc);
+			lexer.initReader();
+			List<SyntaxToken> tokens = lexer.getSyntaxTokens();
+
+			// 获取抽象语法树
+			SemanticAnalyzer senaner = new SemanticAnalyzer();
+			senaner.getAst(tokens);
+
+		}
+	}
 
 }
