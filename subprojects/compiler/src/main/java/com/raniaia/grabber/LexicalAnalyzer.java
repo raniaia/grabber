@@ -29,7 +29,6 @@ import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * 词法解析器 (lexer)
@@ -318,7 +317,7 @@ public class LexicalAnalyzer {
 
 	/** 获取源程序单个字符的读取器 **/
 	CharReader getCharReader() {
-		return new CharReader(code.getValue());
+		return new CharReader(code);
 	}
 
 	/** 判断是不是一个字符 **/
@@ -525,7 +524,7 @@ public class LexicalAnalyzer {
 	 * @see #lexer
 	 * @return Token集合
 	 */
-	public List<SyntaxToken> getSyntaxTokens() {
+	public FinalToken getSyntaxTokens() {
 		while (reader.ready()) {
 			char ch = reader.read();
 			/*
@@ -560,7 +559,7 @@ public class LexicalAnalyzer {
 
 			lexer(ch);
 		}
-		return this.tokens;
+		return new FinalToken(reader.name,this.tokens);
 	}
 
 	void error(String message) {
@@ -871,14 +870,16 @@ public class LexicalAnalyzer {
 	/**
 	 * 字符读取器
 	 */
-	class CharReader {
+	static class CharReader {
 
 		char[] value;
 		int position   = -1; // 当前读取到的位置
 		int lineNumber =  0; // 当前读取到的行
+		String name;
 
-		CharReader(String input) {
-			this.value = input.toCharArray();
+		CharReader(GrabberSource source) {
+			this.name = source.name;
+			this.value = source.value.toCharArray();
 		}
 
 		boolean ready() {
@@ -908,25 +909,6 @@ public class LexicalAnalyzer {
 				lineNumber++;
 			}
 			return v;
-		}
-	}
-
-	public static void main(String[] args) {
-		System.out.println("请输入语法：");
-		Scanner scanner = new Scanner(System.in);
-		while (true) {
-			String value = scanner.nextLine();
-			if ("quit()".equals(value)) {
-				System.exit(0);
-			}
-			LexicalAnalyzer lexer = new LexicalAnalyzer();
-			GrabberSource sourceCode = new GrabberSource();
-			sourceCode.read(value);
-			lexer.setSourceCode(sourceCode);
-			lexer.initReader();
-			for (SyntaxToken token : lexer.getSyntaxTokens()) {
-				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
-			}
 		}
 	}
 

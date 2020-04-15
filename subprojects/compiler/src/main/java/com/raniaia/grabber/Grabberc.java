@@ -30,22 +30,4 @@ import java.util.List;
  */
 public class Grabberc {
 
-	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
-
-	public static void main(String[] args) {
-		SourcesReader reader = new SourcesReader(srcdir);
-		reader.init();
-		List<GrabberSource> scs = reader.toSourceCodeList();
-		for (GrabberSource sc : scs) {
-			LexicalAnalyzer lexer = new LexicalAnalyzer();
-			lexer.setSourceCode(sc);
-			lexer.initReader();
-			List<SyntaxToken> tokens = lexer.getSyntaxTokens();
-
-			// 获取抽象语法树
-			SemanticAnalyzer senaner = new SemanticAnalyzer();
-			senaner.getAst(tokens);
-		}
-	}
-
 }

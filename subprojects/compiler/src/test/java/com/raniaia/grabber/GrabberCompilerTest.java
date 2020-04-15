@@ -24,6 +24,7 @@ package com.raniaia.grabber;
  */
 
 import org.junit.Test;
+import org.raniaia.available.io.file.Files;
 
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class GrabberCompilerTest {
 			LexicalAnalyzer lexer = new LexicalAnalyzer();
 			lexer.setSourceCode(sc);
 			lexer.initReader();
-			List<SyntaxToken> tokens = lexer.getSyntaxTokens();
-			for (SyntaxToken token : tokens) {
+			FinalToken tokens = lexer.getSyntaxTokens();
+			for (SyntaxToken token : tokens.getTokens()) {
 				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
 			}
 		}
@@ -63,8 +64,23 @@ public class GrabberCompilerTest {
 	// ===========================================================
 
 	@Test
-	public void semanticParser() {
+	public void genSyntaxTree() {
+		SourcesReader reader = new SourcesReader(srcdir);
+		reader.init();
+		List<GrabberSource> scs = reader.toSourceCodeList();
+		for (GrabberSource sc : scs) {
+			LexicalAnalyzer lexer = new LexicalAnalyzer();
+			lexer.setSourceCode(sc);
+			lexer.initReader();
+			FinalToken tokens = lexer.getSyntaxTokens();
+			SyntaxTreeGen gen = new SyntaxTreeGen();
+			gen.genSyntaxTree(tokens);
+		}
+	}
 
+	@Test
+	public void getFileName() {
+		System.out.println(Files.newFile("e:/a/b/c\\e\\d/object.brab").getName());
 	}
 
 }

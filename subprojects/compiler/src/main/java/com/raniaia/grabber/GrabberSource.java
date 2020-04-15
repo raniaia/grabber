@@ -33,6 +33,8 @@ public class GrabberSource {
 
     String path;
 
+    String name;
+
     String value;
 
     public GrabberSource() {
@@ -41,6 +43,7 @@ public class GrabberSource {
     public GrabberSource(String path) {
         this.path = path;
         read();
+        name = Files.newFile(path).getName();
     }
 
     void read() {

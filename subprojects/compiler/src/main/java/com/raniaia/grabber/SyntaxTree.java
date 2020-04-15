@@ -20,22 +20,33 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/14.
+ * Creates on 2020/4/15.
  */
-
-import java.util.List;
 
 /**
- * 语义分析器
- *
  * @author tiansheng
  */
-public class SemanticAnalyzer {
+public class SyntaxTree implements AbstractSyntaxTree {
 
-	public void getAst(List<SyntaxToken> syntaxTokens) {
-		for (SyntaxToken syntaxToken : syntaxTokens) {
+	/**
+	 * SyntaxTreeNode才是真正的树。
+	 * SyntaxTree只是用来对TreeNode进行遍历的工具。
+	 */
+	SyntaxTreeNode tree;
 
-		}
+	@Override
+	public boolean top() {
+		return false;
+	}
+
+	@Override
+	public boolean bottom() {
+		return false;
+	}
+
+	@Override
+	public AbstractTreeNode next() {
+		return null;
 	}
 
 }

@@ -33,27 +33,27 @@ public enum Kind {
 	/**
 	 * 表达式
 	 */
-	G_EXPR,
+	CONST_EXPR,
 
 	/**
 	 * 定义一个数组
 	 */
-	G_ARRAY_DEF,
+	CONST_ARRAY_DEF,
 
 	/**
 	 * 标识符
 	 */
-	G_IDEN,
+	CONST_IDEN,
 
 	/**
 	 * 定义函数块
 	 */
-	G_DEF_FUNCTION,
+	CONST_FEAT,
 
 	/**
 	 * return
 	 */
-	G_RETURN,
+	CONST_RETURN,
 
 
 }

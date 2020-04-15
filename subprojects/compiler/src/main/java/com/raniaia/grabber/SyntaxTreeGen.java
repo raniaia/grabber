@@ -24,11 +24,26 @@ package com.raniaia.grabber;
  */
 
 /**
- * 抽象语法树
- * AST(Abstract Syntax Tree)
+ * 语义分析器
  *
  * @author tiansheng
  */
-public class AST {
+public class SyntaxTreeGen {
+
+	SyntaxTreeNode syntaxTree;
+
+	/**
+	 * 生成抽象语法树
+	 *
+	 * @param tokenBuilder 需要形成树结构的语法token
+	 */
+	public void genSyntaxTree(FinalToken tokenBuilder) {
+		for (SyntaxToken syntaxToken : tokenBuilder.getTokens()) {
+			System.out.println();
+		}
+	}
+
+	void addTreeNode(){
+	}
 
 }

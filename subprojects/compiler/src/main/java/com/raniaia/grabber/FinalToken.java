@@ -20,36 +20,43 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/14.
+ * Creates on 2020/4/15.
  */
 
 import java.util.List;
 
 /**
- * 抽象语法树（abstract syntax tree）
- *
  * @author tiansheng
  */
-public class SyntaxTreeNode implements AbstractTreeNode {
+public class FinalToken {
 
 	/**
-	 * 上一个节点
+	 * 表示tokens属于哪个文件
 	 */
-	SyntaxTreeNode parent;
+	private String name;
 
-	/**
-	 * 下一个节点
-	 */
-	SyntaxTreeNode next;
+	private List<SyntaxToken> tokens;
 
-	/**
-	 * 当前节点类型
-	 */
-	Kind type;
+	public FinalToken(){}
 
-	/**
-	 * 子节点
-	 */
-	List<SyntaxTreeNode> children;
+	public FinalToken(String name, List<SyntaxToken> tokens) {
+		this.name = name;
+		this.tokens = tokens;
+	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<SyntaxToken> getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(List<SyntaxToken> tokens) {
+		this.tokens = tokens;
+	}
 }

@@ -1,4 +1,4 @@
-package com.raniaia.grabber;
+package com.raniaia.grabber.lib;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,36 +20,11 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/14.
+ * Creates on 2020/4/16.
  */
-
-import java.util.List;
 
 /**
- * 抽象语法树（abstract syntax tree）
- *
  * @author tiansheng
  */
-public class SyntaxTreeNode implements AbstractTreeNode {
-
-	/**
-	 * 上一个节点
-	 */
-	SyntaxTreeNode parent;
-
-	/**
-	 * 下一个节点
-	 */
-	SyntaxTreeNode next;
-
-	/**
-	 * 当前节点类型
-	 */
-	Kind type;
-
-	/**
-	 * 子节点
-	 */
-	List<SyntaxTreeNode> children;
-
+public class grabber_lib_system {
 }

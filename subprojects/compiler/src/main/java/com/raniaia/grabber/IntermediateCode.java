@@ -20,36 +20,13 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/14.
+ * Creates on 2020/4/15.
  */
 
-import java.util.List;
-
 /**
- * 抽象语法树（abstract syntax tree）
+ * 最终生成的中间代码
  *
  * @author tiansheng
  */
-public class SyntaxTreeNode implements AbstractTreeNode {
-
-	/**
-	 * 上一个节点
-	 */
-	SyntaxTreeNode parent;
-
-	/**
-	 * 下一个节点
-	 */
-	SyntaxTreeNode next;
-
-	/**
-	 * 当前节点类型
-	 */
-	Kind type;
-
-	/**
-	 * 子节点
-	 */
-	List<SyntaxTreeNode> children;
-
+public class IntermediateCode {
 }
