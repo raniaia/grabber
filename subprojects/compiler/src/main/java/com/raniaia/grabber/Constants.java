@@ -189,7 +189,7 @@ public interface Constants {
      * 使用def可以定义一个函数。使用def定义的函数不需要声明返回值。因为
      * 编译器会在解析阶段进行优化的时候推算出函数的返回值。这是一个语法糖。
      */
-    DEF                 =          {KEEP_DEF, KEEP},
+    FEAT                 =          {KEEP_DEF, KEEP},
 
     /**
      * set声明一个变量或者是其他数据类型的时候需要使用的关键字。

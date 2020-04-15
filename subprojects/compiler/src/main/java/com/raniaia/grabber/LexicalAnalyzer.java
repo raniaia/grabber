@@ -35,6 +35,10 @@ import java.util.Scanner;
  * 词法解析器 (lexer)
  *
  * @author tiansheng
+ * @see    #lexer(char)
+ * @see    #getSyntaxTokens()
+ * @see    #getCharReader()
+ * @see	   #tokenRecord(int, String, int, int, LexerSym)
  */
 public class LexicalAnalyzer {
 
@@ -77,7 +81,7 @@ public class LexicalAnalyzer {
 		/**
 		 * 词法解析器解析到一个定义是函数的句子。
 		 */
-		DEF,
+		FEAT,
 
 		/**
 		 * 当解析到是一个定义关键字
@@ -464,7 +468,7 @@ public class LexicalAnalyzer {
 						return;
 					}
 					case Constants.KEEP_DEF: {
-						updateStatus(LexerSym.DEF);
+						updateStatus(LexerSym.FEAT);
 						return;
 					}
 					case Constants.KEEP_INCLUDE: {
@@ -658,7 +662,7 @@ public class LexicalAnalyzer {
 					if (!Constants.isEmpty(value())) {
 						error("非法定义，不能使用关键字作为成员名。");
 					}
-					tokenRecord(IDEN, builderClear(), IDEN, reader.lineNumber, LexerSym.DEF);
+					tokenRecord(IDEN, builderClear(), IDEN, reader.lineNumber, LexerSym.FEAT);
 					return;
 				}
 

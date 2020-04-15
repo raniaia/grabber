@@ -4,11 +4,11 @@ set:
   3: #sput_c    "root"
   4: #sput_c    "root"
 
-def bean.value():
+feat bean.value():
     code:
        0: #none
 
-def bean.value.connect():
+feat bean.value.connect():
     code:
        8: #ifne null    #0x1            // #3如果参数0x1不等于null
        0: #goto         #10             // true
@@ -17,7 +17,7 @@ def bean.value.connect():
       12: #com.raniaia.grabber.exec print   #3              // 打印第三行的内容
        0: #end
 
-def bean.value.man():
+feat bean.value.man():
     code:
        0: #sput_c   #3
        1: #sput_c   "sysdba"
@@ -26,7 +26,7 @@ def bean.value.man():
 
 ---- main bytecode ----
 
-def bean.value.man():
+feat bean.value.man():
     code:
        5: #new          bean.value()
        0: #sput_c       "u"

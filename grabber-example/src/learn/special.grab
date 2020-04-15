@@ -69,7 +69,7 @@ set ots = Object() to char[]
 private
 set me = People()
 
-def exec() {
+feat exec() {
     set g = Group()
     g.addPeople({me})
 }

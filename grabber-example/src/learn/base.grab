@@ -118,7 +118,7 @@ class base {
     --/
 
     
-    def Base(): private
+    feat Base(): private
 
     
 
@@ -130,10 +130,10 @@ class base {
 
     
     @value
-    def Base(value) {}
+    feat Base(value) {}
 
-    def getValue() {}
+    feat getValue() {}
 
-    def getValue0() {}
+    feat getValue0() {}
 
 }

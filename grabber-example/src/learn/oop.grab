@@ -24,7 +24,7 @@
 #define
 
     // 要求声明了该结构的类需要实现的方法
-    def {
+    feat {
         /*
 
         /--
@@ -67,12 +67,12 @@
 */
 #include <'oop'>
 class OOP_A {
-    def name() {"A"}
+    feat name() {"A"}
 }
 
 #include <'oop'>
 class OOP_B {
-    def name() {"B"}
+    feat name() {"B"}
 }
 
 /*
@@ -83,7 +83,7 @@ class OOP_B {
 
 */
 
-def main() {
+feat main() {
 
     set oppA = OppA()
     set base = oppA to <'opp'>

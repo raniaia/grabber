@@ -20,19 +20,28 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/14.
+ * Creates on 2020/4/15.
  */
+
+import org.junit.Test;
 
 import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class Grabberc {
+public class GrabberCompilerTest {
 
 	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
 
-	public static void main(String[] args) {
+	// ===========================================================
+	//
+	// 词法解析器测试
+	//
+	// ===========================================================
+
+	@Test
+	public void lexerShowToken() {
 		SourcesReader reader = new SourcesReader(srcdir);
 		reader.init();
 		List<GrabberSource> scs = reader.toSourceCodeList();
@@ -41,11 +50,21 @@ public class Grabberc {
 			lexer.setSourceCode(sc);
 			lexer.initReader();
 			List<SyntaxToken> tokens = lexer.getSyntaxTokens();
-
-			// 获取抽象语法树
-			SemanticAnalyzer senaner = new SemanticAnalyzer();
-			senaner.getAst(tokens);
+			for (SyntaxToken token : tokens) {
+				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
+			}
 		}
+	}
+
+	// ===========================================================
+	//
+	// 语义解析器以及生成AST测试
+	//
+	// ===========================================================
+
+	@Test
+	public void semanticParser() {
+
 	}
 
 }

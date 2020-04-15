@@ -14,7 +14,7 @@
         }
     },
 
-    def {
+    feat {
        File(path),
        read(path),              // 读取文件
        push(content),           // 放入内容
