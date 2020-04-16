@@ -25,6 +25,7 @@ package com.raniaia.grabber;
  */
 
 import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
+import com.sun.xml.internal.messaging.saaj.util.CharReader;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 
@@ -76,6 +77,11 @@ public class LexicalAnalyzer {
 		 * 词法解析器读取到char声明
 		 */
 		READ_CHAR,
+
+		/**
+		 * 词法解析器读取到注解
+		 */
+		READ_ANNOTATION,
 
 		/**
 		 * 词法解析器解析到一个定义是函数的句子。
@@ -478,6 +484,10 @@ public class LexicalAnalyzer {
 						updateStatus(LexerSym.DEFINE);
 						return;
 					}
+					case Constants.KEEP_ANNOTATION:{
+						updateStatus(LexerSym.INITIAL);
+						return;
+					}
 				}
 			}
 
@@ -649,6 +659,13 @@ public class LexicalAnalyzer {
 				}
 
 				/*
+				 * 当前读取到注解
+				 */
+				case READ_ANNOTATION: {
+					tokenRecord();
+				}
+
+				/*
 				 * 如果状态是一个声明的时候，那么该字符就表示是定义一个变量。
 				 */
 				case STMT_INT:
@@ -754,6 +771,18 @@ public class LexicalAnalyzer {
 		 * 判断是不是其他符号
 		 */
 		switch (ch) {
+
+			/**
+			 * 如果读取到艾特符号，那么就代表这是一个注解
+			 */
+			case '@': {
+				if(!StringUtils.isEmpty(value()) && status == LexerSym.READ_ANNOTATION) {
+					error("错误：注解声明无效符号");
+				}
+				append(ch);
+				updateStatus(LexerSym.READ_ANNOTATION);
+				return;
+			}
 
 			case '\'': {
 

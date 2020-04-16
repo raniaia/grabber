@@ -20,18 +20,17 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/15.
+ * Creates on 2020/4/16.
  */
 
 import org.junit.Test;
-import org.raniaia.available.io.file.Files;
 
 import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class GrabberCompilerTest {
+public class Lexer {
 
 	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
 
@@ -51,36 +50,14 @@ public class GrabberCompilerTest {
 			lexer.setSourceCode(sc);
 			lexer.initReader();
 			FinalToken tokens = lexer.getSyntaxTokens();
+			System.out.println("###############################################################");
+			System.out.println(tokens.name);
 			for (SyntaxToken token : tokens.tokens) {
 				System.out.println("<" + token.code + ", " + token.value + ">");
 			}
+			System.out.println("###############################################################");
+			System.out.println();
 		}
-	}
-
-	// ===========================================================
-	//
-	// 语义解析器以及生成AST测试
-	//
-	// ===========================================================
-
-	@Test
-	public void genSyntaxTree() {
-		SourcesReader reader = new SourcesReader(srcdir);
-		reader.init();
-		List<GrabberSource> scs = reader.toSourceCodeList();
-		for (GrabberSource sc : scs) {
-			LexicalAnalyzer lexer = new LexicalAnalyzer();
-			lexer.setSourceCode(sc);
-			lexer.initReader();
-			FinalToken tokens = lexer.getSyntaxTokens();
-			SyntaxTreeGen gen = new SyntaxTreeGen();
-			gen.genSyntaxTree(tokens);
-		}
-	}
-
-	@Test
-	public void getFileName() {
-		System.out.println(Files.newFile("e:/a/b/c\\e\\d/object.brab").getName());
 	}
 
 }

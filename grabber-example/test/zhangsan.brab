@@ -1,0 +1,9 @@
+#include <'people'>
+class zhangsan {
+
+   @override
+   feat eat() {
+
+   }
+
+}

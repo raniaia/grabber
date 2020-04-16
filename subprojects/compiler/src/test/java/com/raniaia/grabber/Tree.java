@@ -20,38 +20,45 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/5.
+ * Creates on 2020/4/15.
  */
 
+import org.junit.Test;
 import org.raniaia.available.io.file.Files;
 
+import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class GrabberSource {
+public class Tree {
 
-    String path;
+	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
 
-    String name;
+	// ===========================================================
+	//
+	// 语义解析器以及生成AST测试
+	//
+	// ===========================================================
 
-    String value;
+	@Test
+	public void genSyntaxTree() {
+		SourcesReader reader = new SourcesReader(srcdir);
+		reader.init();
+		List<GrabberSource> scs = reader.toSourceCodeList();
+		for (GrabberSource sc : scs) {
+			LexicalAnalyzer lexer = new LexicalAnalyzer();
+			lexer.setSourceCode(sc);
+			lexer.initReader();
+			FinalToken tokens = lexer.getSyntaxTokens();
+			SyntaxTreeGen gen = new SyntaxTreeGen();
+			gen.genSyntaxTree(tokens);
+		}
+	}
 
-    public GrabberSource() {
-    }
-
-    public GrabberSource(String path) {
-        this.path = path;
-        read();
-        name = Files.newFile(path).getName();
-    }
-
-    void read() {
-        this.value = Files.read(path);
-    }
-
-    public void read(String value) {
-        this.value = value;
-    }
+	@Test
+	public void getFileName() {
+		System.out.println(Files.newFile("e:/a/b/c\\e\\d/object.brab").getName());
+	}
 
 }

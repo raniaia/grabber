@@ -56,6 +56,7 @@ public interface Constants {
     int KEEP_DEF        = 0xf06;
     int KEEP_INCLUDE    = 0xf26;
     int KEEP_DEFINE     = 0xf29;
+    int KEEP_ANNOTATION = 0xf25;
 
     int LIMIT_EOF       = 0xEFF0;
     int LIMIT_STR       = 0x46a;
@@ -343,7 +344,7 @@ public interface Constants {
      *
      * 上面作用域的声明有很多，详情请参考{@link #SCOPE}
      */
-    ANNOTATION          =          {0xf25, KEEP},
+    ANNOTATION          =          {KEEP_ANNOTATION, KEEP},
 
     /**
      * include导入结构文件以及包。
@@ -620,16 +621,21 @@ public interface Constants {
     static String cover(String input) {
         // 判断当前字符是不是String类型的
         int il = input.length();
-        if("\"".equals(input.substring(0,1))) {
+        String first = input.substring(0,1);
+        if("\"".equals(first)) {
             if("\"".equals(input.substring(il-1,il))) {
                 input = "str";
             }
         }
         // 判断当前字符是不是char类型的
-        if("\'".equals(input.substring(0,1))) {
+        if("\'".equals(first)) {
             if("\'".equals(input.substring(il-1,il))) {
                 input = "char";
             }
+        }
+        // 判断当前字符串是不是注解
+        if ("@".equals(first)) {
+            input = "@A";
         }
         switch (input) {
             case "=": return "ASSIGN";
@@ -643,6 +649,7 @@ public interface Constants {
             case "<": return "LT";
             case ">": return "GT";
             case "$i": return "C_INDEX";
+            case "@A": return "ANNOTATION";
             case "str": return "STRING";
             case "char": return "CHAR";
             case "#define": return "DEFINE";
