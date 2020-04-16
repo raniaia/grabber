@@ -23,33 +23,18 @@ package com.raniaia.grabber;
  * Creates on 2020/4/14.
  */
 
-import java.util.List;
-
 /**
  * 抽象语法树（abstract syntax tree）
  *
+ * 当前类才是整课语法树，而{@link SyntaxTree}是对{@code SyntaxTreeNode}做了
+ * 一层基本的封装，以及对树的遍历等操作。
+ *
+ * 封装了一颗语法树的基本属性。所以真正的抽象语法树是{@code SyntaxTreeNode}
+ * 而不是{@link SyntaxTree}。
+ *
  * @author tiansheng
+ * @see SyntaxTree
  */
-public class SyntaxTreeNode implements AbstractTreeNode {
-
-	/**
-	 * 上一个节点
-	 */
-	SyntaxTreeNode parent;
-
-	/**
-	 * 下一个节点
-	 */
-	SyntaxTreeNode next;
-
-	/**
-	 * 当前节点类型
-	 */
-	Kind type;
-
-	/**
-	 * 子节点
-	 */
-	List<SyntaxTreeNode> children;
+public class SyntaxTreeNode extends AbstractTreeNode {
 
 }

@@ -57,7 +57,7 @@
  #include这句话就代表声明了一个结构体文件。
  你可以将它理解为Java中的这句话
  <code>
-    class OOP_A implements Base {}
+    class OOPT_A implements Base {}
  <code>
 
  下面我们声明了两个对象，他们同时声明了<'base'>结构体文件。
@@ -66,12 +66,12 @@
 
 */
 #include <'oop'>
-class OOP_A {
+class OOPT_A {
     feat name() {"A"}
 }
 
 #include <'oop'>
-class OOP_B {
+class OOPT_B {
     feat name() {"B"}
 }
 

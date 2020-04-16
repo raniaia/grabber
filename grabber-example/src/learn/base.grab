@@ -132,7 +132,7 @@ class base {
     @value
     feat Base(value) {}
 
-    feat getValue() {}
+    feat value {}
 
     feat getValue0() {}
 

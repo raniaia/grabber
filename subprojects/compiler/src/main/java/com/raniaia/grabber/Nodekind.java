@@ -20,28 +20,52 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/15.
+ * Creates on 2020/4/14.
  */
-
-import java.util.List;
 
 /**
+ * 表示一个节点的语句含义
+ *
  * @author tiansheng
  */
-public class FinalToken {
+public enum Nodekind {
 
 	/**
-	 * 表示tokens属于哪个文件
+	 * 表达式
 	 */
-	String name;
+	CONST_EXPR,
 
-	List<SyntaxToken> tokens;
+	/**
+	 * 定义一个数组
+	 */
+	CONST_ARRAY_DEF,
 
-	public FinalToken(){}
+	/**
+	 * 标识符
+	 */
+	CONST_IDEN,
 
-	public FinalToken(String name, List<SyntaxToken> tokens) {
-		this.name = name;
-		this.tokens = tokens;
-	}
+	/**
+	 * 定义函数块
+	 */
+	CONST_FEAT,
+
+	/**
+	 * return
+	 */
+	CONST_RETURN,
+
+	NK_INCLUDE,
+
+	/**
+	 * 声明导入文件
+	 */
+	STMT_INCLUDE_FILE,
+
+	/**
+	 * 导入声明文件
+	 */
+	STMT_INCLUDE_STMT,
+
 
 }

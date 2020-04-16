@@ -24,7 +24,7 @@ package com.raniaia.grabber;
  */
 
 /**
- * 对整课抽象语法树进行语法推导。
+ * 对整课抽象语法树进行语法推导。以及代码优化
  *
  * @author tiansheng
  */

@@ -20,40 +20,13 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/14.
+ * Creates on 2020/4/16.
  */
 
 /**
- * 一段声明符号表示
+ * 表示当前节点类型
  *
  * @author tiansheng
  */
-public enum Kind {
-
-	/**
-	 * 表达式
-	 */
-	CONST_EXPR,
-
-	/**
-	 * 定义一个数组
-	 */
-	CONST_ARRAY_DEF,
-
-	/**
-	 * 标识符
-	 */
-	CONST_IDEN,
-
-	/**
-	 * 定义函数块
-	 */
-	CONST_FEAT,
-
-	/**
-	 * return
-	 */
-	CONST_RETURN,
-
-
+public class Nodetype {
 }

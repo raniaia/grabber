@@ -51,8 +51,8 @@ public class GrabberCompilerTest {
 			lexer.setSourceCode(sc);
 			lexer.initReader();
 			FinalToken tokens = lexer.getSyntaxTokens();
-			for (SyntaxToken token : tokens.getTokens()) {
-				System.out.println("<" + token.getCode() + ", " + token.getValue() + ">");
+			for (SyntaxToken token : tokens.tokens) {
+				System.out.println("<" + token.code + ", " + token.value + ">");
 			}
 		}
 	}

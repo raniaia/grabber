@@ -34,34 +34,33 @@ import java.lang.reflect.Field;
  * 符号种别码，数组中表示每个符号对应的种别码以及每个符号对应的类别。
  *x* @author tiansheng
  */
-@SuppressWarnings("ALL")
 public interface Constants {
 
     Class<Constants>        clazz       = Constants.class;
     Object                  object      = new Constants() {};
 
-    final int TYPE_CHAR       = 0x01fe;
-    final int TYPE_INT        = 0x02fe;
-    final int TYPE_U_INT      = 0x03fe;
-    final int TYPE_LONG       = 0x04fe;
-    final int TYPE_FLOAT      = 0x05fe;
-    final int TYPE_DOUBLE     = 0x06fe;
-    final int TYPE_BOOL       = 0x07fe;
+    int TYPE_CHAR       = 0x01fe;
+    int TYPE_INT        = 0x02fe;
+    int TYPE_U_INT      = 0x03fe;
+    int TYPE_LONG       = 0x04fe;
+    int TYPE_FLOAT      = 0x05fe;
+    int TYPE_DOUBLE     = 0x06fe;
+    int TYPE_BOOL       = 0x07fe;
 
-    final int OP_GT           = 0x33e;
-    final int OP_LT           = 0x34e;
-    final int OP_ASSIGN       = 0x41e;
+    int OPT_GT           = 0x33e;
+    int OPT_LT           = 0x34e;
+    int OPT_ASSIGN       = 0x41e;
 
-    final int KEEP_SET        = 0xf07;
-    final int KEEP_CLASS      = 0xf24;
-    final int KEEP_DEF        = 0xf06;
-    final int KEEP_INCLUDE    = 0xf26;
-    final int KEEP_DEFINE     = 0xf29;
+    int KEEP_SET        = 0xf07;
+    int KEEP_CLASS      = 0xf24;
+    int KEEP_DEF        = 0xf06;
+    int KEEP_INCLUDE    = 0xf26;
+    int KEEP_DEFINE     = 0xf29;
 
-    final int LIMIT_EOF       = 0xEFF0;
-    final int LIMIT_STR       = 0x46a;
-    final int LIMIT_LPBT      = 0x40a;
-    final int LIMIT_RPBT      = 0x41a;
+    int LIMIT_EOF       = 0xEFF0;
+    int LIMIT_STR       = 0x46a;
+    int LIMIT_LPBT      = 0x40a;
+    int LIMIT_RPBT      = 0x41a;
 
     int
 
@@ -457,12 +456,12 @@ public interface Constants {
     /**
      * 逻辑符大于
      */
-    GT                  =          {OP_GT, OP},
+    GT                  =          {OPT_GT, OP},
 
     /**
      * 逻辑符小于
      */
-    LT                  =          {OP_LT, OP},
+    LT                  =          {OPT_LT, OP},
 
     /**
      * 逻辑符大于等于
@@ -502,7 +501,7 @@ public interface Constants {
     /**
      * 赋值，符号为<=>
      */
-    ASSIGN              =          {OP_ASSIGN, OP},
+    ASSIGN              =          {OPT_ASSIGN, OP},
 
     /**
      * 表示一个char字符

@@ -54,7 +54,7 @@ public class GrabberSource {
         this.value = value;
     }
 
-    public String getValue() {
+    public String value {
         return this.value;
     }
 

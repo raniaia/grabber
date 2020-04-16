@@ -33,22 +33,22 @@ public class SyntaxToken {
     /**
      * 符号对应编码，参考{@link Constants}
      */
-    public int          code;
+    int          code;
 
     /**
      * 符号对应的值
      */
-    public String       value;
+    String       value;
 
     /**
      * 符号对应的分类，参考{@link Constants}
      */
-    public int          classify;
+    int          classify;
 
     /**
      * Token对应的代码中的行号
      */
-    public int          lineNumber;
+    int          lineNumber;
 
     public SyntaxToken(){}
 
@@ -64,38 +64,6 @@ public class SyntaxToken {
         this.code = code;
         this.value = value;
         this.classify = classify;
-        this.lineNumber = lineNumber;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public int getClassify() {
-        return classify;
-    }
-
-    public void setClassify(int classify) {
-        this.classify = classify;
-    }
-
-    public int getLineNumber() {
-        return lineNumber;
-    }
-
-    public void setLineNumber(int lineNumber) {
         this.lineNumber = lineNumber;
     }
 

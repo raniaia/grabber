@@ -419,10 +419,10 @@ public class LexicalAnalyzer {
 		final int classify = scode[1];
 		final int species = scode[0];
 		SyntaxToken token = new SyntaxToken();
-		token.setCode(scode[0]);
-		token.setClassify(classify);
-		token.setValue(value);
-		token.setLineNumber(reader.lineNumber);
+		token.code = scode[0];
+		token.classify = classify;
+		token.value = value;
+		token.lineNumber = reader.lineNumber;
 		this.tokens.add(token);
 
 		switch (classify) {
@@ -484,7 +484,7 @@ public class LexicalAnalyzer {
 			/* 操作符 */
 			case Constants.OP: {
 				switch (species) {
-					case Constants.OP_ASSIGN: {
+					case Constants.OPT_ASSIGN: {
 						if (previous == LexerSym.STMT_INT) {
 							updateStatus(LexerSym.A_INT);
 						}
@@ -493,11 +493,11 @@ public class LexicalAnalyzer {
 						}
 						return;
 					}
-					case Constants.OP_GT:{
+					case Constants.OPT_GT:{
 						updateStatus(LexerSym.GT);
 						return;
 					}
-					case Constants.OP_LT:{
+					case Constants.OPT_LT:{
 						updateStatus(LexerSym.LT);
 						return;
 					}

@@ -28,6 +28,8 @@ package com.raniaia.grabber;
  */
 public class SyntaxTree implements AbstractSyntaxTree {
 
+	String name;
+
 	/**
 	 * SyntaxTreeNode才是真正的树。
 	 * SyntaxTree只是用来对TreeNode进行遍历的工具。

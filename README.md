@@ -1,3 +1,3 @@
-# com.raniaia.grabber
+# Grabber（）
 
-programing language based developing on Java and C++.
+> Grabber是基于Java和C++开发的一门新型编程语言。对于这门编程语言的源码我们团队选择采用全中文的方式进行注释，方便国人阅读源码以及理解。

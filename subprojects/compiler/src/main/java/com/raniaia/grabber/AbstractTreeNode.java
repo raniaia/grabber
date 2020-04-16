@@ -24,10 +24,19 @@ package com.raniaia.grabber;
  */
 
 /**
+ * 抽象语法树节点
  * @author tiansheng
  */
-public interface AbstractTreeNode {
+public abstract class AbstractTreeNode implements Constants {
 
+	Nodekind nodeKind;
 
+	Nodetype nodetype;
+
+	AbstractTreeNode parent;
+
+	AbstractTreeNode leftChildren;
+
+	AbstractTreeNode rightChildren;
 
 }
