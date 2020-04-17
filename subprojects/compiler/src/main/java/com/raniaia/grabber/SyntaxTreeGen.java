@@ -99,6 +99,11 @@ public class SyntaxTreeGen implements Constants {
 					updateNodekind(Nodekind.STMT_INCLUDE_STMT);
 				}
 			}
+			case IDEN: {
+				if (nodekind == Nodekind.STMT_INCLUDE_STMT) {
+
+				}
+			}
 		}
 	}
 
