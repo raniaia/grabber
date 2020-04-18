@@ -60,4 +60,15 @@ public class Lexer {
 		}
 	}
 
+	/*
+	 * 测试linux下获取user.dir目录。
+	 * 这特么是个坑，如果是windows下的话获取到的目录应该是当前
+	 * 项目的根路径，但是如果是在linux的话获取到的user.dir就是当前项目
+	 * 模块的根路径。
+	 */
+	@Test
+	public void userDirPropertyForLinux() {
+		System.out.println(System.getProperty("user.dir"));
+	}
+
 }

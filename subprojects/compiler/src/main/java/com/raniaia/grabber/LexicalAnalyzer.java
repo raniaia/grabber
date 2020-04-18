@@ -25,7 +25,6 @@ package com.raniaia.grabber;
  */
 
 import com.raniaia.grabber.error.syntax.GrabberSyntaxError;
-import com.sun.xml.internal.messaging.saaj.util.CharReader;
 import org.raniaia.available.list.Lists;
 import org.raniaia.available.string.StringUtils;
 

@@ -44,11 +44,11 @@ public class SourcesReader {
 	List<String> 			packages;
 	String 					previous;
 
-	GrabberCfg grabc
-			= GrabberCfg.getInstance(OpCodes.USER_DIR + "/config/compiler.cfg");
-
-	String					OBJECT_FILE_SUFFIX	= grabc.getValue("reader","class");
-	String					STMT_FILE_SUFFIX	= grabc.getValue("reader","structure-body");
+//	GrabberCfg grabc
+//			= GrabberCfg.getInstance(OpCodes.USER_DIR + "/compiler.cfg");
+//
+//	String					OBJECT_FILE_SUFFIX	= grabc.getValue("reader","class");
+//	String					STMT_FILE_SUFFIX	= grabc.getValue("reader","structure-body");
 
 	/**
 	 * @param srcdir 源码目录
@@ -70,8 +70,8 @@ public class SourcesReader {
 			if (file.isDirectory()) {
 				getPackages(file);
 			}
-			if (OBJECT_FILE_SUFFIX.equals(Files.getSuffix(file))
-							|| STMT_FILE_SUFFIX.equals(Files.getSuffix(file))) {
+			if ("brab".equals(Files.getSuffix(file))
+							|| "stmt".equals(Files.getSuffix(file))) {
 				if (classfile == null) {
 					classfile = Lists.newArrayList();
 				}
