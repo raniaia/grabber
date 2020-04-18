@@ -16,7 +16,7 @@ package com.raniaia.grabber;
  *
  * The source code of this program is only provided for learning and research.
  * If the program source code is used for criminal acts, such as illegal acts,
- * it is not related to the original author and need to be personally responsible.
+ * it is not related to the odwadwariginal author and need to be personally responsible.
  */
 
 /*
@@ -25,6 +25,7 @@ package com.raniaia.grabber;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ import java.util.List;
  */
 public class Lexer {
 
-	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
+	static String srcdir = "/home/adminroot/IdeaProjects/grabber/grabber-example/test/";
 
 	// ===========================================================
 	//
@@ -60,14 +61,19 @@ public class Lexer {
 		}
 	}
 
-	/*
-	 * 测试linux下获取user.dir目录。
-	 * 这特么是个坑，如果是windows下的话获取到的目录应该是当前
-	 * 项目的根路径，但是如果是在linux的话获取到的user.dir就是当前项目
-	 * 模块的根路径。
+	/**
+	 * 获取项目根目录
 	 */
 	@Test
 	public void userDirPropertyForLinux() {
+		/*
+		 * 测试linux下获取user.dir目录。
+		 * 这特么是个坑，如果是windows下的话获取到的目录应该是当前
+		 * 项目的根路径，但是如果是在linux的话获取到的user.dir就是当前项目
+		 * 模块的根路径。
+		 *
+		 * 所以这是值得注意的一个地方.
+		 */
 		System.out.println(System.getProperty("user.dir"));
 	}
 
