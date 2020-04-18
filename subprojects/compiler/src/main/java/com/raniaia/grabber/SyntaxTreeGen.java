@@ -50,7 +50,7 @@ public class SyntaxTreeGen implements Constants {
 	 *
 	 * @param finalToken 需要形成树结构的语法token
 	 */
-	public void genSyntaxTree(FinalToken finalToken) {
+	public SyntaxTree genSyntaxTree(FinalToken finalToken) {
 		//
 		// 先构造出一个最基本的树
 		//
@@ -59,6 +59,7 @@ public class SyntaxTreeGen implements Constants {
 		for (SyntaxToken syntaxToken : finalToken.tokens) {
 			buildNode(syntaxToken);
 		}
+		return syntaxTree;
 	}
 
 	void buildNode(SyntaxToken token)
@@ -76,6 +77,7 @@ public class SyntaxTreeGen implements Constants {
 				// ## INCLUDE关键字，只是不知道这个关键字作用在导包还是作用在
 				// ## 导入声明文件。
 				updateNodekind(Nodekind.NK_INCLUDE);
+				return;
 			}
 
 			/*
@@ -98,11 +100,26 @@ public class SyntaxTreeGen implements Constants {
 				if(nodekind == Nodekind.NK_INCLUDE) {
 					updateNodekind(Nodekind.STMT_INCLUDE_STMT);
 				}
+				return;
 			}
-			case IDEN: {
-				if (nodekind == Nodekind.STMT_INCLUDE_STMT) {
 
+			/*
+			 * 扫描到标识符
+			 */
+			case IDEN: {
+
+				// ##
+				// ## 如果当前nodekind等于声明一个STMT的话那么就保存一个
+				// ## 节点到node tree中
+				// ##
+				if (nodekind == Nodekind.STMT_INCLUDE_STMT) {
+					SyntaxTreeNode node = new SyntaxTreeNode();
+					node.nodeKind = nodekind;
+					node.nodevalue = token.value;
+					syntaxTree.setLeftChildren(node);
+					return;
 				}
+				return;
 			}
 		}
 	}

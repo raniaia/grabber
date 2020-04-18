@@ -47,4 +47,8 @@ public interface AbstractSyntaxTree extends Constants {
 	 */
 	AbstractTreeNode next();
 
+	void setLeftChildren(SyntaxTreeNode node);
+
+	void setRightChildren(SyntaxTreeNode node);
+
 }

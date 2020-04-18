@@ -34,7 +34,7 @@ public class SyntaxTree implements AbstractSyntaxTree {
 	 * SyntaxTreeNode才是真正的树。
 	 * SyntaxTree只是用来对TreeNode进行遍历的工具。
 	 */
-	SyntaxTreeNode tree;
+	SyntaxTreeNode tree = new SyntaxTreeNode();
 
 	@Override
 	public boolean top() {
@@ -51,4 +51,13 @@ public class SyntaxTree implements AbstractSyntaxTree {
 		return null;
 	}
 
+	@Override
+	public void setLeftChildren(SyntaxTreeNode node) {
+		tree.leftChildren = node;
+	}
+
+	@Override
+	public void setRightChildren(SyntaxTreeNode node) {
+		tree.rightChildren = node;
+	}
 }

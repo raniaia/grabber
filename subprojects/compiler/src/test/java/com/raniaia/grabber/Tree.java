@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class Tree {
 
-	static String srcdir = System.getProperty("user.dir") + "/grabber-example/test/";
+	static String srcdir = "/home/adminroot/IdeaProjects/grabber/grabber-example/test/";
 
 	// ===========================================================
 	//
@@ -52,7 +52,8 @@ public class Tree {
 			lexer.initReader();
 			FinalToken tokens = lexer.getSyntaxTokens();
 			SyntaxTreeGen gen = new SyntaxTreeGen();
-			gen.genSyntaxTree(tokens);
+			SyntaxTree tree = gen.genSyntaxTree(tokens);
+			System.out.println();
 		}
 	}
 

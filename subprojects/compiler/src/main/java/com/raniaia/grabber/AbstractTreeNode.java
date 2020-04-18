@@ -31,7 +31,7 @@ public abstract class AbstractTreeNode implements Constants {
 
 	Nodekind nodeKind;
 
-	Nodetype nodetype;
+	String nodevalue;
 
 	AbstractTreeNode parent;
 
