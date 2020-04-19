@@ -1,4 +1,4 @@
-package com.raniaia.grabber;
+package com.raniaia.grabber.command;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,18 +23,13 @@ package com.raniaia.grabber;
  * Creates on 2020/4/14.
  */
 
+import java.util.List;
+
 /**
- * 抽象语法树（abstract syntax tree）
- *
- * 当前类才是整课语法树，而{@link SyntaxTree}是对{@code SyntaxTreeNode}做了
- * 一层基本的封装，以及对树的遍历等操作。
- *
- * 封装了一颗语法树的基本属性。所以真正的抽象语法树是{@code SyntaxTreeNode}
- * 而不是{@link SyntaxTree}。
+ * grabber编译命令
  *
  * @author tiansheng
- * @see SyntaxTree
  */
-public class SyntaxTreeNode extends AbstractTreeNode {
+public class grabberc {
 
 }

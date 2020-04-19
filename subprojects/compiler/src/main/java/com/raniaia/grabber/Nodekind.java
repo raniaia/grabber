@@ -31,6 +31,11 @@ package com.raniaia.grabber;
 public enum Nodekind {
 
 	/**
+	 * 表示什么也不做
+	 */
+	DNT,
+
+	/**
 	 * 表达式
 	 */
 	CONST_EXPR,
