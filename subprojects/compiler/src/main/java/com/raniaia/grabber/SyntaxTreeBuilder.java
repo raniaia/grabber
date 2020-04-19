@@ -34,7 +34,7 @@ public class SyntaxTreeBuilder {
     FinalToken finalToken;
 
     /**
-     * 设置源码的最终文件token
+     * 设置源码最终读取的token
      */
     public void setFinalToken(FinalToken finalToken) {
         this.finalToken = finalToken;
@@ -42,7 +42,12 @@ public class SyntaxTreeBuilder {
 
     public List<Node> parser() {
         List<Node> nodes = Lists.newLinkedList();
+        for(SyntaxToken token : finalToken.tokens) {
+
+        }
         return nodes;
     }
+
+    
 
 }
