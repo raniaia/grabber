@@ -2,8 +2,9 @@
 class zhangsan {
 
    @override
-   feat eat() {
-
+   feat eat(what, howk: int) {
+       print(what, howk)
    }
 
 }
+

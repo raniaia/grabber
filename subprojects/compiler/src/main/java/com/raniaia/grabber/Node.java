@@ -20,13 +20,28 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/15.
+ * Creates on 20-4-19.
  */
 
 /**
- * 对整课抽象语法树进行语法推导。以及代码优化
+ * 语法节点
  *
  * @author tiansheng
  */
-public class TreeDerivation {
+public class Node {
+
+    /**
+     * 表示当前在做什么事情
+     */
+    Nodekind nodekind;
+
+    /**
+     * 节点的值
+     */
+    String value;
+
+    public Node(Nodekind nodekind, String value) {
+        this.nodekind = nodekind;
+        this.value = value;
+    }
 }

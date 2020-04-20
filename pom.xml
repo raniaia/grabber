@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
@@ -94,4 +95,102 @@ it is not related to the original author and need to be personally responsible.
         </dependency>
     </dependencies>
 
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright (C) 2020 the original author or authors.
+Licensed under the GPL, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://b2evolution.net/about/gnu-gpl-license
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+The source code of this program is only provided for learning and research.
+If the program source code is used for criminal acts, such as illegal acts,
+it is not related to the original author and need to be personally responsible.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.raniaia</groupId>
+    <artifactId>com.raniaia.grabber</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0.BETA</version>
+
+<!--    <modules>-->
+<!--        &lt;!&ndash; grabber虚拟机 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-virtual-machine</module>-->
+<!--        &lt;!&ndash; grabber自带的库 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-external-lib</module>-->
+<!--        &lt;!&ndash; 将bytecode转换成windows对应的机器码 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-bytecode-windows</module>-->
+<!--        &lt;!&ndash; 将bytecode转换成linux对应的机器码 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-bytecode-linux</module>-->
+<!--        &lt;!&ndash; 将bytecode转换成mac对应的机器码 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-bytecode-macos</module>-->
+<!--        <module>com.raniaia.grabber-provided-lib</module>-->
+<!--        &lt;!&ndash; 静态工具 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-static-com.raniaia.grabber.tools</module>-->
+<!--        &lt;!&ndash; 构建工具 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-builder-tool</module>-->
+<!--        &lt;!&ndash; 异常处理 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-sys-exception</module>-->
+<!--        &lt;!&ndash; debug工具 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-debug-tool</module>-->
+<!--        &lt;!&ndash; 用到的常量 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-provided-constant</module>-->
+<!--        &lt;!&ndash; 源码读取器 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-source-reader</module>-->
+<!--        &lt;!&ndash; 词法分析器：token &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-analysis-lexical</module>-->
+<!--        &lt;!&ndash; 语法分析器：ast &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-analysis-grammar</module>-->
+<!--        &lt;!&ndash; 语义分析器：bytecode &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-analysis-semantic</module>-->
+<!--        &lt;!&ndash; 字节码生成 &ndash;&gt;-->
+<!--        <module>com.raniaia.grabber-bytecode-generator</module>-->
+<!--        <module>com.raniaia.grabber-dev-test</module>-->
+<!--    </modules>-->
+
+    <properties>
+        <const.version>1.0.0.BETA</const.version>
+        <lombok.version>1.18.10</lombok.version>
+        <available.version>1.0.0.FIRST</available.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.raniaia</groupId>
+                <artifactId>com.raniaia.grabber-provided-constant</artifactId>
+                <version>${const.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Java开发工具库 -->
+        <dependency>
+            <groupId>com.raniaia</groupId>
+            <artifactId>available</artifactId>
+            <version>${available.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+    </dependencies>
+
+>>>>>>> 074c750aa2525ce5eb69cee7e64c4405f668411a
 </project>

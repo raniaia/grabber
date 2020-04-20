@@ -1,4 +1,4 @@
-package com.raniaia.grabber;
+package com.raniaia.grabber.command;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,14 +20,13 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/14.
+ * Creates on 20-4-19.
  */
-
-import java.util.List;
 
 /**
+ * grabber运行命令
+ *
  * @author tiansheng
  */
-public class Grabberc {
-
+public class grabber {
 }

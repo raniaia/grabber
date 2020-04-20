@@ -30,7 +30,6 @@ include("subprojects")
  */
 include("subprojects:provided")
 include("subprojects:compiler")
-include("subprojects:dev-test")
 include ("subprojects:codegen")
 include ("subprojects:debug")
 
