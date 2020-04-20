@@ -34,8 +34,6 @@ import java.util.List;
  */
 public class SyntaxTreeGen implements Constants {
 
-	SyntaxTree syntaxTree;
-
 	/**
 	 * 推导出当前节点是在做什么事情
 	 */
@@ -54,8 +52,6 @@ public class SyntaxTreeGen implements Constants {
 		//
 		// 先构造出一个最基本的树
 		//
-		syntaxTree = new SyntaxTree();
-		syntaxTree.name = finalToken.name;
 		for (SyntaxToken syntaxToken : finalToken.tokens) {
 			buildNode(syntaxToken);
 		}
@@ -97,6 +93,11 @@ public class SyntaxTreeGen implements Constants {
 				// ##
 				if(nodekind == Nodekind.NK_INCLUDE) {
 					updateNodekind(Nodekind.STMT_INCLUDE_STMT);
+				}
+			}
+			case IDEN: {
+				if (nodekind == Nodekind.STMT_INCLUDE_STMT) {
+					String v = token.value;
 				}
 			}
 		}

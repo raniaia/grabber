@@ -30,38 +30,38 @@ it is not related to the original author and need to be personally responsible.
     <version>1.0.0.BETA</version>
 
     <modules>
-        <!-- grabber虚拟机 -->
+        <!-- grabber虚拟机
         <module>com.raniaia.grabber-virtual-machine</module>
-        <!-- grabber自带的库 -->
+        &lt;!&ndash; grabber自带的库 &ndash;&gt;
         <module>com.raniaia.grabber-external-lib</module>
-        <!-- 将bytecode转换成windows对应的机器码 -->
+        &lt;!&ndash; 将bytecode转换成windows对应的机器码 &ndash;&gt;
         <module>com.raniaia.grabber-bytecode-windows</module>
-        <!-- 将bytecode转换成linux对应的机器码 -->
+        &lt;!&ndash; 将bytecode转换成linux对应的机器码 &ndash;&gt;
         <module>com.raniaia.grabber-bytecode-linux</module>
-        <!-- 将bytecode转换成mac对应的机器码 -->
+        &lt;!&ndash; 将bytecode转换成mac对应的机器码 &ndash;&gt;
         <module>com.raniaia.grabber-bytecode-macos</module>
         <module>com.raniaia.grabber-provided-lib</module>
-        <!-- 静态工具 -->
+        &lt;!&ndash; 静态工具 &ndash;&gt;
         <module>com.raniaia.grabber-static-com.raniaia.grabber.tools</module>
-        <!-- 构建工具 -->
+        &lt;!&ndash; 构建工具 &ndash;&gt;
         <module>com.raniaia.grabber-builder-tool</module>
-        <!-- 异常处理 -->
+        &lt;!&ndash; 异常处理 &ndash;&gt;
         <module>com.raniaia.grabber-sys-exception</module>
-        <!-- debug工具 -->
+        &lt;!&ndash; debug工具 &ndash;&gt;
         <module>com.raniaia.grabber-debug-tool</module>
-        <!-- 用到的常量 -->
+        &lt;!&ndash; 用到的常量 &ndash;&gt;
         <module>com.raniaia.grabber-provided-constant</module>
-        <!-- 源码读取器 -->
+        &lt;!&ndash; 源码读取器 &ndash;&gt;
         <module>com.raniaia.grabber-source-reader</module>
-        <!-- 词法分析器：token -->
+        &lt;!&ndash; 词法分析器：token &ndash;&gt;
         <module>com.raniaia.grabber-analysis-lexical</module>
-        <!-- 语法分析器：ast -->
+        &lt;!&ndash; 语法分析器：ast &ndash;&gt;
         <module>com.raniaia.grabber-analysis-grammar</module>
-        <!-- 语义分析器：bytecode -->
+        &lt;!&ndash; 语义分析器：bytecode &ndash;&gt;
         <module>com.raniaia.grabber-analysis-semantic</module>
-        <!-- 字节码生成 -->
+        &lt;!&ndash; 字节码生成 &ndash;&gt;
         <module>com.raniaia.grabber-bytecode-generator</module>
-        <module>com.raniaia.grabber-dev-test</module>
+        <module>com.raniaia.grabber-dev-test</module>-->
     </modules>
 
     <properties>
