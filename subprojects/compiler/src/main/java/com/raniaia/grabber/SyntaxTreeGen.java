@@ -98,6 +98,7 @@ public class SyntaxTreeGen implements Constants {
 			case IDEN: {
 				if (nodekind == Nodekind.STMT_INCLUDE_STMT) {
 					String v = token.value;
+					System.out.println(v);
 				}
 			}
 		}
