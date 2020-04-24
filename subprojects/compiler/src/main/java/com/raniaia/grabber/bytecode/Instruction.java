@@ -24,7 +24,7 @@ package com.raniaia.grabber.bytecode;
  */
 
 /**
- * Grabber中间代码，指令集
+ * 中间代码，Grabber指令集
  *
  * @author tiansheng
  */
