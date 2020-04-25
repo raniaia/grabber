@@ -1,19 +1,49 @@
-/**
-     * 执行无符号long类型的加法
+ /**
+     * 从内存中读取int类型的常量
      */
-    ULADD,
+    iload,
 
     /**
-     * 执行无符号long类型的减法
+     * 从内存中读取无符号int类型的常量
      */
-    ULSUB,
+    uiload,
 
     /**
-     * 执行无符号long类型的乘法
+     * 从内存中读取long类型的常量
      */
-    ULMUL,
+    lload,
 
     /**
-     * 执行无符号long类型的除法
+     * 从内存中读取无符号long类型的常量
      */
-    ULDIV,
+    ulload,
+
+    /**
+     * 从内存中读取float类型的常量
+     */
+    fload,
+
+    /**
+     * 从内存中读取double类型的常量
+     */
+    dload,
+
+    /**
+     * 从内存中读取char类型的常量
+     */
+    chload,
+
+    /**
+     * 从内存中读取bool类型的常量true
+     */
+    blload_true,
+
+    /**
+     * 从内存中读取bool类型的常量false
+     */
+    blload_false,
+
+    /**
+     * 从内存中读取byte类型的常量
+     */
+    btload,

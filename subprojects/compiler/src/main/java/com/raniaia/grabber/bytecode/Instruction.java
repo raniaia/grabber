@@ -1,36 +1,30 @@
 package com.raniaia.grabber.bytecode;
 
 /*
- * Copyright (C) 2020 the original author or authors.
- * Licensed under the GPL, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * copyright (c) 2020 the original author or authors.
+ * licensed under the gpl, version 2.0 (the "license");
+ * you may not use this file except in compliance with the license.
+ * you may obtain a copy of the license at
  *
  *     https://b2evolution.net/about/gnu-gpl-license
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * unless required by applicable law or agreed to in writing, software
+ * distributed under the license is distributed on an "as is" basis,
+ * without warranties or conditions of any kind, either express or implied.
+ * see the license for the specific language governing permissions and
+ * limitations under the license.
  *
- * The source code of this program is only provided for learning and research.
- * If the program source code is used for criminal acts, such as illegal acts,
+ * the source code of this program is only provided for learning and research.
+ * if the program source code is used for criminal acts, such as illegal acts,
  * it is not related to the original author and need to be personally responsible.
  */
 
 /*
- * Creates on 2020/4/22.
+ * creates on 2020/4/22.
  */
 
 /**
- * 中间代码，Grabber指令集
- *
- * ICONST           -- ICONST代表int类型
- * UICONST          -- UICONST代表无符号int类型
- * LCONST           -- LCONST代表long类型
- * ULCONST          -- ULCONST代表无符号long类型
- * CHCONST          -- CHCONST代表char类型
+ * 中间代码，grabber指令集
  *
  * @author tiansheng
  */
@@ -40,301 +34,106 @@ public enum Instruction {
     /**
      * 什么也不做
      */
-    NOP,
+    nop,
 
     /**
-     * 将int类型的0推送至栈顶
+     * 将int类型的常量放入内存
      */
-    ICONST_0,
+    iconst,
 
     /**
-     * 将int类型的1推送至栈顶
+     * 将无符号int类型的常量放入内存
      */
-    ICONST_1,
+    uiconst,
 
     /**
-     * 将int类型的2推送至栈顶
+     * 将long类型的常量放入内存
      */
-    ICONST_2,
+    lconst,
 
     /**
-     * 将int类型的3推送至栈顶
+     * 将无符号long类型的常量放入内存
      */
-    ICONST_3,
+    ulconst,
 
     /**
-     * 将int类型的4推送至栈顶
+     * 将float类型的常量放入内存
      */
-    ICONST_4,
+    fconst,
 
     /**
-     * 将int类型的5推送至栈顶
+     * 将double类型的常量放入内存
      */
-    ICONST_5,
+    dconst,
 
     /**
-     * 将int类型的6推送至栈顶
+     * 将char类型的常量放入内存
      */
-    ICONST_6,
+    chconst,
 
     /**
-     * 将int类型的7推送至栈顶
+     * 将bool类型的常量true放入内存
      */
-    ICONST_7,
+    blconst_true,
 
     /**
-     * 将int类型的8推送至栈顶
+     * 将bool类型的常量false放入内存
      */
-    ICONST_8,
+    blconst_false,
 
     /**
-     * 将int类型的9推送至栈顶
+     * 将byte类型的常量放入内存
      */
-    ICONST_9,
+    btcosnt,
 
     /**
-     * 将无符号int类型的0推送至栈顶
+     * 从内存中读取int类型的常量
      */
-    UICONST_0,
+    iload,
 
     /**
-     * 将无符号int类型的1推送至栈顶
+     * 从内存中读取无符号int类型的常量
      */
-    UICONST_1,
+    uiload,
 
     /**
-     * 将无符号int类型的2推送至栈顶
+     * 从内存中读取long类型的常量
      */
-    UICONST_2,
+    lload,
 
     /**
-     * 将无符号int类型的3推送至栈顶
+     * 从内存中读取无符号long类型的常量
      */
-    UICONST_3,
+    ulload,
 
     /**
-     * 将无符号int类型的4推送至栈顶
+     * 从内存中读取float类型的常量
      */
-    UICONST_4,
+    fload,
 
     /**
-     * 将无符号int类型的5推送至栈顶
+     * 从内存中读取double类型的常量
      */
-    UICONST_5,
+    dload,
 
     /**
-     * 将无符号int类型的6推送至栈顶
+     * 从内存中读取char类型的常量
      */
-    UICONST_6,
+    chload,
 
     /**
-     * 将无符号int类型的7推送至栈顶
+     * 从内存中读取bool类型的常量true
      */
-    UICONST_7,
+    blload_true,
 
     /**
-     * 将无符号int类型的8推送至栈顶
+     * 从内存中读取bool类型的常量false
      */
-    UICONST_8,
+    blload_false,
 
     /**
-     * 将无符号int类型的9推送至栈顶
+     * 从内存中读取byte类型的常量
      */
-    UICONST_9,
-
-    /**
-     * 将long类型的0推送至栈顶
-     */
-    LCONST_0,
-
-    /**
-     * 将long类型的1推送至栈顶
-     */
-    LCONST_1,
-
-    /**
-     * 将long类型的2推送至栈顶
-     */
-    LCONST_2,
-
-    /**
-     * 将long类型的3推送至栈顶
-     */
-    LCONST_3,
-
-    /**
-     * 将long类型的4推送至栈顶
-     */
-    LCONST_4,
-
-    /**
-     * 将long类型的5推送至栈顶
-     */
-    LCONST_5,
-
-    /**
-     * 将long类型的6推送至栈顶
-     */
-    LCONST_6,
-
-    /**
-     * 将long类型的7推送至栈顶
-     */
-    LCONST_7,
-
-    /**
-     * 将long类型的8推送至栈顶
-     */
-    LCONST_8,
-
-    /**
-     * 将long类型的9推送至栈顶
-     */
-    LCONST_9,
-
-    /**
-     * 将无符号long类型的0推送至栈顶
-     */
-    ULCONST_0,
-
-    /**
-     * 将无符号long类型的1推送至栈顶
-     */
-    ULCONST_1,
-
-    /**
-     * 将无符号long类型的2推送至栈顶
-     */
-    ULCONST_2,
-
-    /**
-     * 将无符号long类型的3推送至栈顶
-     */
-    ULCONST_3,
-
-    /**
-     * 将无符号long类型的4推送至栈顶
-     */
-    ULCONST_4,
-
-    /**
-     * 将无符号long类型的5推送至栈顶
-     */
-    ULCONST_5,
-
-    /**
-     * 将无符号long类型的6推送至栈顶
-     */
-    ULCONST_6,
-
-    /**
-     * 将无符号long类型的7推送至栈顶
-     */
-    ULCONST_7,
-
-    /**
-     * 将无符号long类型的8推送至栈顶
-     */
-    ULCONST_8,
-
-    /**
-     * 将无符号long类型的9推送至栈顶
-     */
-    ULCONST_9,
-
-    /**
-     * 将一个byte类型的值推送至栈顶
-     */
-    BYCONST,
-
-    /**
-     * 将一个布尔类型的true推送至栈顶
-     */
-    BOOLCONST_TRUE,
-
-    /**
-     * 将一个布尔类型的false推送至栈顶
-     */
-    BOOLCONST_FALSE,
-
-    /**
-     * 执行int类型的加法
-     */
-    IADD,
-
-    /**
-     * 执行int类型的减法
-     */
-    ISUB,
-
-    /**
-     * 执行int的类型的乘法
-     */
-    IMUL,
-
-    /**
-     * 执行int类型的除法
-     */
-    IDIV,
-
-    /**
-     * 执行无符号int类型的加法
-     */
-    UIADD,
-
-    /**
-     * 执行无符号int类型的减法
-     */
-    UISUB,
-
-    /**
-     * 执行无符号int的类型的乘法
-     */
-    UIMUL,
-
-    /**
-     * 执行无符号int类型的除法
-     */
-    UIDIV,
-
-    /**
-     * 执行long类型的加法
-     */
-    LADD,
-
-    /**
-     * 执行long类型的减法
-     */
-    LSUB,
-
-    /**
-     * 执行long的类型的乘法
-     */
-    LMUL,
-
-    /**
-     * 执行long类型的除法
-     */
-    LDIV,
-
-    /**
-     * 执行无符号long类型的加法
-     */
-    ULADD,
-
-    /**
-     * 执行无符号long类型的减法
-     */
-    ULSUB,
-
-    /**
-     * 执行无符号long类型的乘法
-     */
-    ULMUL,
-
-    /**
-     * 执行无符号long类型的除法
-     */
-    ULDIV,
+    btload,
 
 }
