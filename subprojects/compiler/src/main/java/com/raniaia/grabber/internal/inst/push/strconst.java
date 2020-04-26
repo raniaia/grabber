@@ -29,11 +29,11 @@ import com.raniaia.grabber.internal.instop;
 /**
  * @author tiansheng
  */
-public class iconst extends absinstprocess implements instop {
+public class strconst extends absinstprocess implements instop {
 
     @Override
     public void trans(Object... consts) {
-        build("iconst");
+        build("strconst");
     }
 
 }

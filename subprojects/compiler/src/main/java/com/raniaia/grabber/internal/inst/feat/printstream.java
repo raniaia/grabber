@@ -1,4 +1,4 @@
-package com.raniaia.grabber.internal.inst.push;
+package com.raniaia.grabber.internal.inst.feat;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -29,11 +29,11 @@ import com.raniaia.grabber.internal.instop;
 /**
  * @author tiansheng
  */
-public class iconst extends absinstprocess implements instop {
+public class printstream extends absinstprocess implements instop {
 
     @Override
     public void trans(Object... consts) {
-        build("iconst");
+        build("printstream");
     }
 
 }

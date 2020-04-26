@@ -29,7 +29,7 @@ package com.raniaia.grabber.internal;
  * @author tiansheng
  */
 @SuppressWarnings("all")
-public enum instruction {
+public enum inst_base {
 
     /**
      * 什么也不做
@@ -70,6 +70,11 @@ public enum instruction {
      * 将char类型的常量放入内存
      */
     chconst,
+
+    /**
+     * 将字符串作为放入内存
+     */
+    strconst,
 
     /**
      * 将bool类型的常量true放入内存
@@ -310,5 +315,15 @@ public enum instruction {
      * 当条件为truer时跳转
      */
     loop,
+
+    /**
+     * 程序中断
+     */
+    inte,
+
+    /**
+     * 向屏幕打印内存
+     */
+    printstrem,
 
 }

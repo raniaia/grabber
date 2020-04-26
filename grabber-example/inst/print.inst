@@ -1,0 +1,4 @@
+0: strconst "Hello,World!!!\n"
+1: sadd 0, "         ----- by tiansheng"
+2: printstream #1
+3: printstream #0

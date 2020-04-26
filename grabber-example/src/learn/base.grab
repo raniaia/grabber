@@ -9,7 +9,8 @@
 class base {
 
     pre {
-        int x = 0
+        set x = base()
+        print(x.in)
     }
 
     

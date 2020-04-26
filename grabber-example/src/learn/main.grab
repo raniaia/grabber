@@ -1,2 +1,4 @@
-#include base
+set x = 1
+set y = 2
+print(x + y)
 

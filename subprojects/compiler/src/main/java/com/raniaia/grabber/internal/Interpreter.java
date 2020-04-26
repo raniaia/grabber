@@ -1,4 +1,4 @@
-package com.raniaia.grabber.internal.inst.push;
+package com.raniaia.grabber.internal;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,17 +23,15 @@ package com.raniaia.grabber.internal.inst.push;
  * Creates on 2020/4/26.
  */
 
-import com.raniaia.grabber.internal.absinstprocess;
-import com.raniaia.grabber.internal.instop;
-
 /**
+ * 解释器，将grabber指令集解释成汇编
+ *
  * @author tiansheng
  */
-public class iconst extends absinstprocess implements instop {
+public class Interpreter {
 
-    @Override
-    public void trans(Object... consts) {
-        build("iconst");
+    public void exec(){
+
     }
 
 }
