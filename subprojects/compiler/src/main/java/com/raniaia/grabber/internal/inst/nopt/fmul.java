@@ -1,4 +1,4 @@
-package com.raniaia.grabber.internal;
+package com.raniaia.grabber.internal.inst.nopt;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,13 +23,17 @@ package com.raniaia.grabber.internal;
  * Creates on 2020/4/26.
  */
 
+import com.raniaia.grabber.internal.absinstprocess;
+import com.raniaia.grabber.internal.instop;
+
 /**
- * 指令对应的翻译函数
- *
  * @author tiansheng
  */
-public interface instop {
+public class fmul extends absinstprocess implements instop {
 
-    void trans(Object... consts);
+    @Override
+    public void trans(Object... consts) {
+        build("fmul");
+    }
 
 }

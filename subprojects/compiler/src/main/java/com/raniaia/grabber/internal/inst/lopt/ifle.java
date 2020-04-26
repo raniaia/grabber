@@ -1,4 +1,4 @@
-package com.raniaia.grabber.internal;
+package com.raniaia.grabber.internal.inst.lopt;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -23,17 +23,17 @@ package com.raniaia.grabber.internal;
  * Creates on 2020/4/26.
  */
 
+import com.raniaia.grabber.internal.absinstprocess;
+import com.raniaia.grabber.internal.instop;
+
 /**
- * 指令 - nop
- * 说明：什么也不做
- *
  * @author tiansheng
  */
-public class nop extends absinstprocess implements instop{
+public class ifle extends absinstprocess implements instop {
 
     @Override
-    public void trans() {
-        append("nop");
+    public void trans(Object... consts) {
+        build("ifle");
     }
 
 }

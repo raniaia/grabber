@@ -24,12 +24,21 @@ package com.raniaia.grabber.internal;
  */
 
 /**
+ * 构建一个完整类的指令
+ *
  * @author tiansheng
  */
 public class absinstprocess {
 
-    void append(String tocode) {
+    StringBuilder builder = new StringBuilder();
 
+    /**
+     * todo 待实现
+     * @param tocode
+     */
+    protected void build(String tocode) {
+        builder.append(tocode);
+        builder.append("\n");
     }
 
 }
