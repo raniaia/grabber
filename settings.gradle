@@ -32,5 +32,6 @@ include("subprojects:provided")
 include("subprojects:compiler")
 include ("subprojects:codegen")
 include ("subprojects:debug")
+include ("subprojects:dev-test")
 
 

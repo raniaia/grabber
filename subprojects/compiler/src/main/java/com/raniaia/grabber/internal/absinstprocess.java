@@ -1,4 +1,4 @@
-package com.raniaia.grabber;
+package com.raniaia.grabber.internal;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,28 +20,16 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/15.
+ * Creates on 2020/4/26.
  */
-
-import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class FinalToken {
+public class absinstprocess {
 
-	/**
-	 * 表示tokens属于哪个文件
-	 */
-	String name;
+    void append(String tocode) {
 
-	List<SyntaxToken> tokens;
-
-	public FinalToken(){}
-
-	public FinalToken(String name, List<SyntaxToken> tokens) {
-		this.name = name;
-		this.tokens = tokens;
-	}
+    }
 
 }

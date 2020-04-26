@@ -1,4 +1,4 @@
-package com.raniaia.grabber;
+package com.raniaia.grabber.internal;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,28 +20,20 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/15.
+ * Creates on 2020/4/26.
  */
-
-import java.util.List;
 
 /**
+ * 指令 - nop
+ * 说明：什么也不做
+ *
  * @author tiansheng
  */
-public class FinalToken {
+public class nop extends absinstprocess implements instop{
 
-	/**
-	 * 表示tokens属于哪个文件
-	 */
-	String name;
-
-	List<SyntaxToken> tokens;
-
-	public FinalToken(){}
-
-	public FinalToken(String name, List<SyntaxToken> tokens) {
-		this.name = name;
-		this.tokens = tokens;
-	}
+    @Override
+    public void trans() {
+        append("nop");
+    }
 
 }

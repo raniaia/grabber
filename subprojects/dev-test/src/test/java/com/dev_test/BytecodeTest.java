@@ -1,4 +1,4 @@
-package com.raniaia.grabber;
+package com.dev_test;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,28 +20,23 @@ package com.raniaia.grabber;
  */
 
 /*
- * Creates on 2020/4/15.
+ * Creates on 2020/4/26.
  */
-
-import java.util.List;
 
 /**
  * @author tiansheng
  */
-public class FinalToken {
+public class BytecodeTest {
 
-	/**
-	 * 表示tokens属于哪个文件
-	 */
-	String name;
+    static int c = 2;
 
-	List<SyntaxToken> tokens;
+    public int test(int a,int b) {
+        int d = 3;
+        return a + b + c + d;
+    }
 
-	public FinalToken(){}
-
-	public FinalToken(String name, List<SyntaxToken> tokens) {
-		this.name = name;
-		this.tokens = tokens;
-	}
+    public static void main(String[] args) {
+        System.out.println(new BytecodeTest().test(1,2));
+    }
 
 }

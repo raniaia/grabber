@@ -1,0 +1,40 @@
+public class com.dev_test.BytecodeTest {
+  static int c;
+
+  public com.dev_test.BytecodeTest();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public int test(int, int);
+    Code:
+       0: iconst_3
+       1: istore_3
+       2: iload_1
+       3: iload_2
+       4: iadd
+       5: getstatic     #2                  // Field c:I
+       8: iadd
+       9: iload_3
+      10: iadd
+      11: ireturn
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       3: new           #4                  // class com/dev_test/BytecodeTest
+       6: dup
+       7: invokespecial #5                  // Method "<init>":()V
+      10: iconst_1
+      11: iconst_2
+      12: invokevirtual #6                  // Method test:(II)I
+      15: invokevirtual #7                  // Method java/io/PrintStream.println:(I)V
+      18: return
+
+  static {};
+    Code:
+       0: iconst_2
+       1: putstatic     #2                  // Field c:I
+       4: return
+}
