@@ -23,16 +23,16 @@ package com.raniaia.grabber.internal.inst;
  * Creates on 2020/4/26.
  */
 
-import com.raniaia.grabber.internal.absinstprocess;
+import com.raniaia.grabber.internal.instprocess;
 import com.raniaia.grabber.internal.instop;
 
 /**
  * @author tiansheng
  */
-public class inte extends absinstprocess implements instop {
+public class inte extends instprocess implements instop {
 
     @Override
-    public void trans(Object... consts) {
+    public void accept(Object... consts) {
         build("inte");
     }
 

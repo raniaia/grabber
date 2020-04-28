@@ -28,7 +28,7 @@ package com.raniaia.grabber.internal;
  *
  * @author tiansheng
  */
-public class absinstprocess {
+public class instprocess {
 
     StringBuilder builder = new StringBuilder();
 

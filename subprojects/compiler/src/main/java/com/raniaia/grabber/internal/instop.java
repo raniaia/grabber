@@ -30,6 +30,6 @@ package com.raniaia.grabber.internal;
  */
 public interface instop {
 
-    void trans(Object... consts);
+    void accept(Object... consts);
 
 }
