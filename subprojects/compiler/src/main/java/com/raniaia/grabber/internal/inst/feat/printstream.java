@@ -27,6 +27,8 @@ import com.raniaia.grabber.internal.instprocess;
 import com.raniaia.grabber.internal.instop;
 
 /**
+ * 向控制台打印内容
+ *
  * @author tiansheng
  */
 public class printstream extends instprocess implements instop {

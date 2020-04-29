@@ -33,7 +33,6 @@ public class instprocess {
     StringBuilder builder = new StringBuilder();
 
     /**
-     * todo 待实现
      * @param tocode
      */
     protected void build(String tocode) {
