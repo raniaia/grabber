@@ -324,6 +324,11 @@ public enum inst_base {
     /**
      * 向屏幕打印内存
      */
-    printstrem,
+    printstream,
+
+    /**
+     * 入口函数定义
+     */
+    prostart,
 
 }

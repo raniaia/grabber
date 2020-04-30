@@ -23,6 +23,7 @@ package com.raniaia.grabber.internal.inst;
  * Creates on 2020/4/26.
  */
 
+import com.raniaia.grabber.internal.inst_base;
 import com.raniaia.grabber.internal.instprocess;
 import com.raniaia.grabber.internal.instop;
 
@@ -33,6 +34,8 @@ import com.raniaia.grabber.internal.instop;
  * @author tiansheng
  */
 public class nop extends instprocess implements instop {
+
+    inst_base kind = inst_base.nop;
 
     @Override
     public void accept(Object... consts) {

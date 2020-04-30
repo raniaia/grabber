@@ -1,4 +1,4 @@
-package com.raniaia.grabber.internal.inst.nopt;
+package com.raniaia.grabber;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,23 +20,13 @@ package com.raniaia.grabber.internal.inst.nopt;
  */
 
 /*
- * Creates on 2020/4/26.
+ * Creates on 2020/4/30.
  */
-
-import com.raniaia.grabber.internal.inst_base;
-import com.raniaia.grabber.internal.instprocess;
-import com.raniaia.grabber.internal.instop;
 
 /**
+ * Grabber指令集资源文件类
+ *
  * @author tiansheng
  */
-public class dsub extends instprocess implements instop {
-
-    inst_base kind = inst_base.dsub;
-
-    @Override
-    public void accept(Object... consts) {
-        build("dsub");
-    }
-
+public class GrabberInstSource {
 }

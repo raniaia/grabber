@@ -1,4 +1,4 @@
-package com.raniaia.grabber.internal.inst.nopt;
+package com.raniaia.grabber.internal.inst;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,7 +20,7 @@ package com.raniaia.grabber.internal.inst.nopt;
  */
 
 /*
- * Creates on 2020/4/26.
+ * Creates on 2020/4/30.
  */
 
 import com.raniaia.grabber.internal.inst_base;
@@ -28,15 +28,17 @@ import com.raniaia.grabber.internal.instprocess;
 import com.raniaia.grabber.internal.instop;
 
 /**
+ * 指定程序的入口函数
+ *
  * @author tiansheng
  */
-public class dsub extends instprocess implements instop {
+public class prostart extends instprocess implements instop {
 
-    inst_base kind = inst_base.dsub;
+    inst_base kind = inst_base.prostart;
 
     @Override
     public void accept(Object... consts) {
-        build("dsub");
+        build("prostart");
     }
 
 }

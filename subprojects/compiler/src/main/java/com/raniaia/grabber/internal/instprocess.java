@@ -24,7 +24,7 @@ package com.raniaia.grabber.internal;
  */
 
 /**
- * 构建一个完整类的指令
+ * 命令处理，构建一个完成的汇编文件。
  *
  * @author tiansheng
  */
