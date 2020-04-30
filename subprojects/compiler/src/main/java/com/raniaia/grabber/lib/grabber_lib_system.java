@@ -24,6 +24,8 @@ package com.raniaia.grabber.lib;
  */
 
 /**
+ * grabber内置私有方法，不进行公开调用，使用Java编写。
+ *
  * @author tiansheng
  */
 public class grabber_lib_system {

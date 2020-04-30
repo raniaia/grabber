@@ -30,6 +30,10 @@ package com.raniaia.grabber.internal;
  */
 public class Interpreter {
 
+    /**
+     * 将指令集转换成汇编语言，通过转换成String再写出到
+     * 文件，最后再调用汇编的编译器进行编译使用，最后链接。
+     */
     public void exec(){
 
     }
