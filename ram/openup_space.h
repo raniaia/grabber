@@ -4,7 +4,7 @@ class openup_space
         // 初始化堆空间
         void initHeap();
         // 初始化栈空间
-        void initStack()
+        void initStack();
 
     private:
         // 检测内存状态

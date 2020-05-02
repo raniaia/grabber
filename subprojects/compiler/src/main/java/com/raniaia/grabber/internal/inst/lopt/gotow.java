@@ -36,7 +36,7 @@ public class gotow extends instprocess implements instop {
 
     @Override
     public void accept(Object... consts) {
-        build("gotow");
+        build("goto");
     }
 
 }

@@ -1,0 +1,25 @@
+class file_gio {
+
+    /--
+     将对象写出到文件中
+     type为写出的数据格式, 可选方案有json等
+    --/
+    feat write(object,type: Write) throw FileNotFoundException {
+        return file_jio.write(object,type)
+    }
+
+    /--
+     将文件进行加密
+    --/
+    feat encrypt() throws FileNotFoundException {
+        file_jio.encrypt()
+    }
+
+    /--
+     to 2hex
+    --/
+    feat to2Hex() throw FileNotFoundException{
+        file_jio.to2Hex()
+    }
+
+}

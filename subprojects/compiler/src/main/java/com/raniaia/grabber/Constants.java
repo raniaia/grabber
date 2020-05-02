@@ -26,12 +26,9 @@ import org.raniaia.available.string.StringUtils;
 import java.lang.reflect.Field;
 
 /**
- * 注意前排提醒：
- * 不要格式化这个类！
- * 不要格式化这个类！
- * 不要格式化这个类！
- *
  * 符号种别码，数组中表示每个符号对应的种别码以及每个符号对应的类别。
+ * 用于token扫描的时候使用
+ *
  *x* @author tiansheng
  */
 public interface Constants {

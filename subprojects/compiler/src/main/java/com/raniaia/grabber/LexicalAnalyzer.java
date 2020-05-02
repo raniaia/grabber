@@ -243,7 +243,7 @@ public class LexicalAnalyzer {
 	int lineNumber = 0;
 
 	/**
-	 * 用于在扫描源码的时候保存源码的对象
+	 * 用于在扫描源码的时候保存源码token的临时对象
 	 */
 	StringBuilder builder = new StringBuilder();
 
@@ -345,14 +345,14 @@ public class LexicalAnalyzer {
 	}
 
 	/**
-	 * 判断是不是整数
+	 * 判断单个字符是不是整数
 	 */
 	boolean number(char ch) {
 		return (ch >= '0' && ch <= '9');
 	}
 
 	/**
-	 * 判断是不是整数
+	 * 判断一个字符串是不是整数
 	 */
 	boolean number(String input) {
 		for (char ch : input.toCharArray()) {
@@ -582,7 +582,7 @@ public class LexicalAnalyzer {
 	 */
 	private void lexer(char ch) {
 
-		// 如果当前字符是转义符
+		// 如果当前字符是转义符，在Grabber中转义符也是一样的，反斜杠(\)
 		if(ch == '\\') {
 			CONVERSION_CHAR = true;
 			append(ch);
@@ -593,7 +593,7 @@ public class LexicalAnalyzer {
 		 * 首先判断当前状态是否是正在读取字符串。
 		 *
 		 * 因为如果是正在读取字符串的话，字符串中可能会出现各种各式各样的符号，
-		 * 这些符号可能在编译器的符号表中是不允许出现的。但是字符串可以出现，所以我们
+		 * 可能有些符号可能在编译器的符号表中是不允许出现的。但是字符串可以出现，所以我们
 		 * 需要先判断当前是不是正在读取字符串。不是的话再判断其他的。
 		 */
 		if(status == LexerSym.READ_STRING) {
@@ -632,6 +632,12 @@ public class LexicalAnalyzer {
 
 		/*
 		 * 判断是不是读取到了多行注释。
+		 * 在grabber中多行注释是由一个反斜杠两个减号组成的
+		 *
+		 * /--
+		 *  这里是注释内容
+		 * --/
+		 *
 		 */
 		if(ch == '-') {
 			if("/".equals(value())) {
