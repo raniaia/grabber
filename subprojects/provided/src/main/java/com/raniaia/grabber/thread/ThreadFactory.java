@@ -1,4 +1,4 @@
-package com.raniaia.grabber.cmd;
+package com.raniaia.grabber.thread;
 
 /*
  * Copyright (C) 2020 the original author or authors.
@@ -20,14 +20,19 @@ package com.raniaia.grabber.cmd;
  */
 
 /*
- * Creates on 2020/4/14.
+ * Creates on 2020/5/4.
  */
 
-/**
- * grabber编译命令
- *
- * @author tiansheng
- */
-public class grabberc {
+public class ThreadFactory {
+
+    /**
+     * 创建一个线程，每个线程创建的时候必须指定线程名。
+     *
+     * @param threadName 线程名
+     * @return 一个新的线程实例
+     */
+    public static Thread createNewThread(String threadName){
+        return new Thread("grabber internal: " + threadName + " thread");
+    }
 
 }

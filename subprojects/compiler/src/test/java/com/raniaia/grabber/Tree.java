@@ -56,7 +56,7 @@ public class Tree {
 
 	@Test
 	public void getFileName() {
-		System.out.println(Files.newFile("e:/a/b/c\\e\\d/object.brab").getName());
+		System.out.println(Files.newFile("e:/a/b/c\\e\\d/thread.brab").getName());
 	}
 
 }
