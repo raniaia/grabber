@@ -14,3 +14,5 @@ build
 *.tmp
 ~$*.docx
 cmake-build-debug
+.vs
+Debug
