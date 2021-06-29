@@ -1,4 +1,4 @@
-# Grabber [很遗憾它已经停止维护了]
+# Grabber 
 
 > Grabber是基于Java和C++开发的一门新型编程语言。
 
@@ -22,3 +22,4 @@
 ```
 在Grabber的项目根路径下的`config`文件夹中可以看到对于Grabber编译器的一些配置。
     
+# :boom:很遗憾它已经停止维护了
