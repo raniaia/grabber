@@ -1,4 +1,4 @@
-# Grabber
+# Grabber [很遗憾它已经停止维护了]
 
 > Grabber是基于Java和C++开发的一门新型编程语言。
 
